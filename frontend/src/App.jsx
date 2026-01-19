@@ -1,16 +1,23 @@
 
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
+import Navbar from './components/Navbar'
+import Home from './pages/Home'
+import Login from './pages/Login'
+import Registro from './pages/Registro'
 
 function App() {
   
 
   return (
-    <>
-     <main className="app">
-      <h1>Asesoría laboral (demo)</h1>
-      <p>Base de frontend creada con Vite + React.</p>
-    </main>
-    </>
+    <BrowserRouter>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
