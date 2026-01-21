@@ -5,7 +5,7 @@
 - [Propósito](#propósito)
 - [Objetivos](#objetivos)
 - [Alcance](#alcance)
-- [TODO: A partir de este punto eres libre de organizar la documentación como estimes pero debes desarrollar el cuerpo de tu proyecto con apartados y subapartados que completen tu documentación](#todo-a-partir-de-este-punto-eres-libre-de-organizar-la-documentación-como-estimes-pero-debes-desarrollar-el-cuerpo-de-tu-proyecto-con-apartados-y-subapartados-que-completen-tu-documentación)
+- [Desarrollo del proyecto](#desarrollo-del-proyecto)
 - [Conclusiones](#conclusiones)
 - [Referencias, Fuentes consultadas y Recursos externos: Webgrafía](#referencias-fuentes-consultadas-y-recursos-externos-webgrafía)
 
@@ -15,18 +15,24 @@
 
 ## Estado de arte o análisis del contexto
 
+> TODO: Definir el análisis de contexto del proyecto.
+>
 > A quen vai destinada a aplicación? (Contexto social ou sector empresarial, tipo de persoas, ...)
-Cal é a necesidade ou necesidades que se pretenden cubrir ou satisfacer?
-Existen na actualidade aplicacións que tenten dar resposta a esa(s) necesidade(s)? En que medida o conseguen?
-O desenvolvemento da aplicación abre unha oportunidade de negocio? É posible comercializala? Como?
+> Cal é a necesidade ou necesidades que se pretenden cubrir ou satisfacer?
+> Existen na actualidade aplicacións que tenten dar resposta a esa(s) necesidade(s)? En que medida o conseguen?
+> O desenvolvemento da aplicación abre unha oportunidade de negocio? É posible comercializala? Como?
 
 ## Propósito
 
+> TODO: Definir el propósito del proyecto.
+>
 > En que consiste mi proyecto? Cuál es el propósito u objetivo principal del software desarrollado?
 > Esto lo debes tener claro desde el principio y **no es muy susceptible a cambiar**.
 
 ## Objetivos
 
+> TODO: Definir los objetivos del proyecto.
+>
 > A partir del objetivo principal o propósito qué debes lograr en forma de subobjetivos
 > Esto es un apartado "vivo" que debes estar reajustando constantemente en tu avance.
 > Conforme vayas proponiendo cosas y consiguiéndolas, márcalas como objetivos, ya sea porque has conseguido implementar una funcionalidad o porque hayas comprendido cómo iniciar un proyecto con react o vue.
@@ -34,28 +40,31 @@ O desenvolvemento da aplicación abre unha oportunidade de negocio? É posible c
 
 ## Alcance
 
+> TODO: Definir el alcance del proyecto.
+>
 > Delimitar lo que el proyecto incluye
 > Describir qué funcionalidades sí estarán implementadas.
 >
-> Explicar hasta dónde llega el desarrollo (ej.: solo módulo autenticación básica sin implementar roles de usiario, sin personalización del estilo de la aplicación, etc. etc.).
+> Explicar hasta dónde llega el desarrollo (ej.: solo módulo autenticación básica sin implementar roles de usuario, sin personalización del estilo de la aplicación, etc. etc.).
 >
 > Indicar qué usuarios o perfiles podrán usar la aplicación y cuáles no.
 >
 > Señalar el contexto en el que se aplicará (ej.: entorno académico, startup o emprendimiento, prueba de concepto).
 >
->Indicar lo que queda fuera (límites)
+> Indicar lo que queda fuera (límites)
 >
 > Explicar de forma explícita qué no se abordará aunque podría ser una mejora futura (esto evita expectativas poco realistas y muestra capacidad de acotar el trabajo).
 > Ser concreto y medible. Usar frases que definan claramente los límites: Por ejemplo:
 >
 > - “El sistema permitirá registrar usuarios y gestionar roles básicos, pero no incluirá autenticación multifactor.”
->
 > - “Se desarrollará un prototipo funcional con datos de prueba, no una versión en producción.”
 >
 > Relacionar el alcance con el tiempo y recursos disponibles. Justificar por qué se fijan esos límites (ej.: “debido al tiempo de desarrollo limitado, se implementará solo la versión de escritorio”).
 
-## TODO: A partir de este punto eres libre de organizar la documentación como estimes pero debes desarrollar el cuerpo de tu proyecto con apartados y subapartados que completen tu documentación
+## Desarrollo del proyecto
 
+> TODO: Definir y organizar el desarrollo del proyecto en apartados y subapartados.
+>
 > Hemos elaborado un [checklist](checklist.md) de puntos necesarios para tu PFC, para que revises estas recomendaciones/especificaciones.
 > Apóyate en tu tutor/a si tienes duda de cómo organizar tu proyecto y estos apartados/subapartado. Cada proyecto y su contexto determinará la mejor forma de estructurarlo. Piensa bien cómo lo vas a hacer.
 
@@ -66,4 +75,4 @@ O desenvolvemento da aplicación abre unha oportunidade de negocio? É posible c
 
 ## Referencias, Fuentes consultadas y Recursos externos: Webgrafía
 
-> *TODO*: Enlaces externos y descipciones de estos enlaces que creas conveniente indicar aquí. Generalmente ya van a estar integrados con tu documentación, pero si requieres realizar un listado de ellos, este es el lugar.
+> _TODO_: Enlaces externos y descipciones de estos enlaces que creas conveniente indicar aquí. Generalmente ya van a estar integrados con tu documentación, pero si requieres realizar un listado de ellos, este es el lugar.
