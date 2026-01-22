@@ -44,8 +44,26 @@ En definitiva, el propósito del proyecto es crear una base sólida y estructura
 
 ## Objetivos
 
-> TODO: Definir los objetivos del proyecto.
->
+El objetivo principal de este proyecto es desarrollar una aplicación web que sirva como herramienta de apoyo al asesoramiento laboral, permitiendo organizar y gestionar de forma estructurada la información relacionada con empresas, clientes y trabajadores, dentro de un entorno académico.
+
+A partir de este objetivo general, se definen los siguientes objetivos específicos:
+
+- Analizar las necesidades básicas de una asesoría laboral en relación con la gestión de información de trabajadores, empresas y procesos laborales habituales.
+
+- Diseñar la estructura funcional de la aplicación, definiendo los distintos módulos y secciones necesarios para cubrir dichas necesidades (gestión de empresas, trabajadores, incidencias laborales, etc.).
+
+- Desarrollar una interfaz web clara e intuitiva, orientada a facilitar el acceso y la consulta de la información laboral por parte del usuario.
+
+- Implementar un prototipo funcional de la aplicación que permita registrar, visualizar y organizar información laboral mediante datos de prueba.
+
+- Aplicar una arquitectura de aplicación web moderna, separando la lógica de presentación y la gestión de datos, siguiendo buenas prácticas de desarrollo.
+
+- Documentar el proceso de análisis, diseño y desarrollo del proyecto, explicando las decisiones tomadas y justificando las soluciones adoptadas.
+
+- Adquirir y consolidar conocimientos prácticos sobre el desarrollo de aplicaciones web, especialmente en el uso de tecnologías actuales y metodologías de trabajo orientadas a proyectos.
+
+Estos objetivos servirán como referencia para guiar el desarrollo del proyecto y para evaluar el grado de cumplimiento del mismo en las distintas fases establecidas.
+
 > A partir del objetivo principal o propósito qué debes lograr en forma de subobjetivos
 > Esto es un apartado "vivo" que debes estar reajustando constantemente en tu avance.
 > Conforme vayas proponiendo cosas y consiguiéndolas, márcalas como objetivos, ya sea porque has conseguido implementar una funcionalidad o porque hayas comprendido cómo iniciar un proyecto con react o vue.
