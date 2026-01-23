@@ -5,6 +5,11 @@
 - [Propósito](#propósito)
 - [Objetivos](#objetivos)
 - [Alcance](#alcance)
+  - [Funcionalidades incluidas](#funcionalidades-incluidas)
+  - [Usuarios y perfiles](#usuarios-y-perfiles)
+  - [Contexto de aplicación](#contexto-de-aplicación)
+  - [Exclusiones y límites](#exclusiones-y-límites)
+  - [Posibles mejoras futuras](#posibles-mejoras-futuras)
 - [Desarrollo del proyecto](#desarrollo-del-proyecto)
 - [Conclusiones](#conclusiones)
 - [Referencias, Fuentes consultadas y Recursos externos: Webgrafía](#referencias-fuentes-consultadas-y-recursos-externos-webgrafía)
@@ -71,26 +76,59 @@ Estos objetivos servirán como referencia para guiar el desarrollo del proyecto 
 
 ## Alcance
 
-> TODO: Definir el alcance del proyecto.
->
-> Delimitar lo que el proyecto incluye
-> Describir qué funcionalidades sí estarán implementadas.
->
-> Explicar hasta dónde llega el desarrollo (ej.: solo módulo autenticación básica sin implementar roles de usuario, sin personalización del estilo de la aplicación, etc. etc.).
->
-> Indicar qué usuarios o perfiles podrán usar la aplicación y cuáles no.
->
-> Señalar el contexto en el que se aplicará (ej.: entorno académico, startup o emprendimiento, prueba de concepto).
->
-> Indicar lo que queda fuera (límites)
->
-> Explicar de forma explícita qué no se abordará aunque podría ser una mejora futura (esto evita expectativas poco realistas y muestra capacidad de acotar el trabajo).
-> Ser concreto y medible. Usar frases que definan claramente los límites: Por ejemplo:
->
-> - “El sistema permitirá registrar usuarios y gestionar roles básicos, pero no incluirá autenticación multifactor.”
-> - “Se desarrollará un prototipo funcional con datos de prueba, no una versión en producción.”
->
-> Relacionar el alcance con el tiempo y recursos disponibles. Justificar por qué se fijan esos límites (ej.: “debido al tiempo de desarrollo limitado, se implementará solo la versión de escritorio”).
+El alcance de este proyecto comprende el diseño y desarrollo de una **aplicación web de apoyo al asesoramiento laboral**, orientada a la **organización, registro y seguimiento interno de información** relacionada con empresas/clients y sus trabajadores.
+
+### Funcionalidades incluidas
+
+La aplicación permitirá, como mínimo:
+
+- **Gestión de empresas/clientes**, incluyendo el registro, listado y consulta de información básica.
+- **Gestión de trabajadores** asociados a una empresa/cliente, permitiendo su registro, consulta y relación con incidencias laborales.
+- **Registro y seguimiento de incidencias o expedientes laborales**, entendidos como **anotaciones internas de control**, que incluirán:
+  - tipo de incidencia (altas, bajas, variaciones de datos, vacaciones, incapacidades, etc.),
+  - fecha,
+  - estado (pendiente, en curso, resuelta),
+  - observaciones.
+
+Estas incidencias no implican la realización de trámites oficiales, sino que representan **información orientativa y de seguimiento**, utilizada por el asesor para planificar actuaciones, realizar comprobaciones o preparar futuras gestiones administrativas fuera de la aplicación.
+
+- **Navegación tipo SPA**, con páginas estructuradas para facilitar el acceso a la información.
+- Interfaz web clara e intuitiva, orientada a facilitar el trabajo diario del asesor.
+
+### Usuarios y perfiles
+
+La aplicación contempla los siguientes tipos de usuario:
+
+- **Asesoría (perfil gestor)**: responsable de registrar, consultar y actualizar la información de empresas, trabajadores e incidencias.
+- **Cliente (empresa o autónomo)**: podrá consultar la información asociada a su cuenta, en caso de implementarse acceso autenticado.
+- **Zona pública**: páginas informativas accesibles sin autenticación (inicio, contacto, información general).
+
+Por limitaciones de tiempo y alcance, no se implementará un sistema avanzado de permisos; esta funcionalidad se considera una posible mejora futura.
+
+### Contexto de aplicación
+
+El proyecto se desarrolla en un **entorno académico** y se entrega como un **prototipo funcional**, utilizando datos de prueba. Su objetivo es demostrar la viabilidad organizativa y funcional de una herramienta de este tipo, no ofrecer una solución lista para producción.
+
+La aplicación será una **web responsive (mobile-first)**, accesible desde navegadores actuales, sin desarrollo de aplicaciones móviles nativas.
+
+### Exclusiones y límites
+
+Queda fuera del alcance del proyecto:
+
+- La realización de **trámites oficiales reales** ante organismos públicos (Seguridad Social, Agencia Tributaria, SEPE).
+- La integración con plataformas oficiales, certificados digitales o firma electrónica.
+- Automatizaciones administrativas reales.
+- Seguridad avanzada (autenticación multifactor, firma digital, cifrado certificado).
+- Implantación en un entorno productivo real.
+
+### Posibles mejoras futuras
+
+Como líneas de evolución futura, no incluidas en el alcance por limitaciones de tiempo y recursos, se plantean:
+
+- Integración con servicios oficiales.
+- Gestión avanzada de roles y permisos.
+- Sección de recursos oficiales (Estatuto de los Trabajadores actualizado, convenios colectivos).
+- Acceso guiado a calendarios laborales por provincia y convenio.
 
 ## Desarrollo del proyecto
 
