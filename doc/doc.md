@@ -1,6 +1,16 @@
-# Título de tu proyecto
+# Anteproyecto
 
-- [Introducción](#introducción)
+## Aplicación de asesoramiento laboral
+
+**Autor:** David Docampo
+**Ciclo:** DAW — FCT/Proxecto (2025–2026)
+**Centro:** IES San Clemente
+**Fecha:** 23/01/2026
+
+## Índice
+
+- [Aplicación de asesoramiento laboral](#aplicación-de-asesoramiento-laboral)
+- [Índice](#índice)
 - [Estado de arte o análisis del contexto](#estado-de-arte-o-análisis-del-contexto)
 - [Propósito](#propósito)
 - [Objetivos](#objetivos)
@@ -10,13 +20,6 @@
   - [Contexto de aplicación](#contexto-de-aplicación)
   - [Exclusiones y límites](#exclusiones-y-límites)
   - [Posibles mejoras futuras](#posibles-mejoras-futuras)
-- [Desarrollo del proyecto](#desarrollo-del-proyecto)
-- [Conclusiones](#conclusiones)
-- [Referencias, Fuentes consultadas y Recursos externos: Webgrafía](#referencias-fuentes-consultadas-y-recursos-externos-webgrafía)
-
-## Introducción
-
-> Profundiza en la descripción de tu proyecto más allá de lo que has puesto en el README
 
 ## Estado de arte o análisis del contexto
 
@@ -29,11 +32,6 @@ La necesidad principal que se pretende cubrir con este proyecto es la **organiza
 Existen actualmente aplicaciones comerciales orientadas a la gestión laboral y de recursos humanos, muchas de ellas integradas con sistemas oficiales o con funcionalidades avanzadas. Sin embargo, estas soluciones suelen resultar complejas, costosas o excesivamente amplias para pequeñas asesorías o empresas que solo necesitan un control básico y organizado de la información. Además, en un entorno académico, el acceso a estas herramientas no siempre es viable para fines de aprendizaje o demostración.
 
 El desarrollo de esta aplicación abre una **oportunidad de mejora en la digitalización de la gestión laboral**, especialmente como herramienta de apoyo al trabajo del asesor. Aunque el proyecto no tiene como objetivo su comercialización directa, sí muestra cómo una solución web sencilla y bien estructurada puede aportar valor al sector, sirviendo como base para futuras ampliaciones o adaptaciones a entornos profesionales reales.
-
-> A quen vai destinada a aplicación? (Contexto social ou sector empresarial, tipo de persoas, ...)
-> Cal é a necesidade ou necesidades que se pretenden cubrir ou satisfacer?
-> Existen na actualidade aplicacións que tenten dar resposta a esa(s) necesidade(s)? En que medida o conseguen?
-> O desenvolvemento da aplicación abre unha oportunidade de negocio? É posible comercializala? Como?
 
 ## Propósito
 
@@ -69,14 +67,9 @@ A partir de este objetivo general, se definen los siguientes objetivos específi
 
 Estos objetivos servirán como referencia para guiar el desarrollo del proyecto y para evaluar el grado de cumplimiento del mismo en las distintas fases establecidas.
 
-> A partir del objetivo principal o propósito qué debes lograr en forma de subobjetivos
-> Esto es un apartado "vivo" que debes estar reajustando constantemente en tu avance.
-> Conforme vayas proponiendo cosas y consiguiéndolas, márcalas como objetivos, ya sea porque has conseguido implementar una funcionalidad o porque hayas comprendido cómo iniciar un proyecto con react o vue.
-> Las tareas generalmente salen de la definición de estos objetivos. Para lograr un objetivo, habitualmente suele suponer la realización de una o varias tareas.
-
 ## Alcance
 
-El alcance de este proyecto comprende el diseño y desarrollo de una **aplicación web de apoyo al asesoramiento laboral**, orientada a la **organización, registro y seguimiento interno de información** relacionada con empresas/clients y sus trabajadores.
+El alcance de este proyecto comprende el diseño y desarrollo de una **aplicación web de apoyo al asesoramiento laboral**, orientada a la **organización, registro y seguimiento interno de información** relacionada con empresas/clientes y sus trabajadores.
 
 ### Funcionalidades incluidas
 
@@ -129,19 +122,3 @@ Como líneas de evolución futura, no incluidas en el alcance por limitaciones d
 - Gestión avanzada de roles y permisos.
 - Sección de recursos oficiales (Estatuto de los Trabajadores actualizado, convenios colectivos).
 - Acceso guiado a calendarios laborales por provincia y convenio.
-
-## Desarrollo del proyecto
-
-> TODO: Definir y organizar el desarrollo del proyecto en apartados y subapartados.
->
-> Hemos elaborado un [checklist](checklist.md) de puntos necesarios para tu PFC, para que revises estas recomendaciones/especificaciones.
-> Apóyate en tu tutor/a si tienes duda de cómo organizar tu proyecto y estos apartados/subapartado. Cada proyecto y su contexto determinará la mejor forma de estructurarlo. Piensa bien cómo lo vas a hacer.
-
-## Conclusiones
-
-> Deja esta apartado para el final. Realiza un resumen de todo lo que ha supuesto la realización de tu proyecto. Debe ser una redacción breve. Un resumen de los hitos conseguidos más importantes y de lo aprendido durante el proceso.
-> Puede ser un buen punto de partida para organizar tu presentación y ajustarla al tiempo que tienes.
-
-## Referencias, Fuentes consultadas y Recursos externos: Webgrafía
-
-> _TODO_: Enlaces externos y descipciones de estos enlaces que creas conveniente indicar aquí. Generalmente ya van a estar integrados con tu documentación, pero si requieres realizar un listado de ellos, este es el lugar.
