@@ -20,6 +20,10 @@
   - [Contexto de aplicación](#contexto-de-aplicación)
   - [Exclusiones y límites](#exclusiones-y-límites)
   - [Posibles mejoras futuras](#posibles-mejoras-futuras)
+- [Análisis](#análisis)
+  - [Análisis del problema](#análisis-del-problema)
+- [Diseño](#diseño)
+- [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
 
@@ -122,3 +126,21 @@ Como líneas de evolución futura, no incluidas en el alcance por limitaciones d
 - Gestión avanzada de roles y permisos.
 - Sección de recursos oficiales (Estatuto de los Trabajadores actualizado, convenios colectivos).
 - Acceso guiado a calendarios laborales por provincia y convenio.
+
+## Análisis
+
+El análisis del proyecto tiene como objetivo identificar y definir de forma clara las necesidades que debe cubrir la aplicación, los perfiles de usuario implicados y los requisitos que el sistema debe cumplir. Este apartado sirve como base para las fases posteriores de diseño y desarrollo, asegurando que la solución propuesta responde de manera coherente al problema planteado.
+
+### Análisis del problema
+
+En el ámbito del asesoramiento laboral, una parte importante del trabajo diario consiste en manejar información relacionada con empresas, trabajadores y distintos procesos o incidencias laborales. En muchos casos, esa información está repartida entre documentos, hojas de cálculo y notas internas, lo que complica su consulta, su actualización y el seguimiento de tareas.
+
+Cuando no existe un sistema centralizado, es fácil que aparezcan duplicidades, errores al copiar datos y pérdidas de tiempo buscando la información más actualizada o comprobando el estado de una incidencia. Estos problemas se acentúan especialmente cuando se gestionan varios clientes o cuando existen cambios frecuentes en las plantillas de trabajadores.
+
+Especialmente en el caso de pequeñas empresas y autónomos, la gestión de las obligaciones laborales supone una carga significativa. En muchos casos, asumir internamente estas tareas implicaría la contratación de personal específico, a menudo a tiempo completo, lo que resulta inviable desde un punto de vista económico. Además, delegar estas funciones en personas sin la formación adecuada conlleva un riesgo elevado, ya que errores en materia laboral pueden derivar en sanciones, recargos o costes económicos importantes para la empresa.
+
+Con este proyecto no se pretende automatizar trámites oficiales, sino **mejorar la organización y el control interno de la información laboral**. La idea es que el asesor pueda disponer de una visión clara y estructurada de cada empresa y de sus trabajadores, así como llevar un seguimiento sencillo de incidencias habituales (altas, bajas, vacaciones, incapacidad temporal, variaciones de datos, etc.), indicando su estado y observaciones.
+
+## Diseño
+
+## Planificación
