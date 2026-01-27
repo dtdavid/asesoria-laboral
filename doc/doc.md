@@ -22,6 +22,14 @@
   - [Posibles mejoras futuras](#posibles-mejoras-futuras)
 - [Análisis](#análisis)
   - [Análisis del problema](#análisis-del-problema)
+  - [Descripción del proyecto](#descripción-del-proyecto)
+  - [Objetivos](#objetivos-1)
+  - [Alcance](#alcance-1)
+  - [Justificación del proyecto y estudio de necesidades](#justificación-del-proyecto-y-estudio-de-necesidades)
+  - [Funcionalidades del proyecto y actores implicados](#funcionalidades-del-proyecto-y-actores-implicados)
+  - [Tipos de usuarios](#tipos-de-usuarios)
+  - [Modelo de negocio](#modelo-de-negocio)
+  - [Normativa aplicable](#normativa-aplicable)
 - [Diseño](#diseño)
 - [Planificación](#planificación)
 
@@ -139,7 +147,92 @@ Cuando no existe un sistema centralizado, es fácil que aparezcan duplicidades, 
 
 Especialmente en el caso de pequeñas empresas y autónomos, la gestión de las obligaciones laborales supone una carga significativa. En muchos casos, asumir internamente estas tareas implicaría la contratación de personal específico, a menudo a tiempo completo, lo que resulta inviable desde un punto de vista económico. Además, delegar estas funciones en personas sin la formación adecuada conlleva un riesgo elevado, ya que errores en materia laboral pueden derivar en sanciones, recargos o costes económicos importantes para la empresa.
 
-Con este proyecto no se pretende automatizar trámites oficiales, sino **mejorar la organización y el control interno de la información laboral**. La idea es que el asesor pueda disponer de una visión clara y estructurada de cada empresa y de sus trabajadores, así como llevar un seguimiento sencillo de incidencias habituales (altas, bajas, vacaciones, incapacidad temporal, variaciones de datos, etc.), indicando su estado y observaciones.
+Con este proyecto no se pretende automatizar trámites oficiales, sino **mejorar la organización y el control interno de la información laboral**. La idea es que el asesor laboral pueda disponer de una visión clara y estructurada de cada empresa y de sus trabajadores, así como llevar un seguimiento sencillo de incidencias habituales (altas, bajas, vacaciones, situaciones de incapacidad temporal, variaciones de datos, etc.), indicando su estado y observaciones.
+
+### Descripción del proyecto
+
+El proyecto consiste en el diseño y desarrollo de una **aplicación web de apoyo al asesoramiento laboral**, orientada a la organización y gestión interna de la información relacionada con empresas, clientes y trabajadores. La aplicación permitirá centralizar datos y realizar un seguimiento estructurado de los distintos procesos e incidencias laborales habituales, con el objetivo de mejorar el control y la eficiencia del trabajo diario del asesor.
+
+Se trata de un proyecto desarrollado en un **entorno académico**, planteado como un **prototipo funcional**, que utiliza datos de prueba y no realiza trámites oficiales reales. La aplicación está concebida como una herramienta de apoyo organizativo, no como un sustituto de las plataformas oficiales de las administraciones públicas.
+
+### Objetivos
+
+El objetivo principal del proyecto es desarrollar una aplicación web que sirva como herramienta de apoyo al asesoramiento laboral, facilitando la organización y consulta de la información laboral de empresas y trabajadores.
+
+Este objetivo general se concreta en los siguientes aspectos, ya definidos en el anteproyecto:
+
+- Analizar las necesidades básicas de una asesoría laboral en relación con la gestión de información.
+- Diseñar una estructura funcional clara y coherente.
+- Implementar un prototipo funcional que permita registrar y consultar datos laborales.
+- Aplicar buenas prácticas de desarrollo y documentar adecuadamente el proceso.
+
+Los objetivos servirán como referencia para evaluar el grado de cumplimiento del proyecto a lo largo de las distintas fases de análisis, diseño y desarrollo.
+
+### Alcance
+
+El alcance del proyecto incluye el diseño y desarrollo de una aplicación web que permita la **gestión interna de información laboral**, como empresas, trabajadores e incidencias asociadas, mediante una interfaz web accesible desde navegadores actuales.
+
+Quedan dentro del alcance la organización, registro y seguimiento de datos de forma orientativa, así como la navegación tipo SPA y una interfaz clara e intuitiva. Quedan expresamente fuera del alcance la realización de trámites oficiales, la integración con plataformas públicas, la automatización administrativa real y la implantación en un entorno productivo, tal y como se detalla en el apartado de alcance del anteproyecto.
+
+### Justificación del proyecto y estudio de necesidades
+
+Las pequeñas y medianas empresas, así como muchos trabajadores autónomos, necesitan cumplir con un conjunto de obligaciones laborales y administrativas que requieren conocimientos específicos y una atención constante. En muchos casos, asumir internamente estas tareas supondría contratar personal especializado, habitualmente a tiempo completo, lo que resulta **inviable desde el punto de vista económico** para gran parte de estas organizaciones.
+
+Por este motivo, la externalización de la gestión laboral a través de asesorías especializadas es una práctica habitual. No obstante, incluso dentro de las propias asesorías, gran parte del trabajo diario se apoya en herramientas genéricas o en procedimientos manuales que no siempre facilitan una visión clara del estado de cada cliente o de cada incidencia laboral.
+
+Este proyecto se justifica como una respuesta a la necesidad de **organizar, centralizar y estructurar la información laboral**, reduciendo el riesgo de errores, mejorando el seguimiento de tareas y aportando mayor seguridad en la gestión interna. Disponer de una herramienta específica de apoyo permite al asesor dedicar más tiempo al análisis y a la toma de decisiones, minimizando los problemas derivados de una gestión dispersa o poco sistematizada.
+
+### Funcionalidades del proyecto y actores implicados
+
+La aplicación se concibe como una herramienta de apoyo al asesoramiento laboral, centrada en la gestión interna de la información. Las principales funcionalidades previstas son:
+
+- Registro y gestión de empresas o clientes.
+- Registro y gestión de trabajadores asociados a cada empresa.
+- Creación y seguimiento de incidencias o expedientes laborales, tales como altas, bajas, variaciones de datos, vacaciones o situaciones de incapacidad, tratadas como anotaciones internas de control.
+- Consulta del estado de las incidencias y registro de observaciones asociadas a cada una.
+- Acceso a información organizada mediante una navegación clara y estructurada.
+
+Los actores que intervienen en estas funcionalidades son:
+
+- El **asesor laboral**, como principal usuario del sistema.
+- El **cliente (empresa o autónomo)**, en caso de habilitarse un acceso limitado a la consulta de su información.
+- Usuarios no autenticados, en el caso de las secciones informativas públicas de la aplicación.
+
+### Tipos de usuarios
+
+La aplicación contempla los siguientes tipos de usuario:
+
+- **Usuario asesor (perfil gestor)**:  
+  Es el usuario principal del sistema. Puede crear, modificar y consultar empresas, trabajadores e incidencias laborales.
+
+- **Usuario cliente (empresa o autónomo)**:  
+  Podrá acceder a información asociada a su cuenta, siempre que se implemente un sistema de autenticación básica. Este acceso será de solo consulta.
+
+- **Usuario público**:  
+  Usuario sin autenticación, con acceso únicamente a páginas informativas generales.
+
+Por razones de alcance y tiempo, no se implementará un sistema avanzado de roles y permisos, quedando esta funcionalidad como una posible mejora futura.
+
+### Modelo de negocio
+
+El proyecto se desarrolla en un **entorno académico** y no tiene como objetivo su comercialización directa. No obstante, el modelo planteado es compatible con una posible evolución hacia un producto orientado a asesorías laborales, bajo un esquema de:
+
+- Suscripción mensual por asesoría.
+- Licencias por número de clientes o trabajadores gestionados.
+- Uso como herramienta interna personalizada para despachos profesionales.
+
+Este planteamiento se incluye a nivel conceptual, sin desarrollo técnico ni comercial en la presente fase del proyecto.
+
+### Normativa aplicable
+
+Aunque la aplicación no realiza trámites oficiales ni gestiona datos reales en producción, el proyecto tiene en cuenta, a nivel conceptual, la normativa relacionada con el ámbito laboral y la protección de datos, entre la que se incluyen:
+
+- **Protección de datos personales** (RGPD y LOPDGDD), especialmente en lo relativo al tratamiento de datos de trabajadores y empresas.
+- **Normativa laboral básica**, como el Estatuto de los Trabajadores y los convenios colectivos.
+- **Obligaciones fiscales y laborales**, en cuanto a la correcta gestión y conservación de la información.
+- **Prevención de riesgos laborales**, considerada como parte del contexto general del asesoramiento laboral.
+
+Estas normativas se contemplan como marco de referencia, sin implementación técnica específica en esta fase académica.
 
 ## Diseño
 
