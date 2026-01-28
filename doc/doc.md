@@ -31,6 +31,7 @@
   - [Modelo de negocio](#modelo-de-negocio)
   - [Normativa aplicable](#normativa-aplicable)
 - [Diseño](#diseño)
+  - [Mapa de navegación (rutas)](#mapa-de-navegación-rutas)
 - [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
@@ -235,5 +236,11 @@ Aunque la aplicación no realiza trámites oficiales ni gestiona datos reales en
 Estas normativas se contemplan como marco de referencia, sin implementación técnica específica en esta fase académica.
 
 ## Diseño
+
+### Mapa de navegación (rutas)
+
+A continuación se muestra el mapa de navegación de la aplicación, que representa de forma visual las rutas públicas y privadas, así como la jerarquía de acceso entre las distintas secciones. Este diagrama ha sido elaborado utilizando Mermaid y exportado como imagen para su inclusión en la documentación.
+
+![Mapa de navegación de la aplicación](img/mapa-navegacion.png)
 
 ## Planificación

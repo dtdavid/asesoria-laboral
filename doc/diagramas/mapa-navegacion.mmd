@@ -1,0 +1,21 @@
+flowchart TD
+    A[Home]  --> B(Quienes somos /quienes-somos)
+    A --> C[Contacto /contacto]
+    A --> D[Horarios /horarios]
+    A --> E[Recursos /recursos]
+    A --> F[Login /login]
+    A --> G[Registro /registro]
+
+    F --> H[Dashboard /app]
+
+    H --> I[Empresas /app/empresas]
+    I --> I1[Detalle empresa /app/empresas/:id]
+    I --> J[Trabajadores empresa /app/empresas/:id/trabajadores]
+    J --> J1[Detalle trabajador /app/trabajadores/:id]
+
+    H --> K[Incidencias /app/incidencias]
+    k --> K1[Detalle incidencia /app/incidencias/:id]
+
+    H --> L[Perfil /app/perfil]
+
+    X[404 - Página no encontrada]
