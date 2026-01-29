@@ -1,0 +1,32 @@
+flowchart TD
+  A["Dashboard (/app)"] --> B["Empresas (/app/empresas)"]
+
+  B --> B1["Barra superior
+  Título: Empresas
+  Acción: Nueva empresa"]
+
+  B --> B2["Buscador y filtros
+  Nombre
+  NIF/DNI
+  Tipo
+  Estado"]
+
+  B --> B3["Listado de empresas
+  Tabla o tarjetas
+  Empresa
+  NIF/DNI
+  Contacto
+  Nº trabajadores
+  Incidencias abiertas"]
+
+  B3 --> B4["Acciones por fila
+  Ver detalle
+  Editar
+  Archivar"]
+
+  B4 --> C["Detalle empresa
+  /app/empresas/:id
+  (opcional si hay tiempo)"]
+
+  B1 -.-> D["Modal Nueva empresa
+  Alternativa a ruta"]

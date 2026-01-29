@@ -34,6 +34,7 @@
   - [Mapa de navegación (rutas)](#mapa-de-navegación-rutas)
   - [Wireframe de la página principal (Home)](#wireframe-de-la-página-principal-home)
   - [Wireframe del Dashboard (/app)](#wireframe-del-dashboard-app)
+  - [Wireframe de Empresas (/app/empresas)](#wireframe-de-empresas-appempresas)
 - [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
@@ -261,5 +262,11 @@ Su objetivo es ofrecer una **visión personalizada y resumida** de la informaci�
 El dashboard actúa, por tanto, como un **punto central de acceso** a la aplicación, facilitando la organización del trabajo diario y mejorando la experiencia de uso mediante información clara, contextualizada y accesos rápidos a las acciones más habituales.
 
 ![Wireframe Dashboard](img/dashboard.png)
+
+### Wireframe de Empresas (/app/empresas)
+
+La vista de empresas permite al usuario autenticado gestionar las empresas o clientes asociados a su cuenta, consultar información relevante y acceder a funcionalidades relacionadas como trabajadores e incidencias.
+
+![Wireframe Empresas](img/empresas.png)
 
 ## Planificación
