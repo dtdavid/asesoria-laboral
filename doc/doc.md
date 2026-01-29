@@ -32,6 +32,7 @@
   - [Normativa aplicable](#normativa-aplicable)
 - [Diseño](#diseño)
   - [Mapa de navegación (rutas)](#mapa-de-navegación-rutas)
+  - [Wireframe de la página principal (Home)](#wireframe-de-la-página-principal-home)
 - [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
@@ -242,5 +243,12 @@ Estas normativas se contemplan como marco de referencia, sin implementación té
 A continuación se muestra el mapa de navegación de la aplicación, que representa de forma visual las rutas públicas y privadas, así como la jerarquía de acceso entre las distintas secciones. Este diagrama ha sido elaborado utilizando Mermaid y exportado como imagen para su inclusión en la documentación.
 
 ![Mapa de navegación de la aplicación](img/mapa-navegacion.png)
+
+### Wireframe de la página principal (Home)
+
+A continuación se presenta el wireframe de la página principal de la aplicación.  
+Este esquema define la estructura general de la Home, las secciones principales y los puntos de interacción del usuario, sirviendo como guía para el diseño visual y la implementación posterior.
+
+![Wireframe Home](img/wireframe-home.png)
 
 ## Planificación
