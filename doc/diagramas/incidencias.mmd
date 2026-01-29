@@ -1,0 +1,36 @@
+flowchart TD
+  A["Dashboard (/app)"] --> B["Incidencias (/app/incidencias)"]
+
+  B --> B1["Barra superior
+  Título: Incidencias
+  Acción: Nueva incidencia"]
+
+  B --> B2["Buscador y filtros
+  Empresa
+  Trabajador
+  Tipo (alta/baja/vacaciones/IT/variación...)
+  Estado (abierta/en curso/cerrada)
+  Rango de fechas"]
+
+  B --> B3["Listado de incidencias
+  Tabla o tarjetas
+  Fecha
+  Empresa
+  Trabajador (si aplica)
+  Tipo
+  Estado
+  Prioridad
+  Observaciones (resumen)"]
+
+  B3 --> B4["Acciones por fila
+  Ver detalle
+  Editar
+  Cerrar/Reabrir
+  Archivar"]
+
+  B4 --> C["Detalle incidencia
+  /app/incidencias/:id
+  (opcional si hay tiempo)"]
+
+  B1 -.-> D["Modal Nueva incidencia
+  Alternativa a ruta"]

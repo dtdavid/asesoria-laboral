@@ -35,6 +35,7 @@
   - [Wireframe de la página principal (Home)](#wireframe-de-la-página-principal-home)
   - [Wireframe del Dashboard (/app)](#wireframe-del-dashboard-app)
   - [Wireframe de Empresas (/app/empresas)](#wireframe-de-empresas-appempresas)
+  - [Wireframe de Incidencias (/app/incidencias)](#wireframe-de-incidencias-appincidencias)
 - [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
@@ -268,5 +269,11 @@ El dashboard actúa, por tanto, como un **punto central de acceso** a la aplicac
 La vista de empresas permite al usuario autenticado gestionar las empresas o clientes asociados a su cuenta, consultar información relevante y acceder a funcionalidades relacionadas como trabajadores e incidencias.
 
 ![Wireframe Empresas](img/empresas.png)
+
+### Wireframe de Incidencias (/app/incidencias)
+
+La vista de incidencias permite al usuario autenticado registrar y dar seguimiento a eventos o procesos laborales (altas, bajas, vacaciones, IT, variaciones de datos, etc.) como anotaciones internas de control. Incluye filtros para localizar rápidamente incidencias por empresa, trabajador, tipo, estado o fechas, y un listado con acciones frecuentes.
+
+![Wireframe Incidencias](img/incidencias.png)
 
 ## Planificación
