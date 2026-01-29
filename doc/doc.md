@@ -33,6 +33,7 @@
 - [Diseño](#diseño)
   - [Mapa de navegación (rutas)](#mapa-de-navegación-rutas)
   - [Wireframe de la página principal (Home)](#wireframe-de-la-página-principal-home)
+  - [Wireframe del Dashboard (/app)](#wireframe-del-dashboard-app)
 - [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
@@ -250,5 +251,15 @@ A continuación se presenta el wireframe de la página principal de la aplicaci�
 Este esquema define la estructura general de la Home, las secciones principales y los puntos de interacción del usuario, sirviendo como guía para el diseño visual y la implementación posterior.
 
 ![Wireframe Home](img/wireframe-home.png)
+
+### Wireframe del Dashboard (/app)
+
+El dashboard constituye la **pantalla principal de la aplicación tras la autenticación del usuario**. El acceso a esta área está reservado a usuarios con cuenta, que representan a **clientes (empresas o autónomos) y/o a la asesoría**, y que ya tienen servicios asociados dentro de la aplicación.
+
+Su objetivo es ofrecer una **visión personalizada y resumida** de la información laboral relacionada con el usuario autenticado, mostrando únicamente los datos que le afectan directamente, como sus empresas, trabajadores, incidencias o estados de seguimiento. De este modo, el usuario puede consultar de forma rápida qué servicios tiene activos, el estado de sus gestiones y acceder a las principales funcionalidades sin necesidad de navegar por múltiples secciones.
+
+El dashboard actúa, por tanto, como un **punto central de acceso** a la aplicación, facilitando la organización del trabajo diario y mejorando la experiencia de uso mediante información clara, contextualizada y accesos rápidos a las acciones más habituales.
+
+![Wireframe Dashboard](img/dashboard.png)
 
 ## Planificación
