@@ -1,0 +1,47 @@
+erDiagram
+
+    USUARIO {
+        int id_usuario PK
+        string nombre
+        string email
+        string password
+        string rol
+    }
+
+    EMPRESA {
+        int id_empresa PK
+        string nombre
+        string identificador_fiscal
+        string tipo
+        string email_contacto
+    }
+
+    TRABAJADOR {
+        int id_trabajador PK
+        string nombre
+        string dni
+        string categoria
+        date fecha_alta
+    }
+
+    INCIDENCIA {
+        int id_incidencia PK
+        string tipo
+        string estado
+        date fecha_creacion
+        string observaciones
+    }
+
+    DOCUMENTO {
+        int id_documento PK
+        string nombre
+        string tipo
+        date fecha_subida
+    }
+
+    %% Relaciones
+    USUARIO ||--o{ EMPRESA : gestiona
+    EMPRESA ||--o{ TRABAJADOR : tiene
+    EMPRESA ||--o{ INCIDENCIA : registra
+    TRABAJADOR ||--o{ INCIDENCIA : afecta
+    INCIDENCIA ||--o{ DOCUMENTO : adjunta

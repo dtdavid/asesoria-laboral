@@ -38,6 +38,7 @@
   - [Wireframe de Incidencias (/app/incidencias)](#wireframe-de-incidencias-appincidencias)
   - [Wireframe de Perfil (/app/perfil)](#wireframe-de-perfil-appperfil)
   - [Diagrama de casos de uso](#diagrama-de-casos-de-uso)
+  - [Modelo de datos (Diagrama E/R)](#modelo-de-datos-diagrama-er)
 - [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
@@ -289,5 +290,11 @@ La pantalla de perfil centraliza la información básica de la cuenta autenticad
 El siguiente diagrama representa las interacciones principales entre los tipos de usuario y las funcionalidades clave de la aplicación.
 
 ![Diagrama de casos de uso](img/casos-uso.png)
+
+### Modelo de datos (Diagrama E/R)
+
+El siguiente diagrama E/R representa la estructura de datos principal de la aplicación, mostrando las entidades relevantes y sus relaciones. Este modelo sirve como base para el diseño de la base de datos relacional y la posterior implementación en PostgreSQL.
+
+![Modelo entidad-relación](img/modelo-er.png)
 
 ## Planificación
