@@ -1,0 +1,34 @@
+flowchart LR
+
+%% Actores
+classDef actor fill:#ffffff,stroke:#222,stroke-width:1px;
+P[Usuario público]:::actor
+A[Usuario autenticado]:::actor
+
+%% Límite del sistema
+subgraph S["Aplicación web de asesoramiento laboral (demo)"]
+  UC1((Consultar información pública))
+  UC2((Registrarse))
+  UC3((Iniciar sesión))
+  UC4((Ver dashboard))
+  UC5((Gestionar empresas/clientes))
+  UC6((Gestionar trabajadores de empresa))
+  UC7((Gestionar incidencias))
+  UC8((Consultar incidencias))
+  UC9((Gestionar perfil))
+end
+
+%% Relaciones actor -> casos de uso
+P --> UC1
+P --> UC2
+P --> UC3
+
+A --> UC4
+A --> UC5
+A --> UC6
+A --> UC7
+A --> UC8
+A --> UC9
+
+%% Dependencia típica
+UC3 --> UC4

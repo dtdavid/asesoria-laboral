@@ -37,6 +37,7 @@
   - [Wireframe de Empresas (/app/empresas)](#wireframe-de-empresas-appempresas)
   - [Wireframe de Incidencias (/app/incidencias)](#wireframe-de-incidencias-appincidencias)
   - [Wireframe de Perfil (/app/perfil)](#wireframe-de-perfil-appperfil)
+  - [Diagrama de casos de uso](#diagrama-de-casos-de-uso)
 - [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
@@ -282,5 +283,11 @@ La vista de incidencias permite al usuario autenticado registrar y dar seguimien
 La pantalla de perfil centraliza la información básica de la cuenta autenticada y acciones habituales como actualizar preferencias y gestionar seguridad (por ejemplo, cambio de contraseña y cierre de sesión). En el contexto académico, se añade un bloque de avisos sobre uso de datos de prueba.
 
 ![Wireframe Perfil](img/perfil.png)
+
+### Diagrama de casos de uso
+
+El siguiente diagrama representa las interacciones principales entre los tipos de usuario y las funcionalidades clave de la aplicación.
+
+![Diagrama de casos de uso](img/casos-uso.png)
 
 ## Planificación
