@@ -1,13 +1,26 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
-export default function Navbar() {
+
+export default function Navbar({onNavigate}) {
   return (
-    <nav>
+    
         <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/login">Login</Link></li>
-            <li><Link to="/registro">Registro</Link></li>
+            <li>
+              <NavLink to="/" onClick={onNavigate}>
+              Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/login" onClick={onNavigate}>
+              Login
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/registro" onClick={onNavigate} >
+              Registro
+              </NavLink>
+            </li>
         </ul>
-    </nav>
+    
   )
 }
