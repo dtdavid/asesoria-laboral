@@ -36,6 +36,7 @@
   - [Wireframe del Dashboard (/app)](#wireframe-del-dashboard-app)
   - [Wireframe de Empresas (/app/empresas)](#wireframe-de-empresas-appempresas)
   - [Wireframe de Incidencias (/app/incidencias)](#wireframe-de-incidencias-appincidencias)
+  - [Wireframe de Perfil (/app/perfil)](#wireframe-de-perfil-appperfil)
 - [Planificación](#planificación)
 
 ## Estado de arte o análisis del contexto
@@ -275,5 +276,11 @@ La vista de empresas permite al usuario autenticado gestionar las empresas o cli
 La vista de incidencias permite al usuario autenticado registrar y dar seguimiento a eventos o procesos laborales (altas, bajas, vacaciones, IT, variaciones de datos, etc.) como anotaciones internas de control. Incluye filtros para localizar rápidamente incidencias por empresa, trabajador, tipo, estado o fechas, y un listado con acciones frecuentes.
 
 ![Wireframe Incidencias](img/incidencias.png)
+
+### Wireframe de Perfil (/app/perfil)
+
+La pantalla de perfil centraliza la información básica de la cuenta autenticada y acciones habituales como actualizar preferencias y gestionar seguridad (por ejemplo, cambio de contraseña y cierre de sesión). En el contexto académico, se añade un bloque de avisos sobre uso de datos de prueba.
+
+![Wireframe Perfil](img/perfil.png)
 
 ## Planificación
