@@ -40,6 +40,12 @@
   - [Diagrama de casos de uso](#diagrama-de-casos-de-uso)
   - [Modelo de datos (Diagrama E/R)](#modelo-de-datos-diagrama-er)
 - [Planificación](#planificación)
+  - [Identificación de fases](#identificación-de-fases)
+  - [Recursos (humanos y materiales)](#recursos-humanos-y-materiales)
+  - [Planificación temporal (resumen)](#planificación-temporal-resumen)
+  - [Estimación de esfuerzo y presupuesto](#estimación-de-esfuerzo-y-presupuesto)
+  - [Metodología de trabajo](#metodología-de-trabajo)
+  - [Riesgos y mitigación](#riesgos-y-mitigación)
 
 ## Estado de arte o análisis del contexto
 
@@ -298,3 +304,118 @@ El siguiente diagrama E/R representa la estructura de datos principal de la apli
 ![Modelo entidad-relación](img/modelo-er.png)
 
 ## Planificación
+
+La planificación del proyecto se ha realizado teniendo en cuenta el calendario oficial de entregas establecido en el aula virtual (Mestre), así como la duración total del proyecto, que abarca desde el 12 de enero de 2026 hasta el 16 de marzo de 2026, con presentación final el 20 de marzo de 2026.
+
+El proyecto se estructura en fases progresivas que permiten validar resultados parciales en cada entrega, facilitando el seguimiento por parte del tutor y reduciendo los riesgos derivados del desarrollo.
+
+### Identificación de fases
+
+El desarrollo del proyecto se divide en las siguientes fases:
+
+1. **Anteproyecto**
+   - Definición inicial de la idea del proyecto.
+   - Planteamiento general del problema y de la solución propuesta.
+   - Entrega realizada el **23/01/2026**.
+
+2. **Análisis, diseño y planificación**
+   - Definición de requisitos y funcionalidades del sistema.
+   - Identificación de actores y casos de uso.
+   - Diseño del mapa de navegación, wireframes y modelo de datos (E-R).
+   - Planificación técnica y temporal del proyecto.
+   - **Entrega prevista: 06/02/2026**.
+
+3. **Prototipo 1**
+   - Preparación y validación del entorno de desarrollo.
+   - Implementación inicial del frontend (estructura base, rutas y componentes principales).
+   - Desarrollo de un primer prototipo funcional con navegación básica.
+   - **Entrega prevista: 18/02/2026**.
+
+4. **Prototipo 2**
+   - Desarrollo del backend mediante una API REST.
+   - Integración entre frontend y backend.
+   - Implementación de las funcionalidades principales (operaciones CRUD).
+   - **Entrega prevista: 02/03/2026**.
+
+5. **Aplicación final y documentación**
+   - Finalización de funcionalidades pendientes.
+   - Pruebas, corrección de errores y mejoras de usabilidad.
+   - Elaboración y revisión de la documentación técnica y funcional.
+   - **Entrega final: 16/03/2026**.
+
+6. **Preparación y presentación del proyecto**
+   - Elaboración de la presentación final.
+   - Preparación de la defensa y ensayos previos.
+   - Entrega de la presentación: **19/03/2026**.
+   - Exposición oral del proyecto: **20/03/2026**.
+
+### Recursos (humanos y materiales)
+
+**Recursos humanos**
+
+- Un único desarrollador: **David Docampo Trabazo**, responsable del análisis, diseño, implementación, pruebas, documentación y defensa del proyecto.
+
+**Recursos materiales y software**
+
+- Equipo personal con sistema operativo Windows 11.
+- Visual Studio Code como entorno de desarrollo.
+- Control de versiones mediante Git y GitLab.
+- Frontend desarrollado con React y Vite.
+- Backend basado en Node.js y Express.
+- Base de datos PostgreSQL.
+- Herramientas de documentación y diagramado: Markdown y Mermaid.
+
+### Planificación temporal (resumen)
+
+| Fase                             | Periodo aproximado      |
+| -------------------------------- | ----------------------- |
+| Anteproyecto                     | 12/01/2026 – 23/01/2026 |
+| Análisis, diseño y planificación | 24/01/2026 – 06/02/2026 |
+| Prototipo 1                      | 07/02/2026 – 18/02/2026 |
+| Prototipo 2                      | 19/02/2026 – 02/03/2026 |
+| Aplicación final y documentación | 03/03/2026 – 16/03/2026 |
+| Presentación                     | 17/03/2026 – 20/03/2026 |
+
+### Estimación de esfuerzo y presupuesto
+
+La dedicación estimada para el desarrollo completo del proyecto es la siguiente:
+
+- Desarrollo del proyecto (análisis, diseño, implementación y documentación): **210 horas**
+- Preparación de la presentación (3 días × 5 h/día): **15 horas**
+- Preparación de la defensa y defensa del proyecto: **5 horas**
+
+**Total de horas estimadas: 230 horas**
+
+A efectos académicos, se realiza una estimación económica orientativa:
+
+- Coste hora estimado: **20 € / hora**
+- Coste total aproximado: **230 h × 20 € = 4.600 €**
+
+Este cálculo tiene un carácter exclusivamente académico y sirve para contextualizar el esfuerzo realizado durante el desarrollo del proyecto.
+
+### Metodología de trabajo
+
+El proyecto se desarrolla siguiendo un enfoque incremental e iterativo, basado en:
+
+- Avances progresivos con entregas parciales.
+- Uso de control de versiones con commits frecuentes y descriptivos.
+- Revisión continua de la documentación conforme evoluciona el desarrollo.
+- Coordinación periódica con el tutor para validar decisiones técnicas y de alcance.
+
+### Riesgos y mitigación
+
+Durante el desarrollo del proyecto se han identificado los siguientes riesgos potenciales:
+
+- **Exceso de alcance funcional**  
+  _Mitigación:_ delimitación clara del alcance y priorización de un prototipo funcional viable.
+
+- **Problemas de integración entre frontend y backend**  
+  _Mitigación:_ desarrollo incremental y pruebas tempranas de comunicación entre capas.
+
+- **Limitaciones de tiempo**  
+  _Mitigación:_ planificación basada en entregas parciales y ajuste continuo de objetivos.
+
+- **Complejidad técnica superior a la prevista**  
+  _Mitigación:_ uso de tecnologías conocidas y bien documentadas, evitando soluciones innecesariamente complejas.
+
+La identificación de estos riesgos permite anticipar posibles problemas y reducir su impacto en el desarrollo global del proyecto.
