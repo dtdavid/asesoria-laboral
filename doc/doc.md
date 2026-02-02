@@ -39,9 +39,20 @@
   - [Wireframe de Perfil (/app/perfil)](#wireframe-de-perfil-appperfil)
   - [Diagrama de casos de uso](#diagrama-de-casos-de-uso)
   - [Modelo de datos (Diagrama E/R)](#modelo-de-datos-diagrama-er)
+  - [Infraestructura y arquitectura técnica](#infraestructura-y-arquitectura-técnica)
+    - [Componentes principales](#componentes-principales)
+    - [Comunicación entre componentes](#comunicación-entre-componentes)
+    - [Autenticación y autorización (nivel conceptual)](#autenticación-y-autorización-nivel-conceptual)
+    - [Despliegue y ejecución en desarrollo (entorno local)](#despliegue-y-ejecución-en-desarrollo-entorno-local)
+    - [Consideraciones de escalabilidad (conceptual)](#consideraciones-de-escalabilidad-conceptual)
 - [Planificación](#planificación)
   - [Identificación de fases](#identificación-de-fases)
   - [Recursos (humanos y materiales)](#recursos-humanos-y-materiales)
+  - [Infraestructura y entorno de desarrollo](#infraestructura-y-entorno-de-desarrollo)
+    - [Componentes principales](#componentes-principales-1)
+    - [Comunicación entre capas](#comunicación-entre-capas)
+    - [Entorno local de desarrollo](#entorno-local-de-desarrollo)
+    - [Estructura del repositorio (alto nivel)](#estructura-del-repositorio-alto-nivel)
   - [Planificación temporal (resumen)](#planificación-temporal-resumen)
   - [Estimación de esfuerzo y presupuesto](#estimación-de-esfuerzo-y-presupuesto)
   - [Metodología de trabajo](#metodología-de-trabajo)
@@ -303,6 +314,59 @@ El siguiente diagrama E/R representa la estructura de datos principal de la apli
 
 ![Modelo entidad-relación](img/modelo-er.png)
 
+### Infraestructura y arquitectura técnica
+
+La aplicación se plantea con una arquitectura web en tres capas, separando la interfaz de usuario, la lógica de negocio y la persistencia de datos. Esta separación facilita el mantenimiento, permite desarrollar cada parte de forma incremental y reduce el acoplamiento entre componentes.
+
+#### Componentes principales
+
+- **Frontend (SPA)**  
+  Aplicación cliente desarrollada con **React + Vite**, accesible desde navegador.  
+  Se encarga de la navegación, renderizado de vistas y validaciones básicas de formularios.
+
+- **Backend (API REST)**  
+  Servicio desarrollado con **Node.js + Express** que expone endpoints HTTP para gestionar los datos (empresas, trabajadores, incidencias, etc.).  
+  Centraliza la lógica de negocio y valida las peticiones del cliente.
+
+- **Base de datos (PostgreSQL)**  
+  Sistema de persistencia relacional para almacenar la información del dominio (clientes/empresas, trabajadores, incidencias y usuarios).  
+  El backend accede a la base de datos mediante un cliente PostgreSQL (p. ej. `pg`) y consultas parametrizadas.
+
+#### Comunicación entre componentes
+
+- El frontend se comunica con el backend mediante **peticiones HTTP** (GET, POST, PUT/PATCH, DELETE).
+- El formato de intercambio de datos es **JSON**.
+- La API devolverá códigos de estado HTTP adecuados (200, 201, 400, 401, 404, 500, etc.) y mensajes de error controlados.
+
+#### Autenticación y autorización (nivel conceptual)
+
+La zona privada (`/app`) estará protegida mediante autenticación. El enfoque previsto es un modelo **stateless** basado en **token**:
+
+- El usuario inicia sesión y el backend devuelve un token (por ejemplo, **JWT**).
+- El frontend envía el token en las peticiones a la API mediante la cabecera:
+  `Authorization: Bearer <token>`
+- El backend valida el token y aplica autorización básica (por ejemplo, acceso a datos asociados al usuario).
+
+En esta fase, el planteamiento se recoge a nivel de diseño y se implementará de forma progresiva en los prototipos.
+
+#### Despliegue y ejecución en desarrollo (entorno local)
+
+Durante el desarrollo, los componentes se ejecutarán en local:
+
+- Frontend: servidor de desarrollo de Vite (p. ej. `http://localhost:5173`)
+- Backend: servidor Express (p. ej. `http://localhost:3000`)
+- Base de datos: PostgreSQL local
+
+La configuración de URLs y variables sensibles (por ejemplo, credenciales o secretos) se gestionará mediante variables de entorno.
+
+#### Consideraciones de escalabilidad (conceptual)
+
+Aunque el proyecto es académico, la arquitectura propuesta permite escalar de forma razonable:
+
+- El **frontend** puede servirse como contenido estático.
+- El **backend**, al ser stateless con token, podría ejecutarse en varias instancias detrás de un balanceador.
+- La **base de datos** puede mejorar rendimiento mediante índices y optimización de consultas en los campos más utilizados.
+
 ## Planificación
 
 La planificación del proyecto se ha realizado teniendo en cuenta el calendario oficial de entregas establecido en el aula virtual (Mestre), así como la duración total del proyecto, que abarca desde el 12 de enero de 2026 hasta el 16 de marzo de 2026, con presentación final el 20 de marzo de 2026.
@@ -364,6 +428,41 @@ El desarrollo del proyecto se divide en las siguientes fases:
 - Backend basado en Node.js y Express.
 - Base de datos PostgreSQL.
 - Herramientas de documentación y diagramado: Markdown y Mermaid.
+
+### Infraestructura y entorno de desarrollo
+
+La aplicación se desarrollará siguiendo una arquitectura web de tres capas, separando claramente la interfaz de usuario, la lógica de negocio y la persistencia de datos. Este enfoque facilita el desarrollo incremental, el mantenimiento del código y la validación progresiva de resultados en cada entrega.
+
+#### Componentes principales
+
+- **Frontend (SPA)**  
+  Aplicación web desarrollada con **React y Vite**, responsable de la interfaz de usuario, la navegación y la interacción con el sistema. Se implementa como una _Single Page Application_ (SPA).
+
+- **Backend (API REST)**  
+  Servidor desarrollado con **Node.js y Express**, encargado de exponer una API REST para la gestión de datos (operaciones CRUD), aplicar validaciones y centralizar la lógica básica de negocio.
+
+- **Base de datos**  
+  **PostgreSQL**, utilizada para almacenar la información persistente del sistema, como empresas o clientes, trabajadores e incidencias laborales.
+
+#### Comunicación entre capas
+
+- El frontend consume la API del backend mediante peticiones HTTP (GET, POST, PUT, DELETE).
+- El backend procesa las peticiones, interactúa con la base de datos y devuelve respuestas en formato JSON.
+- Durante las fases iniciales del proyecto, algunas vistas del frontend pueden trabajar con datos simulados, hasta completar la integración con la base de datos real.
+
+#### Entorno local de desarrollo
+
+El proyecto se ejecuta en un entorno local de desarrollo, lo que permite iterar rápidamente y detectar errores de forma temprana:
+
+- **Frontend**: ejecución mediante `npm run dev` (Vite), accesible desde el navegador en `http://localhost:<puerto>`.
+- **Backend**: ejecución mediante Node.js y Express en un puerto independiente (por ejemplo, `http://localhost:3000`), con configuración de CORS para permitir la comunicación con el frontend.
+- **Base de datos**: instancia local de PostgreSQL con una base de datos específica para desarrollo y datos de prueba.
+
+#### Estructura del repositorio (alto nivel)
+
+- `frontend/`: aplicación React (Vite), componentes, vistas y rutas.
+- `backend/` (previsto): API REST desarrollada con Express.
+- `doc/`: documentación del proyecto y diagramas.
 
 ### Planificación temporal (resumen)
 
