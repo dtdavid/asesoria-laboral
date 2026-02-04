@@ -55,6 +55,9 @@
     - [Estructura del repositorio (alto nivel)](#estructura-del-repositorio-alto-nivel)
   - [Planificación temporal (resumen)](#planificación-temporal-resumen)
   - [Estimación de esfuerzo y presupuesto](#estimación-de-esfuerzo-y-presupuesto)
+    - [Estimación inicial por bloques](#estimación-inicial-por-bloques)
+    - [Criterio de coste (orientativo)](#criterio-de-coste-orientativo)
+    - [Seguimiento del esfuerzo (método)](#seguimiento-del-esfuerzo-método)
   - [Metodología de trabajo](#metodología-de-trabajo)
   - [Riesgos y mitigación](#riesgos-y-mitigación)
   - [Modelo de negocio](#modelo-de-negocio-1)
@@ -133,13 +136,13 @@ Estas incidencias no implican la realización de trámites oficiales, sino que r
 
 ### Usuarios y perfiles
 
-La aplicación contempla los siguientes tipos de usuario:
+La aplicación contempla tres perfiles de acceso:
 
-- **Asesoría (perfil gestor)**: responsable de registrar, consultar y actualizar la información de empresas, trabajadores e incidencias.
-- **Cliente (empresa o autónomo)**: podrá consultar la información asociada a su cuenta, en caso de implementarse acceso autenticado.
-- **Zona pública**: páginas informativas accesibles sin autenticación (inicio, contacto, información general).
+- **Usuario público**: acceso a páginas informativas (inicio, quiénes somos, contacto). No requiere autenticación.
+- **Cliente registrado** (empresa o autónomo): acceso a la zona privada (`/app`) para **consulta** de la información asociada a su cuenta (empresas, trabajadores e incidencias vinculadas).
+- **Administrador**: acceso a la zona privada con permisos de **gestión** (alta/edición/borrado) sobre empresas, trabajadores e incidencias, y administración básica de usuarios.
 
-Por limitaciones de tiempo y alcance, no se implementará un sistema avanzado de permisos; esta funcionalidad se considera una posible mejora futura.
+En esta fase se implementará un control de acceso **básico por roles** (cliente / administrador). Un sistema de permisos más detallado, con mayor control sobre las acciones de cada usuario, se deja como una posible mejora futura.
 
 ### Contexto de aplicación
 
@@ -483,20 +486,40 @@ El proyecto se ejecuta en un entorno local de desarrollo, lo que permite iterar 
 
 ### Estimación de esfuerzo y presupuesto
 
-La dedicación estimada para el desarrollo completo del proyecto es la siguiente:
+La estimación de esfuerzo se ha realizado desglosando el trabajo por bloques principales (documentación, frontend, backend, base de datos, integración y pruebas). Esta estimación se irá ajustando en las siguientes entregas, registrando desviaciones y decisiones (por ejemplo, mediante issues y anotaciones de seguimiento).
 
-- Desarrollo del proyecto (análisis, diseño, implementación y documentación): **210 horas**
-- Preparación de la presentación (3 días × 5 h/día): **15 horas**
-- Preparación de la defensa y defensa del proyecto: **5 horas**
+#### Estimación inicial por bloques
 
-**Total de horas estimadas: 230 horas**
+| Bloque de trabajo                               | Horas estimadas |
+| ----------------------------------------------- | --------------: |
+| Documentación (análisis, diseño, planificación) |              45 |
+| Frontend (UI, rutas, formularios, validaciones) |              65 |
+| Backend (API REST, validaciones, JWT, CORS)     |              55 |
+| Base de datos (modelo, creación, consultas)     |              25 |
+| Integración FE/BE + gestión de errores          |              20 |
+| Pruebas básicas y correcciones                  |              10 |
+| Preparación de presentación y defensa           |              10 |
+| **Total estimado**                              |         **230** |
 
-A efectos académicos, se realiza una estimación económica orientativa:
+> Nota: En las fases iniciales del proyecto, el frontend puede trabajar con datos de prueba para validar la interfaz y la navegación, sustituyéndose posteriormente por la integración real con el backend y la base de datos.
+
+#### Criterio de coste (orientativo)
+
+A efectos académicos, se realiza una estimación económica orientativa basada en horas de trabajo:
 
 - Coste hora estimado: **20 € / hora**
 - Coste total aproximado: **230 h × 20 € = 4.600 €**
 
-Este cálculo tiene un carácter exclusivamente académico y sirve para contextualizar el esfuerzo realizado durante el desarrollo del proyecto.
+Este cálculo tiene un carácter exclusivamente académico y sirve para contextualizar el esfuerzo del proyecto.
+
+#### Seguimiento del esfuerzo (método)
+
+Para registrar el avance y justificar desviaciones, el trabajo se organizará en **issues** en GitLab, etiquetadas por área (por ejemplo: `doc`, `frontend`, `backend`, `bd`, `bug`, `mejora-futura`). En cada issue se incluirá:
+
+- estimación inicial (horas),
+- tiempo dedicado aproximado,
+- resultado (resuelto / pospuesto / mejora futura),
+- y, si procede, referencias a commits relacionados.
 
 ### Metodología de trabajo
 
