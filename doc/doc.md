@@ -115,6 +115,8 @@ Estos objetivos servirán como referencia para guiar el desarrollo del proyecto 
 
 ## Alcance
 
+El proyecto se plantea como un **Producto Mínimo Viable (MVP)**, centrado en ofrecer un conjunto reducido pero funcional de características que permitan demostrar la viabilidad técnica y organizativa de la solución.
+
 El alcance de este proyecto comprende el diseño y desarrollo de una **aplicación web de apoyo al asesoramiento laboral**, orientada a la **organización, registro y seguimiento interno de información** relacionada con empresas/clientes y sus trabajadores.
 
 ### Funcionalidades incluidas
@@ -234,18 +236,13 @@ Los actores que intervienen en estas funcionalidades son:
 
 ### Tipos de usuarios
 
-La aplicación contempla los siguientes tipos de usuario:
+El sistema contempla tres roles de usuario claramente diferenciados:
 
-- **Usuario asesor (perfil gestor)**:  
-  Es el usuario principal del sistema. Puede crear, modificar y consultar empresas, trabajadores e incidencias laborales.
+- **Usuario público**: acceso sin autenticación a las páginas informativas.
+- **Usuario cliente**: usuario autenticado con acceso de solo consulta a la información asociada a su empresa.
+- **Usuario administrador**: usuario autenticado con permisos completos de gestión sobre empresas, trabajadores e incidencias.
 
-- **Usuario cliente (empresa o autónomo)**:  
-  Podrá acceder a información asociada a su cuenta, siempre que se implemente un sistema de autenticación básica. Este acceso será de solo consulta.
-
-- **Usuario público**:  
-  Usuario sin autenticación, con acceso únicamente a páginas informativas generales.
-
-Por razones de alcance y tiempo, no se implementará un sistema avanzado de roles y permisos, quedando esta funcionalidad como una posible mejora futura.
+La autorización se plantea de forma sencilla, basada en el rol asociado al token de autenticación, evitando un sistema de permisos excesivamente complejo fuera del alcance del proyecto.
 
 ### Modelo de negocio
 
@@ -313,7 +310,7 @@ La pantalla de perfil centraliza la información básica de la cuenta autenticad
 
 ### Diagrama de casos de uso
 
-El siguiente diagrama representa las interacciones principales entre los tipos de usuario y las funcionalidades clave de la aplicación.
+El siguiente diagrama de casos de uso muestra las principales interacciones entre los distintos tipos de usuario y las funcionalidades clave del sistema.
 
 ![Diagrama de casos de uso](img/casos-uso.png)
 
