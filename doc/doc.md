@@ -57,6 +57,12 @@
   - [Estimación de esfuerzo y presupuesto](#estimación-de-esfuerzo-y-presupuesto)
   - [Metodología de trabajo](#metodología-de-trabajo)
   - [Riesgos y mitigación](#riesgos-y-mitigación)
+  - [Modelo de negocio](#modelo-de-negocio-1)
+  - [Normativa: protección de datos, obrigas fiscais e laborais, prevención de riscos e posibles axudas ou subvencións](#normativa-protección-de-datos-obrigas-fiscais-e-laborais-prevención-de-riscos-e-posibles-axudas-ou-subvencións)
+    - [Protección de datos](#protección-de-datos)
+    - [Obrigacións fiscais e laborais](#obrigacións-fiscais-e-laborais)
+    - [Prevención de riscos laborais](#prevención-de-riscos-laborais)
+    - [Posibles axudas ou subvencións](#posibles-axudas-ou-subvencións)
 
 ## Estado de arte o análisis del contexto
 
@@ -518,3 +524,78 @@ Durante el desarrollo del proyecto se han identificado los siguientes riesgos po
   _Mitigación:_ uso de tecnologías conocidas y bien documentadas, evitando soluciones innecesariamente complejas.
 
 La identificación de estos riesgos permite anticipar posibles problemas y reducir su impacto en el desarrollo global del proyecto.
+
+### Modelo de negocio
+
+El presente proyecto se enmarca en un contexto académico, por lo que no persigue la creación de una empresa propia ni la comercialización directa del software. No obstante, resulta necesario describir el modelo de uso y valor que tendría la aplicación en un entorno real.
+
+La aplicación está pensada para ser utilizada por asesorías laborales pequeñas o medianas, así como por profesionales autónomos del ámbito laboral, como herramienta interna de apoyo a la gestión de la información. Su objetivo principal es centralizar y organizar datos relacionados con empresas clientes, trabajadores e incidencias laborales, facilitando su consulta y seguimiento.
+
+Desde el punto de vista del modelo de negocio, el software podría implantarse como:
+
+- una aplicación interna instalada en la propia infraestructura de la asesoría, o
+- un servicio web de uso privado, accesible únicamente por personal autorizado.
+
+El valor que aporta la aplicación no se basa en la automatización de trámites oficiales ni en la sustitución de plataformas de la Administración, sino en:
+
+- la mejora de la organización interna,
+- la reducción de información dispersa,
+- y el apoyo al trabajo diario del personal de la asesoría.
+
+El modelo económico asociado sería el habitual en este tipo de soluciones:
+
+- pago por licencia,
+- suscripción periódica,
+- o desarrollo a medida para una asesoría concreta.
+
+En el contexto de este proyecto, dicho modelo se describe únicamente a nivel conceptual, ya que la aplicación se desarrolla con datos de prueba y con fines formativos, sin explotación comercial real.
+
+### Normativa: protección de datos, obrigas fiscais e laborais, prevención de riscos e posibles axudas ou subvencións
+
+El desarrollo de esta aplicación se realiza en un **entorno académico** y con **datos de prueba**, por lo que no se gestionan datos reales de carácter personal ni se realizan trámites oficiales. Aun así, se han tenido en cuenta las principales normativas que afectarían a una aplicación de este tipo en un entorno real, a nivel conceptual y formativo.
+
+#### Protección de datos
+
+En un contexto real, la aplicación estaría sujeta al **Reglamento General de Protección de Datos** (RGPD) y a la **Ley Orgánica de Protección de Datos Personales y Garantía de los Derechos Digitales** (LOPDGDD), al tratar información relativa a personas trabajadoras.
+En este proyecto:
+
+- no se utilizan datos reales,
+- no se realiza tratamiento efectivo de información personal,
+- y la aplicación se limita a un entorno de pruebas.
+
+No obstante, se han tenido en cuenta principios básicos como:
+
+- control de acceso mediante autenticación,
+- separación de roles de usuario,
+- y restricción del acceso a la información según permisos.
+
+#### Obrigacións fiscais e laborais
+
+La aplicación no sustituye ni automatiza las obligaciones legales de la asesoría frente a organismos oficiales (Seguridad Social, SEPE, Agencia Tributaria, etc.). Su finalidad es únicamente organizativa, como apoyo interno a la gestión de la información laboral.
+
+Cualquier cumplimiento normativo real seguiría dependiendo de los procedimientos y herramientas oficiales correspondientes.
+
+#### Prevención de riscos laborais
+
+En un entorno profesional real, el desarrollo y mantenimiento de software implica considerar aspectos relacionados con la **prevención de riesgos laborales**, especialmente en trabajos con pantallas de visualización de datos (PVD).
+
+Entre estos aspectos destacan:
+
+- la _ergonomía_ del puesto de trabajo (silla, mesa y postura),
+- una _iluminación_ adecuada que reduzca la fatiga visual,
+- _condiciones ambientales_ correctas (temperatura, ventilación y confort),
+- y la correcta _organización_ del tiempo de trabajo, incluyendo pausas periódicas.
+
+En el contexto de este proyecto académico no se implementan medidas específicas relacionadas con la prevención de riesgos laborales, pero se reconoce este marco como parte del entorno real en el que se desarrollaría y utilizaría una aplicación de este tipo.
+
+#### Posibles axudas ou subvencións
+
+En un escenario real, la adopción de una herramienta de digitalización como la desarrollada en este proyecto podría encajar en programas de apoyo orientados a la modernización y digitalización de pequeñas y medianas empresas.
+
+De forma general, podrían existir:
+
+- programas de digitalización de pymes,
+- líneas de apoyo a la innovación tecnológica,
+- o subvenciones destinadas a la transformación digital del tejido empresarial.
+
+En el marco de este proyecto académico no se tramitan ni se analizan subvenciones concretas, mencionándose este apartado únicamente para contextualizar la viabilidad y el encaje teórico de una solución de este tipo en un entorno profesional real.
