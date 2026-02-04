@@ -530,6 +530,8 @@ El proyecto se desarrolla siguiendo un enfoque incremental e iterativo, basado e
 - Revisión continua de la documentación conforme evoluciona el desarrollo.
 - Coordinación periódica con el tutor para validar decisiones técnicas y de alcance.
 
+El **seguimiento del proyecto** se ha realizado mediante **issues** y un **tablero Kanban** en GitLab, utilizados para planificar tareas, visualizar el estado del trabajo y documentar mejoras futuras de forma estructurada.
+
 ### Riesgos y mitigación
 
 Durante el desarrollo del proyecto se han identificado los siguientes riesgos potenciales:
