@@ -443,6 +443,7 @@ La aplicación se desarrollará siguiendo una arquitectura web de tres capas, se
 
 - **Frontend (SPA)**  
   Aplicación web desarrollada con **React y Vite**, responsable de la interfaz de usuario, la navegación y la interacción con el sistema. Se implementa como una _Single Page Application_ (SPA).
+  En el frontend se ha optado por una separación explícita entre rutas públicas y privadas mediante layouts diferenciados (`PublicLayout` y `PrivateLayout`). Esta estructura permite encapsular la zona privada bajo la ruta `/app`, facilitando la escalabilidad de la aplicación y dejando preparada la integración de mecanismos de protección de rutas y control de sesión de forma centralizada, acorde al enfoque incremental del proyecto.
 
 - **Backend (API REST)**  
   Servidor desarrollado con **Node.js y Express**, encargado de exponer una API REST para la gestión de datos (operaciones CRUD), aplicar validaciones y centralizar la lógica básica de negocio.
