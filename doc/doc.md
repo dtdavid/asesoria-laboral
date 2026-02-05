@@ -346,14 +346,19 @@ La aplicación se plantea con una arquitectura web en tres capas, separando la i
 
 #### Autenticación y autorización (nivel conceptual)
 
-La zona privada (`/app`) estará protegida mediante autenticación. El enfoque previsto es un modelo **stateless** basado en **token**:
+La zona privada de la aplicación (`/app`) estará accesible únicamente para usuarios autenticados. A nivel de diseño, se plantea un modelo sin estado basado en el uso de **tokens**, como **JWT**, que permita identificar al usuario en cada petición a la API.
 
-- El usuario inicia sesión y el backend devuelve un token (por ejemplo, **JWT**).
-- El frontend envía el token en las peticiones a la API mediante la cabecera:
-  `Authorization: Bearer <token>`
-- El backend valida el token y aplica autorización básica (por ejemplo, acceso a datos asociados al usuario).
+De forma general, el funcionamiento previsto es el siguiente:
 
-En esta fase, el planteamiento se recoge a nivel de diseño y se implementará de forma progresiva en los prototipos.
+- El usuario inicia sesión y el backend genera un token.
+- El frontend envía ese token en cada petición a la API.
+- El backend valida el token y permite o deniega el acceso a los datos correspondientes.
+
+En esta fase del proyecto, este planteamiento se recoge a nivel conceptual y se irá implementando de manera progresiva en los siguientes prototipos.
+
+En el frontend se ha implementado un componente `ProtectedRoute` que controla el acceso a la zona privada de la aplicación. Actualmente, la autenticación se simula mediante una condición booleana, con el objetivo de comprobar el funcionamiento de la navegación y la separación entre rutas públicas y privadas.
+
+Este enfoque permite avanzar en el desarrollo y validar la estructura de la aplicación sin introducir todavía un sistema completo de autenticación. En fases posteriores, esta lógica se sustituirá por un sistema real basado en JWT, integrado con el backend.
 
 #### Despliegue y ejecución en desarrollo (entorno local)
 
