@@ -12,7 +12,6 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   
-
   return (
     <BrowserRouter>
       <Routes>
@@ -25,7 +24,7 @@ function App() {
         {/* Rutas privadas protegidas*/}
        <Route element = {<ProtectedRoute />} >  
           <Route path="app/" element={<PrivateLayout />}>
-            <Route index element={<Dashboard />} />  {/* Ruta por defecto para /app/ es el Dashboard*/}
+            <Route index element={<Dashboard />} />  {/* Ruta por defecto para /app es el Dashboard*/}
           </Route>
         </Route>
       </Routes>
