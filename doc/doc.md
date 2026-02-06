@@ -488,6 +488,10 @@ El proyecto se ejecuta en un entorno local de desarrollo, lo que permite iterar 
 | Aplicación final y documentación | 03/03/2026 – 16/03/2026 |
 | Presentación                     | 17/03/2026 – 20/03/2026 |
 
+A continuación se muestra un diagrama de Gantt que representa de forma visual la planificación temporal del proyecto por fases, alineada con el calendario oficial de entregas.
+
+![Diagrama de Gantt de la planificación temporal del proyecto](img/gantt-planificacion.png)
+
 ### Estimación de esfuerzo y presupuesto
 
 La estimación de esfuerzo se ha realizado desglosando el trabajo por bloques principales (documentación, frontend, backend, base de datos, integración y pruebas). Esta estimación se irá ajustando en las siguientes entregas, registrando desviaciones y decisiones (por ejemplo, mediante issues y anotaciones de seguimiento).
