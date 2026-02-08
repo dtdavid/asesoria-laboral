@@ -66,6 +66,10 @@
     - [Obrigacións fiscais e laborais](#obrigacións-fiscais-e-laborais)
     - [Prevención de riscos laborais](#prevención-de-riscos-laborais)
     - [Posibles axudas ou subvencións](#posibles-axudas-ou-subvencións)
+- [Codificación y Pruebas](#codificación-y-pruebas)
+  - [Prototipos realizados](#prototipos-realizados)
+    - [Prototipo 1](#prototipo-1)
+- [Referencias y recursos externos](#referencias-y-recursos-externos)
 
 ## Estado de arte o análisis del contexto
 
@@ -632,3 +636,32 @@ De forma general, podrían existir:
 - o subvenciones destinadas a la transformación digital del tejido empresarial.
 
 En el marco de este proyecto académico no se tramitan ni se analizan subvenciones concretas, mencionándose este apartado únicamente para contextualizar la viabilidad y el encaje teórico de una solución de este tipo en un entorno profesional real.
+
+## Codificación y Pruebas
+
+### Prototipos realizados
+
+#### Prototipo 1
+
+**Fecha:** Febrero del 2026
+
+**Descripción:**
+Primer prototipo funcional de la aplicación web. En este prototipo se implementa la estructura base del frontend como una Single Page Application (SPA), definiendo rutas públicas y privadas, así como un sistema de autenticación simulado que permite validar el flujo de acceso a la zona privada de la aplicación.
+
+**Funcionalidades implementadas:**
+
+- Estructura modular del frontend desarrollada con React y Vite.
+- Navegación entre vistas mediante React Router.
+- Definición de rutas públicas y rutas privadas.
+- Sistema de autenticación simulado mediante Context API.
+- Protección de rutas privadas mediante un componente de control de acceso.
+- Inicio y cierre de sesión simulado (login / logout).
+- Integración inicial de Tailwind CSS para la maquetación básica de la interfaz.
+
+## Referencias y recursos externos
+
+- [React – documentación oficial](https://react.dev/)
+- [Vite – documentación oficial](https://vitejs.dev/)
+- [React Router – documentación oficial](https://reactrouter.com/)
+- [Tailwind CSS – documentación oficial](https://tailwindcss.com/docs)
+- [React Icons – documentación oficial](https://react-icons.github.io/react-icons/)
