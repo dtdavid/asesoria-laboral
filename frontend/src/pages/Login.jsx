@@ -12,10 +12,20 @@ export default function Login() {
   }
   
   return (
-    <main>
-      <h2>Login</h2>
-      <p>Página de acceso de los usuarios registrados.</p>
-      <button type="button" onClick={handleLogin}>Simulate login</button>
-    </main>
+    <div className="max-w-md mx-auto space-y-4 text-center">
+
+      <div className="space-y-2 text-center">
+        <h2 className="text-2xl font-semibold">Login</h2>
+        <p className="text-sm">Página de acceso de los usuarios registrados.</p>
+      </div>
+
+      <div >
+        <button 
+        className="rounded border px-6 py-2 bg-gray-500 text-white hover:bg-gray-600"
+        type="button" onClick={handleLogin}
+        >Simulate login</button>
+      </div>
+
+    </div>
   )
 }

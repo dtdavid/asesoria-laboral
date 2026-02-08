@@ -8,15 +8,16 @@ import { Outlet } from "react-router-dom"
 
 export default function PrivateLayout() {
   return (
-    <>
-      <header>
-        <h2>Área privada</h2>
-      </header>
-
-      <main>
-        <Outlet />
+    <div className="min-h-screen flex flex-col">
+      <header />
+        
+      <main className="flex-1 w-full">
+        <section className="w-full max-w-4xl mx-auto px-4 py-10">
+          <Outlet />
+          </section>
       </main>
-    </>
+      
+    </div>
   )
 }
 

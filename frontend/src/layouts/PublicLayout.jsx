@@ -8,16 +8,26 @@ import Header from '../components/Header.jsx'
  * (home, login, registro, etc.)
  */
 
-export default function PrivateLayout() {
+export default function PublicLayout() {
   return (
-    <>
+    <div className="min-h-screen flex flex-col">
       {/* Cabecera común a las páginas públicas */}
       <Header />
 
       {/* Contenido específico de cada ruta */}
-      <main>
-        <Outlet />
+      <main className="flex-1 w-full ">
+        <section className="w-full max-w-4xl mx-auto px-4 py-10"> 
+          <Outlet />
+        </section>
       </main>
-    </>
+        {/* Pie de página común a las páginas públicas */}
+      <footer className="border-t">
+        <div className="w-full max-w-4xl mx-auto px-4 py-4 text-sm">
+          <p>Proyecto académico (demo)</p>
+        </div>
+      </footer>
+        
+     
+    </div>
   )
 }
