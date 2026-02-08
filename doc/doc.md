@@ -646,17 +646,32 @@ En el marco de este proyecto académico no se tramitan ni se analizan subvencion
 **Fecha:** Febrero del 2026
 
 **Descripción:**
-Primer prototipo funcional de la aplicación web. En este prototipo se implementa la estructura base del frontend como una Single Page Application (SPA), definiendo rutas públicas y privadas, así como un sistema de autenticación simulado que permite validar el flujo de acceso a la zona privada de la aplicación.
+
+El Prototipo 1 corresponde a la primera versión funcional de la aplicación web. En esta fase se ha desarrollado el frontend como una Single Page Application (SPA), estableciendo la estructura base del proyecto, el sistema de navegación y el control de acceso a la zona privada de la aplicación.
+
+El objetivo principal de este prototipo es validar el flujo de navegación, la separación entre zonas públicas y privadas y el comportamiento básico de autenticación, sin disponer todavía de un backend ni de un sistema real de gestión de usuarios.
+
+La autenticación se implementa de forma simulada en el frontend con fines académicos, permitiendo desarrollar y probar la arquitectura de la aplicación antes de incorporar mecanismos reales de seguridad en fases posteriores.
 
 **Funcionalidades implementadas:**
 
-- Estructura modular del frontend desarrollada con React y Vite.
-- Navegación entre vistas mediante React Router.
-- Definición de rutas públicas y rutas privadas.
-- Sistema de autenticación simulado mediante Context API.
-- Protección de rutas privadas mediante un componente de control de acceso.
-- Inicio y cierre de sesión simulado (login / logout).
-- Integración inicial de Tailwind CSS para la maquetación básica de la interfaz.
+- Desarrollo del frontend como SPA utilizando **React** y **Vite**.
+- Configuración del enrutado de la aplicación mediante **React Router**.
+- Separación de rutas públicas y privadas mediante layouts específicos (`PublicLayout` y `PrivateLayout`) y el uso de `Outlet`.
+- Implementación de un componente `ProtectedRoute` para controlar el acceso a la zona privada de la aplicación.
+- Gestión del estado de autenticación mediante **Context API**, utilizando un proveedor de contexto (`AuthProvider`) y un hook personalizado.
+- Simulación del proceso de autenticación mediante funciones `login()` y `logout()`, sin conexión a backend.
+- Página de **Login** con botón de “login simulado” que permite acceder a la zona privada (`/app`).
+- Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que redirige al usuario a la página de login.
+- Instalación y configuración básica de **Tailwind CSS** para la maquetación mínima de la interfaz (estructura responsive, centrado de contenidos y espaciados básicos).
+
+**Pruebas realizadas:**
+
+Las pruebas realizadas en este prototipo han sido de tipo manual, centradas en validar el flujo de navegación y autenticación:
+
+- Acceso directo a la ruta privada `/app` sin estar autenticado redirige correctamente a la página `/login`.
+- El uso del login simulado permite acceder a la zona privada de la aplicación.
+- El cierre de sesión (logout) invalida el estado de autenticación y redirige al usuario a la página de login.
 
 ## Referencias y recursos externos
 
@@ -665,3 +680,5 @@ Primer prototipo funcional de la aplicación web. En este prototipo se implement
 - [React Router – documentación oficial](https://reactrouter.com/)
 - [Tailwind CSS – documentación oficial](https://tailwindcss.com/docs)
 - [React Icons – documentación oficial](https://react-icons.github.io/react-icons/)
+- [PostCSS – documentación oficial](https://postcss.org/)
+- [Autoprefixer – documentación oficial](https://github.com/postcss/autoprefixer)
