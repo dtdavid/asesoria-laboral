@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
-
+import Button from "../components/ui/Button"
 /**
  * Página principal del área privada
  * Por ahora es solo un placeholder
@@ -26,12 +26,19 @@ export default function Dashboard() {
       </div>
 
       <div >
-        <button 
+        {/* <button 
         type="button"
         className=" rounded border px-6 py-2 bg-gray-500 text-white hover:bg-gray-600" 
         onClick={handleLogout}
         >
-        Cerrar Sesión</button>
+        Cerrar Sesión</button> */}
+
+        <Button
+        type="button"
+        onClick={handleLogout}
+        >
+        Cerrar Sesión
+        </Button>
       </div>
 
     </div>

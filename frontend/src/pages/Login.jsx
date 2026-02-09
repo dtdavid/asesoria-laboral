@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import Button from "../components/ui/Button"
 
 export default function Login() {
 
@@ -20,10 +21,17 @@ export default function Login() {
       </div>
 
       <div >
-        <button 
+        {/* <button 
         className="rounded border px-6 py-2 bg-gray-500 text-white hover:bg-gray-600"
         type="button" onClick={handleLogin}
-        >Simulate login</button>
+        >Simulate login</button> */}
+        <Button 
+        type="button" 
+        onClick={handleLogin}
+        className="w-full"
+        >
+        Simulate login
+        </Button>
       </div>
 
     </div>
