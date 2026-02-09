@@ -1,6 +1,6 @@
 
 
-export default function Button({className = "", ...props}) {
+export default function Button({children,className = "", ...props}) {
     //className: clases extras para añadir desde fuera
     //...props: recoge el resto de props (type, onClick, disable, children, etc...)
 
@@ -24,6 +24,8 @@ export default function Button({className = "", ...props}) {
 
         className
      }
-    />
-)
+    >
+      {children}
+    </button>   
+  )
 }
