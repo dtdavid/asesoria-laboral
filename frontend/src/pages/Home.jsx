@@ -1,24 +1,21 @@
 
 import Button from "../components/ui/Button"
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 
 export default function Home() {
 
   const navigate = useNavigate()
-
+  // Navegación programática: el botón ejecuta un cambio de ruta sin usar <NavLink>
   const goRegister = () => {
     navigate("/registro")
   }
 
 
-
-
-
   return (
     <div className=" space-y-16">
 
-      {/* HERO */}
+      {/* HERO: presentación rápida + CTA principal */}
       <section className="space-y-6 text-center" id="top">
         <div className="space-y-3">
           <h1 className="text-3xl md:text-4xl font-semibold">Asesoría laboral (Prototipo)</h1>
@@ -27,8 +24,9 @@ export default function Home() {
           </p>
         </div>
 
+        {/* CTA: acciones principales de entrada al prototipo*/}
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Button onClick={goRegister} className="sn:w-auto">
+          <Button onClick={goRegister} className="sm:w-auto">
             Crear cuenta
           </Button>
           <Button
@@ -38,10 +36,11 @@ export default function Home() {
             Acceder
           </Button>
         </div>
+
       </section>
 
-      {/* PROBLEMAS */}
-      <section className="space-y-6" id="problems">
+      {/* PROBLEMAS: secciones con id para navegación por anclas desde el Navbar */}
+      <section className="space-y-6" id="problemas">
         <header className="text-center space-y-2">
           <h2 className="text-2xl font-semibold">Qué problemas resuelve</h2>
           <p className="text-sm text-gray-600">
@@ -64,7 +63,7 @@ export default function Home() {
             </p>
           </article>
 
-          <article className="borderroundedp-4space-y-2">
+          <article className="border rounded p-4 space-y-2">
             <h3 className="font-semibold">Consulta rápida</h3>
             <p className="text-sm text-gray-600">
               Acceso sencillo a datos clave para el trabajo diario.
@@ -73,7 +72,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* QUÉ PERMITE HACER */}
+      {/* FUNCIONALIDADES: resumen de capacidades planteadas para el sistema */}
       <section className="space-y-6" id="funcionalidades">
         <header className="text-center space-y-2">
           <h2 className="text-2xl font-semibold">Qué permite hacer</h2>
@@ -114,17 +113,17 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CÓMO FUNCIONA */}
+      {/* CÓMO FUNCIONA: explica el flujo general de uso */}
 
       <section id="como-funciona" className="space-y-6">
-        <header className="text-centerspace-y-2">
+        <header className="text-center space-y-2">
           <h2 className="text-2xl font-semibold">Cómo funciona</h2>
           <p className="text-sm text-gray-600">
             Flujo básico del uso del sistema.
           </p>
         </header>
 
-        <ol className="gridgap-4md:grid-cols-3">
+        <ol className="grid gap-4 md:grid-cols-3">
           <li className="border rounded p-4 space-y-1">
             <p className="text-sm font-medium">Paso 1</p>
             <p className="font-semibold">Crear cuenta o iniciar sesión.</p>
@@ -145,7 +144,7 @@ export default function Home() {
         </ol>
       </section>
 
-      {/* RECURSOS */}
+      {/* RECURSOS: sección informativa, los enlaces se completarán en prototipos posteriores */}
 
         <section id="recursos" className="space-y-6">
           <header className="text-center space-y-2">
@@ -164,7 +163,7 @@ export default function Home() {
           </div>
         </section>
 
-      {/* CTA FINAL */} 
+      {/* CTA FINAL: cierre de landing con acceso a registro/login */} 
 
       <section className="text-center space-y-3 border-t pt-10" id="cta">
         <h2 className="text-2xl font-semibold">¿Empezamos?</h2>
@@ -172,7 +171,7 @@ export default function Home() {
           Accede al prototipo y revisa el panel privado.
         </p>
 
-        <div className="flexflex-colsm:flex-rowgap-3justify-center">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button onClick={goRegister} className="sm:w-auto"> 
             Registro
           </Button>

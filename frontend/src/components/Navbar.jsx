@@ -2,12 +2,14 @@ import { NavLink } from 'react-router-dom'
 
 
 export default function Navbar({onNavigate}) {
-
+  // Clases base compartidas para evitar duplicación en enlaces del menú
   const base = "text-sm font-medium hover:underline"
 
   return (
     
         <ul className="flex flex-col items-end gap-2 md:flex-row md:items-center md:gap-6">
+
+          {/* Enlaces ancla: desplazan dentro de la landing(Home). onNavigate cierra el menú movil tras hacer click */}
             <li>
               <a className={base} href="#problemas" onClick={onNavigate}>
                 Problemas
@@ -28,12 +30,12 @@ export default function Navbar({onNavigate}) {
                 Recursos
               </a>
             </li>
-
+            {/*  Navegación SPA con React Router (NavLink permite marcar el enlace activo)  */}
             <li>
               <NavLink to="/"
                onClick={onNavigate}
                className={({ isActive }) =>
-              `text-sm font-medium hover:underline ${isActive ? 'underline' : ''}`
+              `${base} ${isActive ? 'underline' : ''}`
               }
                >
               Home
@@ -43,7 +45,7 @@ export default function Navbar({onNavigate}) {
               <NavLink to="/login" 
               onClick={onNavigate}
               className={({ isActive }) =>
-              `text-sm font-medium hover:underline ${isActive ? 'underline' : ''}`
+              `${base} ${isActive ? 'underline' : ''}`
               }
               >
               Login
@@ -53,7 +55,7 @@ export default function Navbar({onNavigate}) {
               <NavLink to="/registro" 
               onClick={onNavigate} 
               className={({ isActive }) =>
-              `text-sm font-medium hover:underline ${isActive ? 'underline' : ''}`
+              `${base} ${isActive ? 'underline' : ''}`
               }
               >
               Registro
