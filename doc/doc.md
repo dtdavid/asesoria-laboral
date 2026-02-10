@@ -661,8 +661,9 @@ La autenticación se implementa de forma simulada en el frontend con fines acad�
 - Implementación de un componente `ProtectedRoute` para controlar el acceso a la zona privada de la aplicación.
 - Gestión del estado de autenticación mediante **Context API**, utilizando un proveedor de contexto (`AuthProvider`) y un hook personalizado.
 - Simulación del proceso de autenticación mediante funciones `login()` y `logout()`, sin conexión a backend.
-- Página de **Login** con botón de “login simulado” que permite acceder a la zona privada (`/app`).
-- Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que redirige al usuario a la página de login.
+- Formularios de **login y registro** con validación básica en el frontend. estos formularios validan campos básicos antes de permitir el acceso.
+- Autenticación simulada mediante Context API, con redirección automática a la zona privada (`/app`) tras el login o registro.
+- Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que devuelve al usuario a la página de login.
 - Instalación y configuración básica de **Tailwind CSS** para la maquetación mínima de la interfaz (estructura responsive, centrado de contenidos y espaciados básicos).
 
 **Pruebas realizadas:**
