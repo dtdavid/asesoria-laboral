@@ -12,7 +12,7 @@ export default function Header() {
 
   return (
     
-      <header className="border-b">
+      <header className="border-b sticky top-0 z-50 bg-white"> {/*sticky top-0 z-50 bg-white*/}
         <div className="w-full max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
 
           {/* Brand */}

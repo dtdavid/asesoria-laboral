@@ -1,6 +1,6 @@
 
 import { Outlet } from 'react-router-dom'
-import Header from '../components/Header.jsx'
+import PublicHeader from '../components/PublicHeader.jsx'
 
 /**
  * Layout público de la aplicación
@@ -12,7 +12,7 @@ export default function PublicLayout() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Cabecera común a las páginas públicas */}
-      <Header />
+      <PublicHeader />
 
       {/* Contenido específico de cada ruta */}
       <main className="flex-1 w-full">

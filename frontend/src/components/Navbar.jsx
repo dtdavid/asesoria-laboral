@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom'
 
 
 export default function Navbar({onNavigate}) {
-  // Clases base compartidas para evitar duplicación en enlaces del menú
+  // Clases base compartidas para evitar duplicación en enlaces del menú(desktop y mobile)
   const base = "text-sm font-medium hover:underline"
 
   return (
@@ -30,37 +30,7 @@ export default function Navbar({onNavigate}) {
                 Recursos
               </a>
             </li>
-            {/*  Navegación SPA con React Router (NavLink permite marcar el enlace activo)  */}
-            <li>
-              <NavLink to="/"
-               onClick={onNavigate}
-               className={({ isActive }) =>
-              `${base} ${isActive ? 'underline' : ''}`
-              }
-               >
-              Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/login" 
-              onClick={onNavigate}
-              className={({ isActive }) =>
-              `${base} ${isActive ? 'underline' : ''}`
-              }
-              >
-              Login
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/registro" 
-              onClick={onNavigate} 
-              className={({ isActive }) =>
-              `${base} ${isActive ? 'underline' : ''}`
-              }
-              >
-              Registro
-              </NavLink>
-            </li>
+            
         </ul>
     
   )
