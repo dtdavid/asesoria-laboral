@@ -40,7 +40,7 @@ export default function Home() {
       </section>
 
       {/* PROBLEMAS: secciones con id para navegación por anclas desde el Navbar */}
-      <section className="space-y-6" id="problemas">
+      <section className="scroll-mt-24 space-y-6" id="problemas">
         <header className="text-center space-y-2">
           <h2 className="text-2xl font-semibold">Qué problemas resuelve</h2>
           <p className="text-sm text-gray-600">
@@ -73,7 +73,7 @@ export default function Home() {
       </section>
 
       {/* FUNCIONALIDADES: resumen de capacidades planteadas para el sistema */}
-      <section className="space-y-6" id="funcionalidades">
+      <section className="scroll-mt-24 space-y-6" id="funcionalidades">
         <header className="text-center space-y-2">
           <h2 className="text-2xl font-semibold">Qué permite hacer</h2>
           <p className="text-sm text-gray-600">
@@ -115,7 +115,7 @@ export default function Home() {
 
       {/* CÓMO FUNCIONA: explica el flujo general de uso */}
 
-      <section id="como-funciona" className="space-y-6">
+      <section id="como-funciona" className="scroll-mt-24 space-y-6">
         <header className="text-center space-y-2">
           <h2 className="text-2xl font-semibold">Cómo funciona</h2>
           <p className="text-sm text-gray-600">
@@ -146,7 +146,7 @@ export default function Home() {
 
       {/* RECURSOS: sección informativa, los enlaces se completarán en prototipos posteriores */}
 
-        <section id="recursos" className="space-y-6">
+        <section id="recursos" className="scroll-mt-24 space-y-6">
           <header className="text-center space-y-2">
             <h2 className="text-2xl font-semibold">Recursos</h2>
             <p className="text-sm text-gray-600">
@@ -165,7 +165,7 @@ export default function Home() {
 
       {/* CTA FINAL: cierre de landing con acceso a registro/login */} 
 
-      <section className="text-center space-y-3 border-t pt-10" id="cta">
+      <section className="scroll-mt-24 text-center space-y-3 border-t pt-10" id="cta">
         <h2 className="text-2xl font-semibold">¿Empezamos?</h2>
         <p className="text-sm text-gray-600">
           Accede al prototipo y revisa el panel privado.
