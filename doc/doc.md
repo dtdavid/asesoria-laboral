@@ -333,6 +333,7 @@ La aplicación se plantea con una arquitectura web en tres capas, separando la i
 - **Frontend (SPA)**  
   Aplicación cliente desarrollada con **React + Vite**, accesible desde navegador.  
   Se encarga de la navegación, renderizado de vistas y validaciones básicas de formularios.
+  En el área privada (`/app`), se ha implementado una estructura basada en un layout específico que incluye cabecera y menú lateral de navegación. Este enfoque permite organizar las distintas secciones internas (dashboard, empresas, trabajadores e incidencias) manteniendo coherencia visual y facilitando la escalabilidad futura del sistema.
 
 - **Backend (API REST)**  
   Servicio desarrollado con **Node.js + Express** que expone endpoints HTTP para gestionar los datos (empresas, trabajadores, incidencias, etc.).  
@@ -666,6 +667,10 @@ La autenticación se implementa de forma simulada en el frontend con fines acad�
 - Configuración de una paleta de colores personalizada en **Tailwind CSS**, centralizando estilos para garantizar coherencia visual y facilitar la escalabilidad futura.
 - Creación de un componente reutilizable `Button` para unificar estilos y comportamiento, favoreciendo la mantenibilidad del código.
 - Verificación del comportamiento responsive en dispositivo móvil real.
+- Ampliación de la zona privada bajo la ruta `/app/*`, incorporando páginas internas de navegación (empresas, trabajadores e incidencias) como placeholders estructurales.
+- Implementación de un layout privado con cabecera y menú lateral (sidebar), que organiza la navegación interna del área autenticada.
+- Navegación interna mediante enlaces con estado activo visible, facilitando la orientación del usuario dentro del sistema.
+- Adaptación responsive del área privada: menú lateral visible en escritorio y colapsable en dispositivos móviles.
 
 **Pruebas realizadas:**
 
@@ -675,6 +680,8 @@ Las pruebas realizadas en este prototipo han sido de tipo manual, centradas en v
 - El uso del login simulado permite acceder a la zona privada de la aplicación.
 - El cierre de sesión (logout) invalida el estado de autenticación y redirige al usuario a la página de login.
 - Los formularios de login y registro validan campos básicos antes de permitir el acceso.
+- Comprobación del comportamiento responsive del layout privado en dispositivos móviles y escritorio.
+- Verificación del resaltado automático del enlace activo en el menú lateral.
 
 ## Referencias y recursos externos
 
