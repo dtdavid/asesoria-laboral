@@ -8,6 +8,9 @@ import PublicLayout from './layouts/PublicLayout'
 import PrivateLayout from './layouts/PrivateLayout'
 import Dashboard from './pages/Dashboard'
 import ProtectedRoute from './components/ProtectedRoute'
+import Empresas from './pages/Empresas'
+import Trabajadores from './pages/Trabajadores'
+import Incidencias from './pages/Incidencias'
 
 
 function App() {
@@ -25,6 +28,9 @@ function App() {
        <Route element = {<ProtectedRoute />} >  
           <Route path="app/" element={<PrivateLayout />}>
             <Route index element={<Dashboard />} />  {/* Ruta por defecto para /app es el Dashboard*/}
+            <Route path="empresas" element={<Empresas />} />
+            <Route path="trabajadores" element={<Trabajadores />} />
+            <Route path="incidencias" element={<Incidencias />} />
           </Route>
         </Route>
       </Routes>

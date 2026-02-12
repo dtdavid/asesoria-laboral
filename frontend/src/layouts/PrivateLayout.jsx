@@ -1,24 +1,43 @@
-
 import { Outlet } from "react-router-dom"
+import PrivateSidebar from "../components/PrivateSidebar"
+import PrivateHeader from "../components/private/PrivateHeader"
+
 
 /**
- * Layout privado de la aplicación
- * En el futuro se protegerá con autenticación (JWT)
+ * Layout privado (/app/*)
+ * - Header superior fijo
+ * - Sidebar en escritorio, colapsable en móvil
+ * - En móvil, la sidebar pasa arriba (stack vertical)
  */
-
 export default function PrivateLayout() {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header />
-        
-      <main className="flex-1 w-full">
-        <section className="w-full max-w-4xl mx-auto px-4 py-10">
-          <Outlet />
-          </section>
-      </main>
+    <div className="min-h-screen bg-brand-surface">
       
+      {/* Header privado */}
+      <PrivateHeader />
+
+      {/* Contenedor principal */}
+      <div className="w-full px-4 py-6">
+        
+        {/* 
+          grid-cols-1 en móvil (una columna)
+          md:grid-cols-[220px_1fr] en escritorio
+        */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-[220px_1fr]">
+
+          {/* Sidebar */}
+          <PrivateSidebar />
+
+          {/* Contenido */}
+          <main className="rounded border border-brand-border bg-white p-6">
+            <Outlet />
+          </main>
+
+        </div>
+      </div>
     </div>
   )
 }
+
 
 
