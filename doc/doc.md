@@ -657,14 +657,15 @@ La autenticación se implementa de forma simulada en el frontend con fines acad�
 
 - Desarrollo del frontend como SPA utilizando **React** y **Vite**.
 - Configuración del enrutado de la aplicación mediante **React Router**.
-- Separación de rutas públicas y privadas mediante layouts específicos (`PublicLayout` y `PrivateLayout`) y el uso de `Outlet`.
+- Separación de rutas públicas y privadas mediante layouts específicos (`PublicLayout` y `PrivateLayout`).
 - Implementación de un componente `ProtectedRoute` para controlar el acceso a la zona privada de la aplicación.
-- Gestión del estado de autenticación mediante **Context API**, utilizando un proveedor de contexto (`AuthProvider`) y un hook personalizado.
-- Simulación del proceso de autenticación mediante funciones `login()` y `logout()`, sin conexión a backend.
-- Formularios de **login y registro** con validación básica en el frontend. estos formularios validan campos básicos antes de permitir el acceso.
-- Autenticación simulada mediante Context API, con redirección automática a la zona privada (`/app`) tras el login o registro.
+- Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend.
+- Formularios de **login y registro** con validación básica en el frontend y redirección automática a la zona privada (`/app`) tras la autenticación simulada.
 - Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que devuelve al usuario a la página de login.
-- Instalación y configuración básica de **Tailwind CSS** para la maquetación mínima de la interfaz (estructura responsive, centrado de contenidos y espaciados básicos).
+- Rediseño del **Header público**, incluyendo navegación contextual, versión responsive con menú móvil y comportamiento sticky para mejorar la usabilidad.
+- Configuración de una paleta de colores personalizada en **Tailwind CSS**, centralizando estilos para garantizar coherencia visual y facilitar la escalabilidad futura.
+- Creación de un componente reutilizable `Button` para unificar estilos y comportamiento, favoreciendo la mantenibilidad del código.
+- Verificación del comportamiento responsive en dispositivo móvil real.
 
 **Pruebas realizadas:**
 
@@ -673,6 +674,7 @@ Las pruebas realizadas en este prototipo han sido de tipo manual, centradas en v
 - Acceso directo a la ruta privada `/app` sin estar autenticado redirige correctamente a la página `/login`.
 - El uso del login simulado permite acceder a la zona privada de la aplicación.
 - El cierre de sesión (logout) invalida el estado de autenticación y redirige al usuario a la página de login.
+- Los formularios de login y registro validan campos básicos antes de permitir el acceso.
 
 ## Referencias y recursos externos
 
