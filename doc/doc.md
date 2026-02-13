@@ -199,14 +199,29 @@ Se trata de un proyecto desarrollado en un **entorno académico**, planteado com
 
 El objetivo principal del proyecto es desarrollar una aplicación web que sirva como herramienta de apoyo al asesoramiento laboral, facilitando la organización y consulta de la información laboral de empresas y trabajadores.
 
-Este objetivo general se concreta en los siguientes aspectos, ya definidos en el anteproyecto:
+Este objetivo general se concreta en los siguientes aspectos, ya definidos en el anteproyecto y ampliados conforme avanza el desarrollo técnico del proyecto:
 
-- Analizar las necesidades básicas de una asesoría laboral en relación con la gestión de información.
-- Diseñar una estructura funcional clara y coherente.
-- Implementar un prototipo funcional que permita registrar y consultar datos laborales.
-- Aplicar buenas prácticas de desarrollo y documentar adecuadamente el proceso.
+- Analizar las necesidades básicas de una asesoría laboral en relación con la gestión y organización de la información.
 
-Los objetivos servirán como referencia para evaluar el grado de cumplimiento del proyecto a lo largo de las distintas fases de análisis, diseño y desarrollo.
+- Diseñar una estructura funcional clara y coherente, diferenciando zonas públicas y privadas dentro de una arquitectura SPA.
+
+- Implementar un prototipo funcional en el frontend utilizando **React**, aplicando el modelo de componentes y una estructura modular que facilite la escalabilidad y el mantenimiento del código.
+
+- Configurar el sistema de navegación mediante **React Router**, estableciendo rutas públicas y privadas, así como validando el flujo de acceso a la aplicación.
+
+- Aplicar un framework de estilos como **Tailwind CSS** para la maquetación de la interfaz, garantizando coherencia visual, diseño responsive y reutilización de componentes.
+
+- Simular un sistema de autenticación en el frontend con el fin de validar la arquitectura de acceso a la zona privada, dejando preparada la aplicación para su futura integración con un sistema real basado en tokens.
+
+- Implementar en fases posteriores un backend con **Node.js y Express**, exponiendo una API REST para la gestión de empresas, trabajadores e incidencias.
+
+- Incorporar autenticación basada en **JSON Web Tokens (JWT)** en fases posteriores, integrando el frontend con el backend y protegiendo los recursos privados de la aplicación.
+
+- Diseñar e implementar la persistencia de datos mediante **PostgreSQL**, trasladando el modelo conceptual a un esquema relacional y realizando operaciones CRUD desde la API.
+
+- Aplicar buenas prácticas de desarrollo, control de versiones y documentación técnica, manteniendo coherencia entre el código implementado y la memoria del proyecto.
+
+Los objetivos servirán como referencia para evaluar el grado de cumplimiento del proyecto a lo largo de las distintas fases de análisis, diseño y desarrollo, permitiendo verificar que la evolución técnica del sistema se ajusta al alcance definido.
 
 ### Alcance
 
