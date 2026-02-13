@@ -11,12 +11,25 @@ const AuthContext = createContext(null)
  * Provider: envuelve la app y comparte el estado de autentificación.
  */
 export function AuthProvider({children}) {
-    //estado: "estoy logueado"
-    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    //estado global: indica si el usuario está autenticado
+    //se inicializa leyendo localStorage para mantener sesión tras recargar. 
+    const [isAuthenticated, setIsAuthenticated] = useState(() => {
+        const saved = localStorage.getItem("isAuthenticated")
+        return saved === "true"
+    })
 
-    // acciones simuladas
-    const login = () => setIsAuthenticated(true)
-    const logout = () => setIsAuthenticated(false)
+    //login simulado: actualiza estado y persiste la sesión en localStorage
+    //En el futuro, aquí guardaremos el token JWT 
+    const login = () => {
+        setIsAuthenticated(true)
+        localStorage.setItem("isAuthenticated", "true")
+    }
+    //Logout simulado: limpia estado y persiste el cierre de sesión
+    //En el futuro, aquí eliminaremos el token JWT
+    const logout = () => {
+        setIsAuthenticated(false)
+        localStorage.setItem("isAuthenticated", "false")
+    }
 
     return (
         <AuthContext.Provider value={{isAuthenticated, login, logout}}>
