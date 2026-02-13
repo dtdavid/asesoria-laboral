@@ -26,7 +26,7 @@ function App() {
         </Route>
         {/* Rutas privadas protegidas*/}
        <Route element = {<ProtectedRoute />} >  
-          <Route path="app/" element={<PrivateLayout />}>
+          <Route path="app" element={<PrivateLayout />}>
             <Route index element={<Dashboard />} />  {/* Ruta por defecto para /app es el Dashboard*/}
             <Route path="empresas" element={<Empresas />} />
             <Route path="trabajadores" element={<Trabajadores />} />
