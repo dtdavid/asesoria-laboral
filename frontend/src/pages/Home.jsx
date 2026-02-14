@@ -48,15 +48,15 @@ export default function Home() {
           </p>
         </header>
 
-        <div className="gridgap-4md:grid-cols-3">
-          <article className="borderroundedp-4space-y-2">
+        <div className="grid gap-4 md:grid-cols-3">
+          <article className="border rounded p-4 space-y-2">
             <h3 className="font-semibold">Información dispersa</h3>
             <p className="text-sm text-gray-600">
               Empresas, trabajadores y gestiones organizadas en un mismo sitio.
             </p>
           </article>
 
-          <article className="borderroundedp-4space-y-2">
+          <article className="border rounded p-4 space-y-2">
             <h3 className="font-semibold">Seguimiento de incidencias</h3>
             <p className="text-sm text-gray-600">
               Registro y control de altas, bajas, vacaciones e IT.
@@ -81,7 +81,7 @@ export default function Home() {
           </p>
         </header>
 
-        <div className="gridgap-4md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
 
           <div className="border rounded p-4 space-y-1">
             <p className="font-semibold">Gestión de empresas</p>
