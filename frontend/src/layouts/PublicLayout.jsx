@@ -1,6 +1,7 @@
 
 import { Outlet } from 'react-router-dom'
 import PublicHeader from '../components/PublicHeader.jsx'
+import PublicFooter from '../components/PublicFooter.jsx'
 
 /**
  * Layout público de la aplicación
@@ -10,7 +11,7 @@ import PublicHeader from '../components/PublicHeader.jsx'
 
 export default function PublicLayout() {
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text">
       {/* Cabecera común a las páginas públicas */}
       <PublicHeader />
 
@@ -21,13 +22,7 @@ export default function PublicLayout() {
         </section>
       </main>
         {/* Pie de página común a las páginas públicas */}
-      <footer className="border-t text-gray-500">
-        <div className="w-full max-w-4xl mx-auto px-4 py-4 text-sm">
-          <p>Proyecto académico (demo)</p>
-        </div>
-      </footer>
-        
-     
+      <PublicFooter /> 
     </div>
   )
 }
