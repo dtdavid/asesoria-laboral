@@ -14,7 +14,6 @@ import Button from "../ui/Button"
  */
 
 export default function PrivateHeader() {
-
   const navigate = useNavigate()
   const { logout } = useAuth()
 
@@ -24,26 +23,27 @@ export default function PrivateHeader() {
   }
 
   return (
-    <header className="bg-white border-b border-brand-border">
-      <div className="w-full max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+    <header className="border-b border-brand-border bg-brand-surface">
+      <div className="w-full max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
         {/* Identidad mínima */}
         <div className="flex items-center gap-3">
-          <span className="text-sm font-medium text-brand-muted uppercase tracking-wide">
+          <span className="text-xs font-semibold text-brand-muted uppercase tracking-wide">
             Área privada
           </span>
         </div>
 
         {/* Usuario + acción */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <span className="hidden sm:inline text-sm text-brand-muted">
             Usuario
           </span>
 
           <Button
             type="button"
+            variant="ghost"
             onClick={handleLogout}
-            className="px-3 py-2 text-sm"
+            className="px-3"
           >
             Cerrar sesión
           </Button>
@@ -53,4 +53,5 @@ export default function PrivateHeader() {
     </header>
   )
 }
+
 
