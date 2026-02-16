@@ -11,7 +11,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import Empresas from './pages/Empresas'
 import Trabajadores from './pages/Trabajadores'
 import Incidencias from './pages/Incidencias'
-
+import NotFound from './pages/NotFound'
 
 function App() {
   
@@ -24,6 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Registro />} />
         </Route>
+
         {/* Rutas privadas protegidas*/}
        <Route element = {<ProtectedRoute />} >  
           <Route path="app" element={<PrivateLayout />}>
@@ -33,6 +34,9 @@ function App() {
             <Route path="incidencias" element={<Incidencias />} />
           </Route>
         </Route>
+
+        {/* 404 */}
+          <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )
