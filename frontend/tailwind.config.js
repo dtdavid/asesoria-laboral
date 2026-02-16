@@ -17,6 +17,7 @@ export default {
           primaryHover: "#162B47",
           secondary: "#3B82B1",
           secondaryHover: "#2F6C95",
+          footer: "#2F3E4F",
         },
       },
     },
