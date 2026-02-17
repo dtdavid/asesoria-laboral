@@ -54,3 +54,5 @@ coverage
 ##### FIN DE TEMPLATE #####
 
 # Incluye los ignores que consideres a partir de aquí
+# Node backend
+backend/node_modules/
