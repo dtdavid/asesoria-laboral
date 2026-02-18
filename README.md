@@ -1,99 +1,269 @@
 “Work in progress. README will be completed during final delivery.”
 
-# Aplicación web para la gestión de asesoría laboral
+# Aplicación Web – Asesoría Laboral
 
-> _TODO_: Este documento será la "_página de aterrizaje_" de tu proyecto. Será lo primero que vean los que se interesen por él. Cúida su redacción con todo tu mimo. Elimina posteriormente todas las lineas "_TODO_" cuando creas finalizada su redacción.
-> Puedes acompañar a la redacción de este fichero con imágenes o gifs, pero no abuses de ellos.
+Proyecto Fin de Ciclo (DAW)
 
-## Descripción
+Aplicación web académica orientada a la gestión interna de una asesoría laboral.  
+Permite organizar empresas, trabajadores e incidencias laborales.
 
-Este proyecto consiste en el desarrollo de una aplicación web orientada a apoyar la gestión interna de una asesoría laboral. La aplicación permite organizar de forma estructurada la información relacionada con empresas, autónomos y trabajadores, así como realizar el seguimiento de incidencias laborales habituales como altas, bajas, vacaciones, incapacidades temporales o variaciones de datos.
+---
 
-El objetivo principal es centralizar la información laboral en un único entorno accesible, facilitando la consulta del estado de las gestiones y mejorando la organización del trabajo diario tanto para la asesoría como para sus clientes. La aplicación no realiza trámites oficiales con la administración, sino que actúa como una herramienta de apoyo y control interno, utilizando datos de prueba en un contexto académico.
+# 1. Tecnologías utilizadas
 
-Este proyecto se desarrolla como parte del Proyecto Fin de Ciclo y sirve como ejercicio práctico de análisis, diseño y desarrollo de una aplicación web moderna, aplicando buenas prácticas de programación, documentación y control de versiones.
+## Frontend
 
-Actualmente se encuentra en fase de prototipo funcional (Prototipo 1).
+- React
+- Vite
+- React Router
+- Tailwind CSS
+- React Icons
+- PostCSS
+- Autoprefixer
 
-> _TODO_: Realiza una breve descripción del proyecto. No menos de 100 palabras y no más de 300. Resalta lo fundamental **con tus propias palabras**. Utiliza un lenguaje correcto, **pero natural**, que lo entienda todo el mundo, incluso y en especial, las personas que no tengan un conocimiento técnico avanzado. Puede ser un estracto o resumen de apartados que ya contemples en otros ficheros.
+## Backend
 
-## Instalación / Puesta en marcha
+- Node.js
+- Express
+- PostgreSQL
+- pg (node-postgres)
+- dotenv
+- cors
+- nodemon
 
-La aplicación está pensada para ejecutarse en un entorno local de desarrollo.
+---
 
-### Requisitos previos
+# 2. Estructura del repositorio
 
-- Node.js (versión LTS recomendada)
+```
+/
+├── frontend/
+│   ├── src/
+│   ├── package.json
+│   └── ...
+│
+├── backend/
+│   ├── src/
+│   │   ├── app.js
+│   │   ├── server.js
+│   │   └── db.js
+│   ├── .env.example
+│   ├── package.json
+│   └── ...
+│
+└── doc/
+    └── doc.md
+```
+
+---
+
+# 3. Requisitos previos
+
+- Node.js (LTS)
 - npm
 - Git
+- PostgreSQL instalado en local
+- Base de datos creada: `asesoria_laboral`
 
-### Pasos de instalación
+---
 
-1. Clonar el repositorio:
+# 4. Instalación
+
+## 4.1 Clonar repositorio
 
 ```bash
 git clone https://gitlab.iessanclemente.net/dawd/a25daviddt.git
+cd a25daviddt
 ```
 
-2. Acceder al directorio del frontend
+---
+
+## 4.2 Instalación del frontend
 
 ```bash
-cd a25daviddt/frontend
+cd frontend
+npm install
+npm run dev
 ```
 
-3. Instalar las dependencias
+Frontend disponible en:
+
+```
+http://localhost:5173
+```
+
+---
+
+## 4.3 Instalación del backend
 
 ```bash
+cd backend
 npm install
 ```
 
-4. Ejecutar el servidor de desarrollo
+---
+
+# 5. Variables de entorno
+
+Archivo plantilla:
+
+```
+backend/.env.example
+```
+
+Ejemplo de contenido:
+
+```env
+PORT=3000
+PGHOST=localhost
+PGPORT=5432
+PGDATABASE=asesoria_laboral
+PGUSER=postgres
+PGPASSWORD=tu_password
+```
+
+Para desarrollo:
+
+1. Copiar `.env.example`
+2. Renombrar a `.env`
+3. Configurar credenciales reales
+
+⚠️ `.env` está ignorado en `.gitignore`.
+
+---
+
+# 6. Creación de la base de datos
+
+Desde `psql`:
+
+```sql
+CREATE DATABASE asesoria_laboral;
+```
+
+Comprobar:
+
+```sql
+\l
+```
+
+---
+
+# 7. Arranque del backend
 
 ```bash
 npm run dev
 ```
 
-5. La consola mostrará la direión URL en la que estará disponible, generalmente:
+Backend disponible en:
 
-```bash
-➜  Local:   http://localhost:5173/
+```
+http://localhost:3000
 ```
 
-> _TODO_: En este apartado describe con toda precisión y a poder ser con la mayor simplicidad/facilidad posible, cómo poner en marcha tu aplicación para probarla (en un ambiente local). Se valorará muy positivamente que este proceso sea lo más fácil posible, con una simple instrucción (p. e. un script de instalación). Docker es ideal para esto.
+---
 
-## Uso
+# 8. Endpoints disponibles
 
-La _aplicación_ ofrece una interfaz web accesible desde el navegador.
+## GET /health
 
-- Los usuarios no autenticados pueden acceder a la parte **pública** del sitio, donde se presenta la información general del proyecto.
-- Tras **iniciar sesión**, el usuario accede a un **panel principal (dashboard)** desde el que puede:
-  - Consultar sus empresas o clientes asociados.
-  - Gestionar trabajadores.
-  - Registrar y realizar seguimiento de incidencias laborales.
-  - Acceder a información de perfil y preferencias.
+Comprueba que la API está operativa.
 
-- El uso está orientado a la **consulta** y **organización** de la información, no a la realización de trámites oficiales.
+Respuesta ejemplo:
 
-> _TODO_: Es este apartado describe brevemente cómo se usará este software. Plantea un uso básico (como un _quickstart_) Si tiene una interfaz de terminal, puedes describir aquí su sintaxis. Si tiene una interfaz gráfica de usuario, describe aquí **sólo el uso** (a modo de sumario) **de los aspectos más relevantes de su funcionamiento** (máxima brevedad, como si fuese un anuncio reclamo o comercial).
-> Podrías incluso hacer una pequeña demo en _gif_ o un pantallazo de la misma muy descriptivo. Recueda que esto es un reclamo para que la prueben o lean tu documentación más extensa.
+```json
+{
+  "ok": true,
+  "service": "backend",
+  "ts": "2026-02-16T22:33:11.005Z"
+}
+```
 
-## Sobre el autor
+---
 
-#### David Docampo Trabazo
+## GET /db-time
 
-Estudiante de **Desarrollo de Aplicaciones Web**, con especial interés en el **desarrollo frontend** y en la arquitectura de aplicaciones web. Actualmente trabajo principalmente con tecnologías como **HTML**, **CSS** y **JavaScript**, aplicadas al desarrollo de interfaces modernas mediante **React**.
+Ejecuta:
 
-En el ámbito del backend y la persistencia de datos, utilizo **Node.js** junto con **Express** para la creación de APIs REST, y **PostgreSQL** como sistema gestor de bases de datos relacional. Estas tecnologías constituyen la base técnica principal del proyecto.
+```sql
+SELECT NOW();
+```
 
-La elección de este proyecto responde al interés por aplicar los conocimientos adquiridos a un contexto realista, relacionado con la gestión laboral y administrativa, combinando análisis funcional, diseño de interfaces y desarrollo web dentro de un entorno académico.
+Verifica conexión con PostgreSQL.
 
-> _TODO_: Realiza una breve descripción de quien eres (perfil profesional), tus puntos fuertes, o tecnologías que más dominas... y porqué te has decantado por este proyecto. **No más de 200 palabras**. Indica la forma fiable de contactar contigo en el presente y en el futuro.
+---
 
-## Licencia
+## POST /echo
 
-Este proyecto se distribuye bajo la licencia **MIT**, una licencia de software libre que permite el uso, modificación y redistribución del código, siempre que se mantenga el aviso de copyright original.
+Devuelve el body recibido.
 
-El texto completo de la licencia puede consultarse en el archivo [LICENSE](LICENSE) incluido en la raíz del repositorio.
+Ejemplo:
+
+```json
+{
+  "received": {
+    "mensaje": "hola"
+  }
+}
+```
+
+---
+
+# 9. Scripts disponibles
+
+## Backend
+
+```json
+"scripts": {
+  "dev": "nodemon src/server.js",
+  "start": "node src/server.js"
+}
+```
+
+## Frontend
+
+```json
+"scripts": {
+  "dev": "vite",
+  "build": "vite build",
+  "preview": "vite preview"
+}
+```
+
+---
+
+# 10. Estado actual (Prototipo 1)
+
+✔ SPA con rutas públicas y privadas  
+✔ Layout público y privado  
+✔ Autenticación simulada  
+✔ Backend Express operativo  
+✔ Conexión verificada con PostgreSQL  
+✔ Base preparada para JWT
+
+---
+
+# 11. Documentación
+
+La documentación técnica completa se encuentra en:
+
+```
+doc/doc.md
+```
+
+Incluye análisis, diseño, arquitectura y referencias externas.
+
+---
+
+# 12. Autor
+
+David Docampo Trabazo  
+CFGS Desarrollo de Aplicaciones Web (DAW)
+
+---
+
+# 13. Licencia
+
+Proyecto académico bajo licencia MIT.
 
 > _TODO_: Brevísimamente. Indica qué licencia usarás y crea un link a ella. Hay miles de ejemplos en Github.
 > _TODO_: Es requisito INDISPENSABLE el licenciar explícitamente el proyecto software. Se recomienda licenciar con _MIT License_ (como viene en la plantilla) o _GNU Free Documentation License Version 1.3_. Presencia de un fichero `LICENSE` en la raiz del repo, con tu fichero de licencia. Recuerda que si empleas una licencia de software libre estás autorizando la derivación de tu obra bajo la misma licencia que elijas, pudiendo dar continuidad, p. e. otro alumno, para continuar tu proyecto en otro curso.
