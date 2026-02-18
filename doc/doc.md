@@ -659,7 +659,7 @@ En el marco de este proyecto académico no se tramitan ni se analizan subvencion
 
 #### Prototipo 1
 
-**Fecha:** Febrero del 2026
+**Fecha:** 18 de febrero del 2026
 
 **Descripción:**
 
