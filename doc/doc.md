@@ -70,6 +70,9 @@
   - [Prototipos realizados](#prototipos-realizados)
     - [Prototipo 1](#prototipo-1)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
+  - [Documentación oficial](#documentación-oficial)
+  - [Recursos conceptuales](#recursos-conceptuales)
+  - [Bibliografía](#bibliografía)
 
 ## Estado de arte o análisis del contexto
 
@@ -700,6 +703,8 @@ Las pruebas realizadas en este prototipo han sido de tipo manual, centradas en v
 
 ## Referencias y recursos externos
 
+### Documentación oficial
+
 - [React – documentación oficial](https://react.dev/)
 - [Vite – documentación oficial](https://vitejs.dev/)
 - [React Router – documentación oficial](https://reactrouter.com/)
@@ -707,3 +712,27 @@ Las pruebas realizadas en este prototipo han sido de tipo manual, centradas en v
 - [React Icons – documentación oficial](https://react-icons.github.io/react-icons/)
 - [PostCSS – documentación oficial](https://postcss.org/)
 - [Autoprefixer – documentación oficial](https://github.com/postcss/autoprefixer)
+- [Node.js – documentación oficial](https://nodejs.org/)
+- [Express – documentación oficial](https://expressjs.com/)
+- [PostgreSQL – documentación oficial](https://www.postgresql.org/docs/)
+- [pg (node-postgres) – documentación oficial](https://node-postgres.com/)
+- [dotenv – documentación oficial](https://github.com/motdotla/dotenv)
+- [cors – documentación oficial](https://github.com/expressjs/cors)
+- [bcryptjs – documentación oficial](https://github.com/dcodeIO/bcrypt.js)
+- [jsonwebtoken – documentación oficial](https://github.com/auth0/node-jsonwebtoken)
+- [Nodemon – documentación oficial](https://nodemon.io/)
+
+### Recursos conceptuales
+
+- [MDN Web Docs – HTTP](https://developer.mozilla.org/es/docs/Web/HTTP)
+- [MDN Web Docs – REST](https://developer.mozilla.org/es/docs/Glossary/REST)
+- [MDN Web Docs – CORS](https://developer.mozilla.org/es/docs/Web/HTTP/CORS)
+- [MDN Web Docs – JSON](https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/JSON)
+
+### Bibliografía
+
+- Azaustre, Carlos. _Aprendiendo React_.
+- Altadill Izura, Pello Xabier. _React Práctico_. Madrid: Anaya Multimedia, 2023.
+- Durán, Miguel Ángel. _Aprendiendo Git y GitHub_.
+- Cuantun Technologies LLC. _JavaScript de Cero a Superhéroe_. 1ª ed., 2024.
+- Ortuño Pérez, Miguel Ángel. _Express.js: introducción y buenas prácticas._ Universidad Rey Juan Carlos, diciembre 2023. Disponible en: https://gsyc.urjc.es/~mortuno/at/express.pdf
