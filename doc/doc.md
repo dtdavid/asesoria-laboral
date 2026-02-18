@@ -678,14 +678,14 @@ La autenticación se implementa de forma simulada en el frontend con fines acad�
 - Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend.
 - Formularios de **login y registro** con validación básica en el frontend y redirección automática a la zona privada (`/app`) tras la autenticación simulada.
 - Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que devuelve al usuario a la página de login.
+- Ampliación de la zona privada bajo la ruta `/app/*`, incorporando páginas internas de navegación (empresas, trabajadores e incidencias) como estructura base del área autenticada.
+- Implementación de un layout privado con cabecera y menú lateral (sidebar), organizando la navegación interna y el contenido mediante `<Outlet />`.
+- Navegación interna mediante enlaces con estado activo visible, facilitando la orientación del usuario dentro del sistema.
 - Rediseño del **Header público**, incluyendo navegación contextual, versión responsive con menú móvil y comportamiento sticky para mejorar la usabilidad.
 - Configuración de una paleta de colores personalizada en **Tailwind CSS**, centralizando estilos para garantizar coherencia visual y facilitar la escalabilidad futura.
 - Creación de un componente reutilizable `Button` para unificar estilos y comportamiento, favoreciendo la mantenibilidad del código.
-- Verificación del comportamiento responsive en dispositivo móvil real.
-- Ampliación de la zona privada bajo la ruta `/app/*`, incorporando páginas internas de navegación (empresas, trabajadores e incidencias) como placeholders estructurales.
-- Implementación de un layout privado con cabecera y menú lateral (sidebar), que organiza la navegación interna del área autenticada.
-- Navegación interna mediante enlaces con estado activo visible, facilitando la orientación del usuario dentro del sistema.
 - Adaptación responsive del área privada: menú lateral visible en escritorio y colapsable en dispositivos móviles.
+- Verificación del comportamiento responsive en dispositivo móvil real.
 
 **Pruebas realizadas:**
 
