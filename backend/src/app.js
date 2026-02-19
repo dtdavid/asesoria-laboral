@@ -29,11 +29,28 @@ app.get("/db-time", async (_req, res, next) => {
   }
 })
 
-
 app.post("/echo", (req, res) => {
   res.status(200).json({
     received: req.body
   })
+})
+
+// Listado de empresas
+app.get("/empresas", async (_req, res, next) => {
+  try {
+    const result = await pool.query(
+      `SELECT id, razon_social, cif, ciudad, provincia, activa
+       FROM empresas
+       ORDER BY created_at DESC`
+    )
+
+    res.status(200).json({
+      ok: true,
+      data: result.rows
+    })
+  } catch (err) {
+    next(err)
+  }
 })
 
 
