@@ -1,4 +1,4 @@
-import { getEmpresas, createEmpresa, deleteEmpresaById } from "../services/empresas.service.js"
+import { getEmpresas, createEmpresa, deleteEmpresaById, updateEmpresaById } from "../services/empresas.service.js"
 
 /**
  * Controller de empresas.
@@ -88,3 +88,38 @@ export async function removeEmpresa(req, res, next) {
     next(err)
   }
 }
+
+/**
+ * PUT /empresas/:id
+ * Actualiza una empresa por ID.
+ */
+export async function editEmpresa(req, res, next) {
+  try {
+    const id = Number(req.params.id)
+    if (!id || Number.isNaN(id)) {
+      return res.status(400).json({ ok: false, error: "ID inválido" })
+    }
+
+    const { razon_social, cif } = req.body || {}
+    if (!razon_social || !cif) {
+      return res.status(400).json({
+        ok: false,
+        error: "Campos obligatorios: razon_social, cif",
+      })
+    }
+
+    const updated = await updateEmpresaById(id, req.body)
+
+    if (!updated) {
+      return res.status(404).json({ ok: false, error: "Empresa no encontrada" })
+    }
+
+    return res.status(200).json({ ok: true, data: updated })
+  } catch (err) {
+    if (err?.code === "23505") {
+      return res.status(409).json({ ok: false, error: "Ya existe una empresa con ese CIF" })
+    }
+    next(err)
+  }
+}
+

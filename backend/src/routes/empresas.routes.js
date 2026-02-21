@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { listEmpresas, addEmpresa, removeEmpresa } from "../controllers/empresas.controller.js"
+import { listEmpresas, addEmpresa, removeEmpresa, editEmpresa } from "../controllers/empresas.controller.js"
 
 
 /**
@@ -17,6 +17,9 @@ router.post("/", addEmpresa)
 
 // DELETE /empresas/:id
 router.delete("/:id", removeEmpresa)
+
+// PUT /empresas/:id
+router.put("/:id", editEmpresa)
 
 
 export default router

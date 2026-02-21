@@ -95,3 +95,70 @@ export async function deleteEmpresaById(id) {
 
   return result.rowCount  //rowCount = 0 si no se ha eliminado nada (404), 1 si se ha eliminado una fila (204)
 }
+
+
+/**
+ * Actualiza una empresa por ID.
+ * @param {number} id - ID de la empresa
+ * @param {Object} payload - Datos a actualizar
+ * @returns {Promise<Object|null>} Empresa actualizada o null si no existe
+ */
+export async function updateEmpresaById(id, payload) {
+  const {
+    razon_social,
+    cif,
+    nombre_comercial = null,
+    direccion = null,
+    codigo_postal = null,
+    ciudad = null,
+    provincia = null,
+    pais = "España",
+    telefono = null,
+    email = null,
+    codigo_cuenta_cotizacion = null,
+    convenio_colectivo = null,
+    sector_actividad = null,
+    activa = true,
+  } = payload
+
+  const result = await pool.query(
+    `UPDATE empresas
+     SET
+       razon_social = $1,
+       cif = $2,
+       nombre_comercial = $3,
+       direccion = $4,
+       codigo_postal = $5,
+       ciudad = $6,
+       provincia = $7,
+       pais = $8,
+       telefono = $9,
+       email = $10,
+       codigo_cuenta_cotizacion = $11,
+       convenio_colectivo = $12,
+       sector_actividad = $13,
+       activa = $14,
+       updated_at = NOW()
+     WHERE id = $15
+     RETURNING id, razon_social, cif, ciudad, provincia, activa, created_at, updated_at`,
+    [
+      razon_social,
+      cif,
+      nombre_comercial,
+      direccion,
+      codigo_postal,
+      ciudad,
+      provincia,
+      pais,
+      telefono,
+      email,
+      codigo_cuenta_cotizacion,
+      convenio_colectivo,
+      sector_actividad,
+      activa,
+      id,
+    ]
+  )
+
+  return result.rows[0] || null
+}
