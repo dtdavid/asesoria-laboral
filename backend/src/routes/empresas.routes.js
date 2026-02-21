@@ -1,5 +1,11 @@
 import { Router } from "express"
-import { listEmpresas, addEmpresa } from "../controllers/empresas.controller.js"
+import { listEmpresas, addEmpresa, removeEmpresa } from "../controllers/empresas.controller.js"
+
+
+/**
+ * Router de empresas.
+ * Define los endpoints relacionados con empresas.
+ */
 
 const router = Router()
 
@@ -8,5 +14,9 @@ router.get("/", listEmpresas)
 
 // POST /empresas
 router.post("/", addEmpresa)
+
+// DELETE /empresas/:id
+router.delete("/:id", removeEmpresa)
+
 
 export default router

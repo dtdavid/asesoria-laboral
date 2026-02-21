@@ -1,6 +1,6 @@
 import express from "express"
 import cors from "cors"
-import { pool } from "./db.js"
+import empresasRoutes from "./routes/empresas.routes.js"
 
 
 
@@ -35,24 +35,9 @@ app.post("/echo", (req, res) => {
   })
 })
 
-// Listado de empresas
-app.get("/empresas", async (_req, res, next) => {
-  try {
-    const result = await pool.query(
-      `SELECT id, razon_social, cif, ciudad, provincia, activa
-       FROM empresas
-       ORDER BY created_at DESC`
-    )
+// Monta el router de empresas bajo el prefijo /empresas
 
-    res.status(200).json({
-      ok: true,
-      data: result.rows
-    })
-  } catch (err) {
-    next(err)
-  }
-})
-
+app.use("/empresas", empresasRoutes)
 
 // Handler de rutas no existentes (404 de API)
 app.use((_req, res) => {

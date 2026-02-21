@@ -1,12 +1,16 @@
 import { pool } from "../db.js"
 
 /**
- * Service de empresas: capa de acceso a datos (BD)
- * Aquí viven las consultas SQL.
+* Service de empresas.
+ * Contiene la lógica de acceso a datos (consultas SQL).
+ * No gestiona HTTP ni req/res.
  */
 
 
-{/* FUNCIÓN DE CONSULTA */}
+/**
+ * Obtiene el listado de empresas ordenadas por fecha de creación.
+ * @returns {Promise<Array>} Array de empresas
+ */
 
 export async function getEmpresas() {
   const result = await pool.query(
@@ -17,7 +21,11 @@ export async function getEmpresas() {
   return result.rows
 }
 
-{/*FUNCIÓN INSERT */}
+/**
+ * Inserta una nueva empresa en la base de datos.
+ * @param {Object} payload - Datos de la empresa
+ * @returns {Promise<Object>} Empresa creada
+ */
 
 export async function createEmpresa(payload) {
   const {
@@ -73,3 +81,17 @@ export async function createEmpresa(payload) {
   return result.rows[0]
 }
 
+/**
+ * 
+ * @param {number} id - ID de la empresa
+ * @returns {Promise<number>} Número de filas eliminadas
+ */
+
+export async function deleteEmpresaById(id) {
+  const result = await pool.query(
+    `DELETE FROM empresas WHERE id = $1`,
+    [id]
+  )
+
+  return result.rowCount  //rowCount = 0 si no se ha eliminado nada (404), 1 si se ha eliminado una fila (204)
+}
