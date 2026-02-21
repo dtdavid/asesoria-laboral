@@ -69,6 +69,7 @@
 - [Codificación y Pruebas](#codificación-y-pruebas)
   - [Prototipos realizados](#prototipos-realizados)
     - [Prototipo 1](#prototipo-1)
+    - [Prototipo 2](#prototipo-2)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
   - [Documentación oficial](#documentación-oficial)
   - [Recursos conceptuales](#recursos-conceptuales)
@@ -700,6 +701,59 @@ Las pruebas realizadas en este prototipo han sido de tipo manual, centradas en v
 - Los formularios de login y registro validan campos básicos antes de permitir el acceso.
 - Comprobación del comportamiento responsive del layout privado en dispositivos móviles y escritorio.
 - Verificación del resaltado automático del enlace activo en el menú lateral.
+
+#### Prototipo 2
+
+**Fecha:** Febrero de 2026
+
+**Descripción:**
+
+El Prototipo 2 introduce la capa servidor y la persistencia de datos. En esta fase se ha iniciado la implementación del backend como servicio independiente (API REST) con **Node.js y Express**, y se ha configurado una base de datos **PostgreSQL** local para almacenar la información del sistema.
+
+El objetivo principal de este prototipo es validar la arquitectura cliente-servidor, la comunicación mediante JSON, la conexión real con la base de datos y la implementación inicial de operaciones CRUD sobre la primera entidad del dominio (empresas).
+
+**Funcionalidades implementadas:**
+
+- Creación y configuración del backend con **Express**, separado del frontend SPA.
+- Configuración de **CORS** y soporte de JSON en las peticiones (`express.json()`).
+- Gestión de configuración sensible mediante variables de entorno con **dotenv**.
+- Configuración de conexión a PostgreSQL mediante **pg** y un `Pool` de conexiones reutilizables.
+- Base de datos local creada: `asesoria_laboral`.
+- Endpoints técnicos de validación:
+  - `GET /health` para comprobar que la API responde.
+  - `GET /db-time` para validar la conexión con PostgreSQL mediante `SELECT NOW()`.
+  - `POST /echo` para verificar recepción y respuesta de datos en JSON.
+- Implementación inicial del módulo **Empresas** (CRUD parcial):
+  - `GET /empresas`: listado de empresas desde PostgreSQL.
+  - `POST /empresas`: alta de una nueva empresa.
+  - `DELETE /empresas/:id`: eliminación de empresa por identificador.
+  - `PUT /empresas/:id`: actualización de los datos de una empresa existente.
+- Estructuración del backend con separación de responsabilidades (`routes`, `controllers`, `services`) para facilitar el mantenimiento.
+- Control de rutas no existentes (404) y gestión centralizada de errores mediante middleware global (500), con uso de `try/catch` y `next(err)` en operaciones asíncronas.
+
+**Organización interna del backend:**
+
+Desde el inicio se separaron responsabilidades en distintos archivos:
+
+- `server.js`: punto de entrada del servidor y arranque de la aplicación.
+- `app.js`: configuración de Express, middlewares y registro de rutas.
+- `db.js`: configuración del pool de conexión a PostgreSQL.
+
+Esta separación permite desacoplar la inicialización del servidor de la configuración de la aplicación y del acceso a datos, facilitando el mantenimiento y las pruebas.
+
+**Pruebas realizadas (manuales):**
+
+- Verificación de respuesta del backend con `GET /health`.
+- Verificación de conectividad con base de datos mediante `GET /db-time`.
+- Pruebas de `POST /echo` comprobando el intercambio de JSON.
+- Pruebas de los endpoints de empresas (`GET`, `POST`, `DELETE`) mediante Thunder Client y/o Postman:
+  - inserción de registros,
+  - recuperación del listado,
+  - eliminación por id,
+  - y verificación del efecto en PostgreSQL.
+- Pruebas de actualización mediante `PUT /empresas/:id`, verificando la modificación correcta de los datos en la base de datos.
+
+El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` durante el desarrollo para facilitar la iteración.
 
 ## Referencias y recursos externos
 
