@@ -677,9 +677,10 @@ La autenticación se implementa de forma simulada en el frontend con fines acad�
 
 - Desarrollo del frontend como SPA utilizando **React** y **Vite**.
 - Configuración del enrutado de la aplicación mediante **React Router**.
+- La navegación se gestiona de forma declarativa mediante **React Router**, definiendo las rutas y los componentes asociados sin manipular directamente el DOM.
 - Separación de rutas públicas y privadas mediante layouts específicos (`PublicLayout` y `PrivateLayout`).
 - Implementación de un componente `ProtectedRoute` para controlar el acceso a la zona privada de la aplicación.
-- Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend.
+- Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend. El uso de **Context API** ayuda a evitar la incorporación de librerías externas como **Redux** en esta fase del proyecto.
 - Formularios de **login y registro** con validación básica en el frontend y redirección automática a la zona privada (`/app`) tras la autenticación simulada.
 - Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que devuelve al usuario a la página de login.
 - Ampliación de la zona privada bajo la ruta `/app/*`, incorporando páginas internas de navegación (empresas, trabajadores e incidencias) como estructura base del área autenticada.
@@ -731,6 +732,21 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
 - Estructuración del backend con separación de responsabilidades (`routes`, `controllers`, `services`) para facilitar el mantenimiento.
 - Control de rutas no existentes (404) y gestión centralizada de errores mediante middleware global (500), con uso de `try/catch` y `next(err)` en operaciones asíncronas.
 
+**Uso de códigos de estado HTTP:**
+
+La API utiliza códigos de estado coherentes con el estándar HTTP y el estilo REST, permitiendo representar adecuadamente el resultado de cada operación:
+
+- `200 OK`: operación realizada correctamente y con contenido en la respuesta.
+- `201 Created`: recurso creado con éxito (habitualmente tras una petición POST).
+- `204 No Content`: operación correcta sin contenido en la respuesta (por ejemplo, eliminación mediante DELETE).
+- `400 Bad Request`: datos de entrada inválidos o mal formateados.
+- `401 Unauthorized`: acceso no autorizado (previsto para futura implementación con autenticación).
+- `404 Not Found`: recurso inexistente.
+- `409 Conflict`: conflicto con el estado actual del recurso (por ejemplo, duplicidad de CIF).
+- `500 Internal Server Error`: error inesperado del servidor.
+
+El uso adecuado de estos códigos permite que el cliente interprete correctamente el resultado de cada petición.
+
 **Organización interna del backend:**
 
 Desde el inicio se separaron responsabilidades en distintos archivos:
@@ -740,6 +756,16 @@ Desde el inicio se separaron responsabilidades en distintos archivos:
 - `db.js`: configuración del pool de conexión a PostgreSQL.
 
 Esta separación permite desacoplar la inicialización del servidor de la configuración de la aplicación y del acceso a datos, facilitando el mantenimiento y las pruebas.
+
+**Middleware global de gestión de errores:**
+
+Se ha implementado un middleware global de errores siguiendo el patrón recomendado por Express. Este middleware captura cualquier error propagado mediante `next(err)` desde rutas o controladores, evitando duplicar lógica de gestión de excepciones.
+
+En Express, un middleware de gestión de errores se identifica porque recibe cuatro parámetros (`err`, `req`, `res`, `next`), lo que permite diferenciarlo del resto de middlewares estándar.
+
+En caso de error no controlado, el sistema devuelve una respuesta JSON con código HTTP 500, garantizando una salida consistente y evitando exponer detalles internos del servidor.
+
+El orden de declaración de los middlewares en Express es determinante, ya que se ejecutan de forma secuencial en el ciclo de vida de cada petición HTTP. Por este motivo, los middlewares globales (CORS, parseo de JSON) se registran antes de las rutas, mientras que el middleware de gestión de errores se declara al final.
 
 **Pruebas realizadas (manuales):**
 
@@ -790,3 +816,4 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
 - Durán, Miguel Ángel. _Aprendiendo Git y GitHub_.
 - Cuantun Technologies LLC. _JavaScript de Cero a Superhéroe_. 1ª ed., 2024.
 - Ortuño Pérez, Miguel Ángel. _Express.js: introducción y buenas prácticas._ Universidad Rey Juan Carlos, diciembre 2023. Disponible en: https://gsyc.urjc.es/~mortuno/at/express.pdf
+- Express.js – Error Handling. Documentación oficial. https://expressjs.com/en/guide/error-handling.html
