@@ -680,7 +680,7 @@ La autenticación se implementa de forma simulada en el frontend con fines acad�
 - La navegación se gestiona de forma declarativa mediante **React Router**, definiendo las rutas y los componentes asociados sin manipular directamente el DOM.
 - Separación de rutas públicas y privadas mediante layouts específicos (`PublicLayout` y `PrivateLayout`).
 - Implementación de un componente `ProtectedRoute` para controlar el acceso a la zona privada de la aplicación.
-- Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend. El uso de **Context API** ayuda a evitar la incorporación de librerías externas como **Redux** en esta fase del proyecto.
+- Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend. El uso de **Context API** apermite gestionar el estado global sin necesidad de incorporar librerías externas como **Redux** en esta fase del proyecto.
 - Uso de hooks de React como `useState`, `useEffect` y `useContext` para gestionar estado, efectos y autenticación simulada.
 - Formularios de **login y registro** con validación básica en el frontend y redirección automática a la zona privada (`/app`) tras la autenticación simulada.
 - Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que devuelve al usuario a la página de login.
