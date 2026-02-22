@@ -681,6 +681,7 @@ La autenticación se implementa de forma simulada en el frontend con fines acad�
 - Separación de rutas públicas y privadas mediante layouts específicos (`PublicLayout` y `PrivateLayout`).
 - Implementación de un componente `ProtectedRoute` para controlar el acceso a la zona privada de la aplicación.
 - Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend. El uso de **Context API** ayuda a evitar la incorporación de librerías externas como **Redux** en esta fase del proyecto.
+- Uso de hooks de React como `useState`, `useEffect` y `useContext` para gestionar estado, efectos y autenticación simulada.
 - Formularios de **login y registro** con validación básica en el frontend y redirección automática a la zona privada (`/app`) tras la autenticación simulada.
 - Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que devuelve al usuario a la página de login.
 - Ampliación de la zona privada bajo la ruta `/app/*`, incorporando páginas internas de navegación (empresas, trabajadores e incidencias) como estructura base del área autenticada.
@@ -729,6 +730,7 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
   - `POST /empresas`: alta de una nueva empresa.
   - `DELETE /empresas/:id`: eliminación de empresa por identificador.
   - `PUT /empresas/:id`: actualización de los datos de una empresa existente.
+- Uso de parámetros dinámicos en rutas (por ejemplo, `/empresas/:id`) para identificar recursos concretos dentro de la API.
 - Estructuración del backend con separación de responsabilidades (`routes`, `controllers`, `services`) para facilitar el mantenimiento.
 - Control de rutas no existentes (404) y gestión centralizada de errores mediante middleware global (500), con uso de `try/catch` y `next(err)` en operaciones asíncronas.
 
@@ -758,6 +760,8 @@ Desde el inicio se separaron responsabilidades en distintos archivos:
 Esta separación permite desacoplar la inicialización del servidor de la configuración de la aplicación y del acceso a datos, facilitando el mantenimiento y las pruebas.
 
 **Middleware global de gestión de errores:**
+
+Un middleware en Express es una función que participa en el procesamiento de una petición HTTP y puede modificar la solicitud/respuesta o delegar el control al siguiente paso del flujo mediante `next()`.
 
 Se ha implementado un middleware global de errores siguiendo el patrón recomendado por Express. Este middleware captura cualquier error propagado mediante `next(err)` desde rutas o controladores, evitando duplicar lógica de gestión de excepciones.
 
