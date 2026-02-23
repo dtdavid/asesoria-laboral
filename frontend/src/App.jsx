@@ -12,6 +12,7 @@ import Empresas from './pages/Empresas'
 import Trabajadores from './pages/Trabajadores'
 import Incidencias from './pages/Incidencias'
 import NotFound from './pages/NotFound'
+import EmpresaForm from './pages/EmpresaForm'
 
 function App() {
   
@@ -30,6 +31,7 @@ function App() {
           <Route path="app" element={<PrivateLayout />}>
             <Route index element={<Dashboard />} />  {/* Ruta por defecto para /app es el Dashboard*/}
             <Route path="empresas" element={<Empresas />} />
+            <Route path="empresas/nueva" element={<EmpresaForm />} />
             <Route path="trabajadores" element={<Trabajadores />} />
             <Route path="incidencias" element={<Incidencias />} />
           </Route>

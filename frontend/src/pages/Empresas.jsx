@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom" 
 
 /**
  * Página privada: Empresas
@@ -10,6 +11,9 @@ export default function Empresas() {
   const [items, setItems] = useState([]) // empresas
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
+  const navigate = useNavigate()
+
+
 
   useEffect(() => {
     // evitamos actualizar el estado si el componente se desmonta antes de que se termine la petición asíncrona
@@ -65,13 +69,15 @@ export default function Empresas() {
         </div>
 
         {/* Acción futura (placeholder) */}
+        
         <button
           type="button"
           className="rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-brand-text hover:bg-brand-surface transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-          disabled
+          onClick ={() => navigate("nueva")}
         >
           Nueva empresa
         </button>
+        
       </header>
 
       {/* Estados */}

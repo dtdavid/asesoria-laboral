@@ -35,7 +35,10 @@ export async function addEmpresa(req, res, next) {
     if (!razon_social || !cif) {
       return res.status(400).json({
         ok: false,
-        error: "Campos obligatorios: razon_social, cif",
+        code: "VALIDATION_ERROR",
+        message:" Campos obligatorios: razon_social, cif",
+        details:{fields:["razon_social", "cif"]},
+        //error: "Campos obligatorios: razon_social, cif",
       })
     }
 
@@ -51,7 +54,10 @@ export async function addEmpresa(req, res, next) {
     if (err?.code === "23505") {
       return res.status(409).json({
         ok: false,
-        error: "Ya existe una empresa con ese CIF",
+        code: "CIF_DUPLICADO",
+        message: "Ya existe una empresa con ese CIF",
+        details: { field: "cif" },
+        //error: "Ya existe una empresa con ese CIF"
       })
     }
 
@@ -115,7 +121,8 @@ export async function editEmpresa(req, res, next) {
     }
 
     return res.status(200).json({ ok: true, data: updated })
-  } catch (err) {
+  } 
+  catch (err) {
     if (err?.code === "23505") {
       return res.status(409).json({ ok: false, error: "Ya existe una empresa con ese CIF" })
     }
