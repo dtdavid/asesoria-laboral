@@ -733,6 +733,15 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
 - Uso de parámetros dinámicos en rutas (por ejemplo, `/empresas/:id`) para identificar recursos concretos dentro de la API.
 - Estructuración del backend con separación de responsabilidades (`routes`, `controllers`, `services`) para facilitar el mantenimiento.
 - Control de rutas no existentes (404) y gestión centralizada de errores mediante middleware global (500), con uso de `try/catch` y `next(err)` en operaciones asíncronas.
+- Integración real entre frontend y backend para el alta de empresas desde la SPA.
+- Implementación de la página `EmpresaForm` en ruta privada (`/app/empresas/nueva`) para crear nuevas empresas.
+- Envío de datos al backend mediante petición `POST /empresas` utilizando `fetch` y comunicación en formato JSON.
+- Validación mínima en frontend (campos obligatorios) y validación complementaria en backend para garantizar consistencia.
+- Gestión de errores específicos en el flujo de creación:
+  - `400 Bad Request` cuando faltan datos obligatorios.
+  - `409 Conflict` cuando se produce duplicidad de CIF (captura de error `23505` de PostgreSQL).
+- Uso de `INSERT ... RETURNING` en PostgreSQL para devolver los datos básicos de la entidad creada.
+- Redirección automática al listado de empresas tras creación exitosa, consolidando el flujo completo SPA ↔ API ↔ Base de datos.
 
 **Uso de códigos de estado HTTP:**
 
@@ -782,6 +791,11 @@ El orden de declaración de los middlewares en Express es determinante, ya que s
   - eliminación por id,
   - y verificación del efecto en PostgreSQL.
 - Pruebas de actualización mediante `PUT /empresas/:id`, verificando la modificación correcta de los datos en la base de datos.
+- Pruebas del flujo completo de alta de empresa:
+  - creación válida desde la interfaz,
+  - verificación de inserción en base de datos,
+  - comprobación de respuesta `409 Conflict` ante CIF duplicado,
+  - validación de redirección automática al listado tras creación correcta.
 
 El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` durante el desarrollo para facilitar la iteración.
 
