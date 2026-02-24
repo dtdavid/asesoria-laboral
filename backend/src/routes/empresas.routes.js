@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { listEmpresas, addEmpresa, removeEmpresa, editEmpresa } from "../controllers/empresas.controller.js"
+import { getEmpresa, listEmpresas, addEmpresa, removeEmpresa, editEmpresa } from "../controllers/empresas.controller.js"
 
 
 /**
@@ -11,6 +11,9 @@ const router = Router()
 
 // GET /empresas
 router.get("/", listEmpresas)
+
+// GET /empresas/:id
+router.get("/:id", getEmpresa)
 
 // POST /empresas
 router.post("/", addEmpresa)

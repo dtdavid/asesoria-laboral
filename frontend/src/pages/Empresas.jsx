@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom" 
+import Button from "../components/ui/Button"
 
 /**
  * Página privada: Empresas
@@ -56,7 +57,7 @@ export default function Empresas() {
   }, [])
 
   const card = "rounded-2xl bg-white p-5 shadow-sm"
-
+  const newCompany = "rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-brand-text hover:bg-brand-surface transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
   return (
     <div className="space-y-6 min-w-0">
       {/* Header */}
@@ -68,19 +69,22 @@ export default function Empresas() {
           </p>
         </div>
 
-        {/* Acción futura (placeholder) */}
+        {/* POST nueva empresa  */}
         
-        <button
+        <Button className={newCompany} onClick={() => navigate("/app/empresas/nueva")}>Nueva empresa</Button>
+          
+        {/* <button
           type="button"
           className="rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-brand-text hover:bg-brand-surface transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-          onClick ={() => navigate("nueva")}
+          onClick ={() => navigate("/app/empresas/nueva")}
         >
           Nueva empresa
-        </button>
+        </button> */}
         
       </header>
 
       {/* Estados */}
+
       {loading ? (
         <section className={card}>
           <p className="text-sm text-brand-muted">Cargando empresas…</p>
@@ -114,6 +118,7 @@ export default function Empresas() {
                     <th className="py-3 pr-4">CIF</th>
                     <th className="py-3 pr-4">Provincia</th>
                     <th className="py-3 pr-4">Activa</th>
+                    <th className="py-3 pr-4">Acciones</th>
                   </tr>
                 </thead>
 
@@ -140,6 +145,9 @@ export default function Empresas() {
                           {e.activa ? "Sí" : "No"}
                         </span>
                       </td>
+                      <td className="py-3 pr-4 text-brand-text">
+                        <Button onClick={() => navigate(`/app/empresas/${e.id}/editar`)}>Editar</Button>
+                        </td>
                     </tr>
                   ))}
                 </tbody>

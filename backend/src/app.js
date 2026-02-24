@@ -44,11 +44,22 @@ app.use((_req, res) => {
   res.status(404).json({ ok: false, error: "Not Found" })
 })
 
+
+//middleware de error (err, req, res, next)
 // Handler de errores global (captura errores lanzados en rutas/middlewares)
 app.use((err, _req, res, _next) => {
   console.error(err)
   res.status(500).json({ ok: false, error: "Internal Server Error" })
 })
+// -> CAMBIAR AL SIGUIENTE CÓDIGO CUANDO ESTÉN TODOS LOS CONTROLADORES CON MESSAGES Y CODES EN LOS ERRORES
+// app.use((err, _req, res, _next) => {
+//   console.error(err)
+//   res.status(500).json({
+//     ok: false,
+//     code: "INTERNAL_ERROR",
+//     message: "Internal Server Error",
+//   })
+// })
 
 export default app
 

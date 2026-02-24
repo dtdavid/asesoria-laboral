@@ -32,6 +32,7 @@ function App() {
             <Route index element={<Dashboard />} />  {/* Ruta por defecto para /app es el Dashboard*/}
             <Route path="empresas" element={<Empresas />} />
             <Route path="empresas/nueva" element={<EmpresaForm />} />
+            <Route path="empresas/:id/editar" element={<EmpresaForm />} />
             <Route path="trabajadores" element={<Trabajadores />} />
             <Route path="incidencias" element={<Incidencias />} />
           </Route>

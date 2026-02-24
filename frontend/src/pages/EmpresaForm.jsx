@@ -1,13 +1,16 @@
 import Button from "../components/ui/Button"
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useState, useEffect } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
 export default function EmpresasForm() {
 
   const navigate = useNavigate()
-  const [error, setError] = useState("")
+  const { id } = useParams() // si hay id, es edición; si no, creación
+  const isEdit = Boolean(id)
+  
 
-  //Estado del formulario
+  const [error, setError] = useState("")
+   //Estado del formulario
   const [form, setForm] = useState({
     razon_social: "",
     cif: "",
@@ -24,6 +27,32 @@ export default function EmpresasForm() {
     sector_actividad: "",
     activa: true,
   })
+
+  useEffect(() => {
+    if (!isEdit) return // si no es edición, no necesitamos cargar datos
+    // Aquí cargaríamos los datos de la empresa a editar usando el id, por ejemplo:
+    const loadEmpresa = async () => {
+      try {
+        setError("")
+        const res = await fetch(`http://localhost:3000/empresas/${id}`)
+        const data = await res.json()
+
+        if(!res.ok) {
+          setError(data?.message ?? "No se pudo cargar la empresa.")
+          return
+        }
+
+        // data.data trae la empresa
+        setForm(data.data)
+    } catch  {
+        setError("Error de conexión con el servidor.")
+    }
+  }
+
+    loadEmpresa()
+
+  }, [isEdit, id])
+
 
   // Validación mínima
   

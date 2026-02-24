@@ -16,9 +16,25 @@ export async function getEmpresas() {
   const result = await pool.query(
     `SELECT id, razon_social, cif, ciudad, provincia, activa
      FROM empresas
-     ORDER BY created_at DESC`
+     ORDER BY created_at ASC`
   )
   return result.rows
+}
+
+/**
+ * Obtiene una empresa por ID.
+ * @export
+ * @param {number} id - ID de la empresa
+ * @returns {Promise<Object|null>} Empresa encontrada o null si no existe
+ */
+export async function getEmpresaById(id) {
+  const result = await pool.query(
+    `SELECT id, razon_social, cif, ciudad, provincia, activa
+     FROM empresas
+     WHERE id = $1`,
+    [id]
+  )
+  return result.rows[0] || null
 }
 
 /**
