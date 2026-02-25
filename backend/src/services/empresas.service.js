@@ -29,9 +29,7 @@ export async function getEmpresas() {
  */
 export async function getEmpresaById(id) {
   const result = await pool.query(
-    `SELECT id, razon_social, cif, ciudad, provincia, activa
-     FROM empresas
-     WHERE id = $1`,
+    `SELECT * FROM empresas WHERE id = $1`,
     [id]
   )
   return result.rows[0] || null
@@ -156,7 +154,7 @@ export async function updateEmpresaById(id, payload) {
        activa = $14,
        updated_at = NOW()
      WHERE id = $15
-     RETURNING id, razon_social, cif, ciudad, provincia, activa, created_at, updated_at`,
+     RETURNING id, razon_social, cif,nombre_comercial, direccion, codigo_postal, ciudad, provincia, pais, telefono, email, codigo_cuenta_cotizacion, convenio_colectivo, sector_actividad, activa, created_at, updated_at`,
     [
       razon_social,
       cif,

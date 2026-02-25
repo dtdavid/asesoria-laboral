@@ -9,6 +9,8 @@ import Button from "../components/ui/Button"
  * - Renderiza un listado básico (tabla)
  */
 export default function Empresas() {
+
+  const API = import.meta.env.VITE_API_URL || "http://localhost:3000" // URL del backend desde variables de entorno o valor por defecto
   const [items, setItems] = useState([]) // empresas
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
@@ -25,7 +27,7 @@ export default function Empresas() {
         setLoading(true)
         setError("")
 
-        const res = await fetch("http://localhost:3000/empresas")
+        const res = await fetch(`${API}/empresas`)
         const data = await res.json()
 
         if (!res.ok) {
@@ -70,7 +72,7 @@ export default function Empresas() {
         </div>
 
         {/* POST nueva empresa  */}
-        
+
         <Button className={newCompany} onClick={() => navigate("/app/empresas/nueva")}>Nueva empresa</Button>
           
         {/* <button

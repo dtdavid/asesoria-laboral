@@ -4,11 +4,12 @@ import { useNavigate, useParams } from "react-router-dom"
 
 export default function EmpresasForm() {
 
+  const API = import.meta.env.VITE_API_URL || "http://localhost:3000" // URL del backend desde variables de entorno o valor por defecto
   const navigate = useNavigate()
   const { id } = useParams() // si hay id, es edición; si no, creación
-  const isEdit = Boolean(id)
-  
-
+  const isEdit = Boolean(id) // true si id existe, false si es undefined
+   
+  //Estado de error para mostrar mensajes al usuario
   const [error, setError] = useState("")
    //Estado del formulario
   const [form, setForm] = useState({
@@ -34,7 +35,7 @@ export default function EmpresasForm() {
     const loadEmpresa = async () => {
       try {
         setError("")
-        const res = await fetch(`http://localhost:3000/empresas/${id}`)
+        const res = await fetch(`${API}/empresas/${id}`)
         const data = await res.json()
 
         if(!res.ok) {
@@ -43,7 +44,7 @@ export default function EmpresasForm() {
         }
 
         // data.data trae la empresa
-        setForm(data.data)
+        setForm(prev => ({...prev, ...data.data})) // actualizamos el formulario con los datos de la empresa
     } catch  {
         setError("Error de conexión con el servidor.")
     }
@@ -55,9 +56,11 @@ export default function EmpresasForm() {
 
 
   // Validación mínima
-  
-  const canSubmit = Boolean(form.razon_social.trim() && form.cif.trim()) // Requerimos al menos razón social y CIF para crear una empresa
+  // Requerimos al menos razón social y CIF para crear una empresa
 
+  const canSubmit = Boolean(form.razon_social.trim() && form.cif.trim()) 
+
+  //manejador checkbox
   const handleChange = (e) => {
     const { name, type, value,checked } = e.target
     setForm((prev) => ({
@@ -65,25 +68,29 @@ export default function EmpresasForm() {
       [name]: type === "checkbox" ? checked : value, // manejamos checkbox correctamente
     }))
   }
+
   //manejador submit del formulario
   const handleSubmit = async (e) => {
     e.preventDefault() // evita que el navegador recargue la página
     setError("") // reseteamos el error antes de intentar registrar
 
     console.log(form)
-
+    //verificamos validación mínima antes de enviar al backend
     if (!canSubmit) {
       setError(
         "Por favor, introduce una Razón Social y un CIF válidos para crear la empresa."
       )
       return
     }
-
+    // Si es edición, la URL es /empresas/:id con método PUT; si es creación, es /empresas con método POST
+    const url = isEdit ? `${API}/empresas/${id}` : `${API}/empresas`
+    const method = isEdit ? "PUT" : "POST"
     const payload = form
     
       try {
-        const res = await fetch("http://localhost:3000/empresas", {
-          method: "POST",
+        // Enviamos los datos al backend
+        const res = await fetch(url, {
+          method: method,
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         })
@@ -397,7 +404,7 @@ export default function EmpresasForm() {
               )}
     
               <Button type="submit" disabled={!canSubmit} className="w-full">  
-                Crear empresa
+                {isEdit ? "Actualizar empresa" : "Crear empresa"}
               </Button>
     
               <p className="text-xs text-brand-muted text-center">
