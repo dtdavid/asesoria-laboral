@@ -113,7 +113,7 @@ export async function removeEmpresa(req, res, next) {
   try {
     const id = Number(req.params.id)
 
-    if (Number.isInteger(id) && id > 0) {
+    if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({
         ok: false,
         code: "VALIDATION_ERROR",

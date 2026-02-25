@@ -17,12 +17,7 @@ export default function Empresas() {
   const navigate = useNavigate()
 
 
-
-  useEffect(() => {
-    // evitamos actualizar el estado si el componente se desmonta antes de que se termine la petición asíncrona
-    let isMounted = true 
-
-    async function loadEmpresas() {
+  async function loadEmpresas() {
       try {
         setLoading(true)
         setError("")
@@ -34,28 +29,46 @@ export default function Empresas() {
           // Si el backend devuelve ok:false o error, lo mostramos
           throw new Error(data?.error || "Error al cargar empresas")
         }
-
-        if (isMounted) {
           setItems(data.data || [])
-        }
       } catch (err) {
-        if (isMounted) {
           setError(err?.message || "Error inesperado")
-        }
       } finally {
-        if (isMounted) {
           setLoading(false)
-        }
       }
     }
 
+  //Manejador DELETE empresa handleDelete
+  const handleDelete = async (id) => {
+
+  const confirmDelete = window.confirm(
+    "¿Estás seguro de que quieres eliminar esta empresa?"
+  )
+
+  if (!confirmDelete) return
+
+  try {
+    const res = await fetch(`${API}/empresas/${id}`, {
+      method: "DELETE",
+    })
+
+    if (!res.ok) {
+      setError("No se pudo eliminar la empresa.")
+      return
+    }
+
+    // recargar listado
     loadEmpresas()
 
-    // Cleanup del efecto: se ejecuta al desmontar el componente.
-    // Marcamos isMounted como false para impedir setState posterior.
-    return () => {
-      isMounted = false
-    }
+  } catch {
+    setError("Error de conexión con el servidor.")
+  }
+}
+
+
+  useEffect(() => {
+
+    loadEmpresas()
+
   }, [])
 
   const card = "rounded-2xl bg-white p-5 shadow-sm"
@@ -74,14 +87,6 @@ export default function Empresas() {
         {/* POST nueva empresa  className={newCompany}*/}
 
         <Button  variant="secondary"className="ml-auto" onClick={() => navigate("/app/empresas/nueva")}>Nueva empresa</Button>
-          
-        {/* <button
-          type="button"
-          className="rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-brand-text hover:bg-brand-surface transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
-          onClick ={() => navigate("/app/empresas/nueva")}
-        >
-          Nueva empresa
-        </button> */}
         
       </header>
 
@@ -149,7 +154,8 @@ export default function Empresas() {
                       </td>
                       <td className="py-3 pr-4 text-brand-text">
                         <Button onClick={() => navigate(`/app/empresas/${e.id}/editar`)}>Editar</Button>
-                        </td>
+                        <Button variant="ghost" className="ml-3" onClick={() => handleDelete(e.id)}>Eliminar</Button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
