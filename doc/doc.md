@@ -339,9 +339,13 @@ El siguiente diagrama de casos de uso muestra las principales interacciones entr
 
 ### Modelo de datos (Diagrama E/R)
 
-El siguiente diagrama E/R representa la estructura de datos principal de la aplicación, mostrando las entidades relevantes y sus relaciones. Este modelo sirve como base para el diseño de la base de datos relacional y la posterior implementación en PostgreSQL.
+El siguiente diagrama Entidad–Relación representa la estructura actual del modelo de datos del sistema, incluyendo las entidades principales (`empresas`, `trabajadores` e `incidencias`) y sus relaciones. Este modelo sirve como base para la implementación en PostgreSQL y garantiza la integridad referencial mediante el uso de claves primarias y foráneas.
 
-![Modelo entidad-relación](img/modelo-er.png)
+![Modelo entidad-relación actualizado](img/modelo-er-v2.png)
+
+El diagrama muestra cómo se relacionan las empresas, los trabajadores y las incidencias.
+Una empresa puede tener varios trabajadores y registrar múltiples incidencias.
+Las relaciones entre tablas se controlan mediante claves foráneas para mantener la integridad de los datos.
 
 ### Infraestructura y arquitectura técnica
 
