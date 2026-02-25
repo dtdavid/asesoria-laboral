@@ -59,7 +59,7 @@ export default function Empresas() {
   }, [])
 
   const card = "rounded-2xl bg-white p-5 shadow-sm"
-  const newCompany = "rounded-lg border border-brand-border bg-white px-4 py-2 text-sm font-medium text-brand-text hover:bg-brand-surface transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+  
   return (
     <div className="space-y-6 min-w-0">
       {/* Header */}
@@ -71,9 +71,9 @@ export default function Empresas() {
           </p>
         </div>
 
-        {/* POST nueva empresa  */}
+        {/* POST nueva empresa  className={newCompany}*/}
 
-        <Button className={newCompany} onClick={() => navigate("/app/empresas/nueva")}>Nueva empresa</Button>
+        <Button  variant="secondary"className="ml-auto" onClick={() => navigate("/app/empresas/nueva")}>Nueva empresa</Button>
           
         {/* <button
           type="button"
