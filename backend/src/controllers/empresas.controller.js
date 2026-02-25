@@ -112,7 +112,7 @@ export async function addEmpresa(req, res, next) {
 export async function removeEmpresa(req, res, next) {
   try {
     const id = Number(req.params.id)
-
+    // Validación defensiva para evitar DELETE con id inválido o manipulaciones en URL
     if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({
         ok: false,

@@ -67,6 +67,8 @@ export default function Empresas() {
 
   useEffect(() => {
 
+    // Recarga la lista completa tras una operación (DELETE/PUT)
+    
     loadEmpresas()
 
   }, [])

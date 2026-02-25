@@ -743,6 +743,23 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
 - Uso de `INSERT ... RETURNING` en PostgreSQL para devolver los datos básicos de la entidad creada.
 - Redirección automática al listado de empresas tras creación exitosa, consolidando el flujo completo SPA ↔ API ↔ Base de datos.
 
+**Módulo Empresas (CRUD completo e integración SPA–API–BD):**
+
+- Implementación del ciclo CRUD completo para la entidad **Empresas**, con integración real entre frontend (React), backend (Express) y base de datos (PostgreSQL).
+- Endpoints REST disponibles para Empresas:
+  - `GET /empresas` (listado)
+  - `GET /empresas/:id` (detalle)
+  - `POST /empresas` (alta)
+  - `PUT /empresas/:id` (edición)
+  - `DELETE /empresas/:id` (borrado)
+- Validación defensiva en backend:
+  - `400 Bad Request` para datos inválidos o incompletos.
+  - `404 Not Found` cuando el recurso no existe.
+  - `409 Conflict` ante conflictos de unicidad (por ejemplo, CIF duplicado), detectados desde PostgreSQL.
+- Reutilización del formulario de empresa para **alta y edición**, evitando duplicación de componentes y manteniendo un flujo consistente.
+- Confirmación previa al borrado y recarga del listado tras operaciones, priorizando claridad y robustez en el flujo.
+- Configuración del frontend para consumir la API mediante variable de entorno `VITE_API_URL`, evitando valores hardcodeados y facilitando pruebas en distintos entornos (local y red).
+
 **Uso de códigos de estado HTTP:**
 
 La API utiliza códigos de estado coherentes con el estándar HTTP y el estilo REST, permitiendo representar adecuadamente el resultado de cada operación:
@@ -797,7 +814,25 @@ El orden de declaración de los middlewares en Express es determinante, ya que s
   - comprobación de respuesta `409 Conflict` ante CIF duplicado,
   - validación de redirección automática al listado tras creación correcta.
 
+- Pruebas manuales del flujo completo CRUD de Empresas desde la interfaz:
+  - alta correcta y visualización en listado,
+  - consulta por id (detalle/precarga en edición),
+  - actualización mediante `PUT`,
+  - eliminación mediante `DELETE` con confirmación.
+- Verificación de persistencia real en PostgreSQL tras crear/editar/eliminar.
+- Verificación de errores esperados:
+  - `400` por validación,
+  - `404` por recurso inexistente,
+  - `409` por CIF duplicado,
+  - `500` para errores no controlados gestionados por el middleware global.
+
 El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` durante el desarrollo para facilitar la iteración.
+
+**Mejoras futuras registradas:**
+
+- ajustes de usabilidad y diseño responsive del listado de Empresas en móvil (issue abierta en GitLab).
+
+* Incorporar feedback visual explícito tras la eliminación de una empresa (mensaje de confirmación o notificación tipo toast), mejorando la experiencia de usuario.
 
 ## Referencias y recursos externos
 
