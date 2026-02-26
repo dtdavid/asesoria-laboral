@@ -1,6 +1,8 @@
 import express from "express"
 import cors from "cors"
 import empresasRoutes from "./routes/empresas.routes.js"
+import trabajadoresRoutes from "./routes/trabajadores.routes.js"
+import { pool } from "./db.js"
 
 
 
@@ -35,9 +37,13 @@ app.post("/echo", (req, res) => {
   })
 })
 
+
 // Monta el router de empresas bajo el prefijo /empresas
 
 app.use("/empresas", empresasRoutes)
+
+//Monta el router de trabajadores bajo el prefijo /trabajadores
+app.use("/trabajadores", trabajadoresRoutes)
 
 // Handler de rutas no existentes (404 de API)
 app.use((_req, res) => {
