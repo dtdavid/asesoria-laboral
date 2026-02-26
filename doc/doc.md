@@ -758,6 +758,10 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
   - y la integridad referencial del modelo.
 - Este modelo servirá como base para la futura implementación de los módulos de Trabajadores e Incidencias siguiendo el mismo patrón arquitectónico aplicado en Empresas.
 
+* Implementación del endpoint `GET /trabajadores` con soporte de filtrado opcional por `empresa_id` mediante parámetro de consulta (`?empresa_id=`).
+
+- Inserción de datos de prueba (seed) en las tablas para validar el funcionamiento del filtrado y las relaciones entre empresas y trabajadores.
+
 **Módulo Empresas (CRUD completo e integración SPA–API–BD):**
 
 - Implementación del ciclo CRUD completo para la entidad **Empresas**, con integración real entre frontend (React), backend (Express) y base de datos (PostgreSQL).
@@ -844,6 +848,8 @@ El orden de declaración de los middlewares en Express es determinante, ya que s
 - Verificación manual de la creación de las nuevas tablas en PostgreSQL.
 - Comprobación de inserciones de prueba y validación de relaciones mediante consultas SQL.
 - Validación del comportamiento de las claves foráneas ante inserciones dependientes.
+- Verificación del filtrado de trabajadores por empresa mediante parámetro de consulta (`GET /trabajadores?empresa_id=...`).
+- Comprobación de consistencia de resultados en función de la empresa seleccionada.
 
 El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` durante el desarrollo para facilitar la iteración.
 
