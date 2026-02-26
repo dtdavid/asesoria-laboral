@@ -746,6 +746,17 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
   - `409 Conflict` cuando se produce duplicidad de CIF (captura de error `23505` de PostgreSQL).
 - Uso de `INSERT ... RETURNING` en PostgreSQL para devolver los datos básicos de la entidad creada.
 - Redirección automática al listado de empresas tras creación exitosa, consolidando el flujo completo SPA ↔ API ↔ Base de datos.
+- Creación de las tablas `trabajadores` e `incidencias` en PostgreSQL, ampliando el modelo relacional del sistema.
+- Definición de claves foráneas para establecer la relación entre:
+  - `trabajadores` y `empresas`,
+  - `incidencias` y `empresas`,
+  - `incidencias` y `trabajadores` (relación opcional).
+- Configuración de restricciones de integridad (claves primarias, unicidad y valores por defecto) para garantizar coherencia de datos.
+- Inserción de registros de prueba en ambas tablas con el fin de validar:
+  - la correcta creación de relaciones,
+  - el funcionamiento de las claves foráneas,
+  - y la integridad referencial del modelo.
+- Este modelo servirá como base para la futura implementación de los módulos de Trabajadores e Incidencias siguiendo el mismo patrón arquitectónico aplicado en Empresas.
 
 **Módulo Empresas (CRUD completo e integración SPA–API–BD):**
 
@@ -829,6 +840,10 @@ El orden de declaración de los middlewares en Express es determinante, ya que s
   - `404` por recurso inexistente,
   - `409` por CIF duplicado,
   - `500` para errores no controlados gestionados por el middleware global.
+
+- Verificación manual de la creación de las nuevas tablas en PostgreSQL.
+- Comprobación de inserciones de prueba y validación de relaciones mediante consultas SQL.
+- Validación del comportamiento de las claves foráneas ante inserciones dependientes.
 
 El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` durante el desarrollo para facilitar la iteración.
 
