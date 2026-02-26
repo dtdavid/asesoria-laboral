@@ -776,7 +776,7 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
   - `404 Not Found` cuando el recurso no existe.
   - `409 Conflict` ante conflictos de unicidad (por ejemplo, CIF duplicado), detectados desde PostgreSQL.
 - Reutilización del formulario de empresa para **alta y edición**, evitando duplicación de componentes y manteniendo un flujo consistente.
-- Confirmación previa al borrado y recarga del listado tras operaciones, priorizando claridad y robustez en el flujo.
+- Eliminación de empresas con confirmación previa (diálogo confirm) y recarga del listado para reflejar el cambio en la interfaz. **Mejora futura**: añadir feedback visual tras la eliminación (toast/alert) sin depender solo de la recarga.
 - Configuración del frontend para consumir la API mediante variable de entorno `VITE_API_URL`, evitando valores hardcodeados y facilitando pruebas en distintos entornos (local y red).
 
 **Uso de códigos de estado HTTP:**
@@ -856,8 +856,13 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
 **Mejoras futuras registradas:**
 
 - ajustes de usabilidad y diseño responsive del listado de Empresas en móvil (issue abierta en GitLab).
-
-* Incorporar feedback visual explícito tras la eliminación de una empresa (mensaje de confirmación o notificación tipo toast), mejorando la experiencia de usuario.
+- Incorporar feedback visual explícito tras la eliminación de una empresa (mensaje de confirmación o notificación tipo toast), mejorando la experiencia de usuario.
+- Sustituir la autenticación simulada por autenticación real (JWT) y control de sesión completo.
+- Añadir pruebas de la API (colección Postman/Thunder Client y/o tests automatizados) para validar endpoints y errores.
+- Mejorar la experiencia tras eliminar registros: confirmación más clara y aviso visual (toast/alert) sin depender solo de recargar.
+- Ajustes responsive en listados/tablas para pantallas pequeñas (overflow, columnas y espaciado).
+- Revisar comportamiento del sidebar en móvil (cierre automático al navegar y coherencia de estado).
+- Completar y enlazar recursos informativos del footer (FAQ, términos, privacidad, contacto), dejando los no operativos como pendiente.
 
 ## Referencias y recursos externos
 
