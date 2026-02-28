@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { listTrabajadores } from "../controllers/trabajadores.controller.js";
+import { listTrabajadores, getTrabajador } from "../controllers/trabajadores.controller.js";
 /**
  * Router de trabajadores.
  * Define los endpoints relacionados con trabajadores.
@@ -14,7 +14,7 @@ const router = Router()
 router.get("/", listTrabajadores)
 
 // GET /trabajadores/:id
-//router.get("/:id", getTrabajador)
+router.get("/:id", getTrabajador)
 
 // POST /trabajadores
 //router.post("/", addTrabajador) 

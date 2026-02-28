@@ -1,4 +1,4 @@
-import { getTrabajadores } from "../services/trabajadores.service.js";
+import { getTrabajadores, getTrabajadorById } from "../services/trabajadores.service.js";
 
 /** controlador de trabajadores
  * aquí se implementarán las funciones que manejarán las peticiones relacionadas con los trabajadores
@@ -27,6 +27,41 @@ export async function listTrabajadores(req, res, next) {
         return res.status(200).json({ ok: true, data: trabajadores })
         
     } catch (error) {
+        next(error)
+    }
+}
+
+/**
+ * busca trabajador por id (path param)
+ * GET /trabajadores/:id
+ */
+
+export async function getTrabajador(req, res, next){
+
+    try {
+        const id = Number(req.params.id)
+        if(!Number.isInteger(id) || id <= 0){
+            return res.status(400).json({
+                ok:false,
+                code: "VALIDATION_ERROR",
+                message: "ID de trabajador inválido",
+                details: { field: "id", value: req.params.id },
+                //error: "ID de trabajador inválido"
+            })
+        }
+        const trabajador = await getTrabajadorById(id)
+        if(!trabajador){
+            return res.status(404).json({
+                ok:false, code: "NOT_FOUND",
+                message: "Trabajador no encontrado",
+                details: {id},
+                //error: "Trabajador no encontrado"
+            })
+        }
+        return res.status(200).json({ok:true, data: trabajador})
+        
+    } catch (error) {
+        
         next(error)
     }
 }
