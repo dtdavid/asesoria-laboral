@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { listTrabajadores, getTrabajador } from "../controllers/trabajadores.controller.js";
+import { listTrabajadores, getTrabajador, addTrabajador } from "../controllers/trabajadores.controller.js";
 /**
  * Router de trabajadores.
  * Define los endpoints relacionados con trabajadores.
@@ -17,7 +17,7 @@ router.get("/", listTrabajadores)
 router.get("/:id", getTrabajador)
 
 // POST /trabajadores
-//router.post("/", addTrabajador) 
+router.post("/", addTrabajador) 
 
 // PUT /trabajadores/:id
 //router.put("/:id", editTrabajador)

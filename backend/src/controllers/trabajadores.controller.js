@@ -1,4 +1,4 @@
-import { getTrabajadores, getTrabajadorById } from "../services/trabajadores.service.js";
+import { getTrabajadores, getTrabajadorById, createTrabajador } from "../services/trabajadores.service.js";
 
 /** controlador de trabajadores
  * aquí se implementarán las funciones que manejarán las peticiones relacionadas con los trabajadores
@@ -62,6 +62,56 @@ export async function getTrabajador(req, res, next){
         
     } catch (error) {
         
+        next(error)
+    }
+}
+
+// inserción de un nuevo trabajador
+export async function addTrabajador(req, res, next){
+    try {
+        const {empresa_id, nombre, apellidos, dni} = req.body
+
+        //validación básica de campos obligatorios
+        if(!empresa_id || !nombre || !apellidos || !dni){
+            return res.status(400).json({
+                ok:false,
+                code: "VALIDATION_ERROR",
+                message: "Campos obligatorios: empresa_id, nombre, apellidos, dni",
+                details: { missing_fields: ["empresa_id", "nombre", "apellidos", "dni"].filter(f => !req.body[f]) },
+                //error: "Campos obligatorios: empresa_id, nombre, apellidos, dni"
+            })
+        }
+
+        const empresa_id_num = Number(empresa_id)
+
+        if(!Number.isInteger(empresa_id_num) || empresa_id_num <= 0){
+            return res.status(400).json({
+                ok:false,
+                code: "VALIDATION_ERROR",
+                message: "ID de empresa inválido",
+                details: { field: "empresa_id", value: empresa_id },
+            })
+        } 
+
+        //paso el payload con la validación numérica del empresa_id
+        const payload = { ...req.body, empresa_id: empresa_id_num}
+        const nuevo = await createTrabajador(payload)
+        return res.status(201).json({
+            ok:true,
+            data: nuevo
+            })
+            } catch (error) 
+        {
+        //error.code 23505 es el código de error de Postgres para violación de restricción de unicidad (en este caso, el DNI debe ser único)
+        if(error?.code === "23505"){
+            return res.status(409).json({
+                ok:false,
+                code: "DNI_DUPLICADO",
+                message: "Ya existe un trabajador con ese DNI",
+                details: { field: "dni", value: req.body.dni },
+                //error: "Ya existe un trabajador con ese DNI"
+            })
+        }
         next(error)
     }
 }

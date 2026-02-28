@@ -37,4 +37,13 @@ export async function getTrabajadorById(id) {
     return result.rows[0] || null
 }           
     
-
+/**
+ * Crea un trabajador nuevo
+ */
+export async function createTrabajador(payload){
+    const {empresa_id, nombre, apellidos, dni, telefono = null, email = null, puesto = null, salario_bruto = null, activo = true} = payload
+    const result = await pool.query(
+        `INSERT INTO trabajadores (empresa_id, nombre, apellidos, dni, telefono, email, puesto, salario_bruto, activo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING id, empresa_id, nombre, apellidos, dni, telefono, email, puesto, salario_bruto, activo, created_at, updated_at`,
+        [empresa_id, nombre, apellidos, dni, telefono, email, puesto, salario_bruto, activo]    )
+    return result.rows[0]
+}
