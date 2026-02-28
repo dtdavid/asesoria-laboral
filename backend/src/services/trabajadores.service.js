@@ -47,3 +47,14 @@ export async function createTrabajador(payload){
         [empresa_id, nombre, apellidos, dni, telefono, email, puesto, salario_bruto, activo]    )
     return result.rows[0]
 }
+
+
+//eliminar un trabajador por su id
+export async function deleteTrabajadorById(id){
+    const result = await pool.query(
+        "DELETE FROM trabajadores WHERE id = $1",
+        [id]
+    )
+    
+    return result.rowCount  // 1 si se ha eliminado(204), 0 si no se ha encontrado(404)
+}

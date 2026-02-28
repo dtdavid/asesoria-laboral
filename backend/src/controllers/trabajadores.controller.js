@@ -1,4 +1,4 @@
-import { getTrabajadores, getTrabajadorById, createTrabajador } from "../services/trabajadores.service.js";
+import { getTrabajadores, getTrabajadorById, createTrabajador, deleteTrabajadorById } from "../services/trabajadores.service.js";
 
 /** controlador de trabajadores
  * aquí se implementarán las funciones que manejarán las peticiones relacionadas con los trabajadores
@@ -112,6 +112,38 @@ export async function addTrabajador(req, res, next){
                 //error: "Ya existe un trabajador con ese DNI"
             })
         }
+        next(error)
+    }
+}
+
+// eliminación de un trabajador por su id
+export async function removeTrabajador(req, res, next){
+    try {
+        const id = Number(req.params.id)
+        if(!Number.isInteger(id) || id <= 0){
+            return res.status(400).json({
+                ok:false,
+                code: "VALIDATION_ERROR",
+                message: "ID de trabajador inválido",
+                details: { field: "id", value: req.params.id },
+                //error: "ID de trabajador inválido"
+            })
+        }
+        
+        const deleted = await deleteTrabajadorById(id)
+
+        if(deleted === 0){
+            return res.status(404).json({
+                ok:false,
+                code: "NOT_FOUND",
+                message: "Trabajador no encontrado",
+                details: {id},
+                //error: "Trabajador no encontrado"
+            })
+        }
+        return res.status(204).send()
+    } 
+    catch (error) {
         next(error)
     }
 }
