@@ -756,10 +756,19 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
   - la correcta creación de relaciones,
   - el funcionamiento de las claves foráneas,
   - y la integridad referencial del modelo.
-- Este modelo servirá como base para la futura implementación de los módulos de Trabajadores e Incidencias siguiendo el mismo patrón arquitectónico aplicado en Empresas.
+- Este modelo sirve como base para continuar la implementación de los módulos de **Trabajadores** (ya iniciado en backend) e **Incidencias** (pendiente), siguiendo el mismo patrón arquitectónico aplicado en Empresas.
+- Implementación del endpoint `GET /trabajadores` con soporte de filtrado opcional por `empresa_id` mediante parámetro de consulta (`?empresa_id=`).
 
-* Implementación del endpoint `GET /trabajadores` con soporte de filtrado opcional por `empresa_id` mediante parámetro de consulta (`?empresa_id=`).
+**Módulo Trabajadores (CRUD backend):**
 
+- Implementación del CRUD completo en backend para la entidad **Trabajadores**, siguiendo el mismo patrón que Empresas (rutas, controladores y acceso a PostgreSQL).
+- Endpoints REST disponibles para Trabajadores:
+  - `GET /trabajadores` (listado, con filtrado opcional por `empresa_id` mediante `?empresa_id=`)
+  - `GET /trabajadores/:id` (detalle)
+  - `POST /trabajadores` (alta)
+  - `PUT /trabajadores/:id` (edición)
+  - `DELETE /trabajadores/:id` (borrado)
+- Estado del frontend: pendiente de integrar el CRUD de Trabajadores en la SPA (se abordará en el siguiente prototipo).
 - Inserción de datos de prueba (seed) en las tablas para validar el funcionamiento del filtrado y las relaciones entre empresas y trabajadores.
 
 **Módulo Empresas (CRUD completo e integración SPA–API–BD):**
