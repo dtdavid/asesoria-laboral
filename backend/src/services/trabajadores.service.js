@@ -58,3 +58,27 @@ export async function deleteTrabajadorById(id){
     
     return result.rowCount  // 1 si se ha eliminado(204), 0 si no se ha encontrado(404)
 }
+
+
+//actualizar un trabajador por su id
+ export async function updateTrabajadorById(id, payload){
+    const {empresa_id, nombre, apellidos, dni, telefono = null, email = null, puesto = null, salario_bruto = null, activo = true} = payload
+    const result = await pool.query(
+        `UPDATE trabajadores
+        SET empresa_id = $1,
+        nombre = $2, 
+        apellidos = $3, 
+        dni = $4, 
+        telefono = $5, 
+        email = $6, 
+        puesto = $7, 
+        salario_bruto = $8, 
+        activo = $9, 
+        updated_at = NOW()
+        WHERE id = $10
+        RETURNING id, empresa_id, nombre, apellidos, dni, telefono, email, puesto, salario_bruto, activo, created_at, updated_at`,
+        [empresa_id, nombre, apellidos, dni, telefono, email, puesto, salario_bruto, activo, id]
+    )
+    return result.rows[0] || null // devuelve el trabajador actualizado o null si no se ha encontrado
+
+}

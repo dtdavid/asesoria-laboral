@@ -156,21 +156,37 @@ export async function editEmpresa(req, res, next) {
     if (!razon_social || !cif) {
       return res.status(400).json({
         ok: false,
-        error: "Campos obligatorios: razon_social, cif",
+        code: "VALIDATION_ERROR",
+        message: "Campos obligatorios: razon_social, cif",
+        details: { fields: ["razon_social", "cif"] },
+        //error: "Campos obligatorios: razon_social, cif"
+
       })
     }
 
     const updated = await updateEmpresaById(id, req.body)
 
     if (!updated) {
-      return res.status(404).json({ ok: false, error: "Empresa no encontrada" })
+      return res.status(404).json({
+        ok: false, 
+        code: "NOT_FOUND",
+        message: "Empresa no encontrada",
+        details: { id },
+        //error: "Empresa no encontrada"
+      })
     }
 
     return res.status(200).json({ ok: true, data: updated })
   } 
   catch (err) {
     if (err?.code === "23505") {
-      return res.status(409).json({ ok: false, error: "Ya existe una empresa con ese CIF" })
+      return res.status(409).json({ 
+        ok: false, 
+        code: "CIF_DUPLICADO",
+        message: "Ya existe una empresa con ese CIF",
+        details: { field: "cif" },
+        //error: "Ya existe una empresa con ese CIF"
+      })
     }
     next(err)
   }

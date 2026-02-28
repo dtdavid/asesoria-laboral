@@ -1,4 +1,4 @@
-import { getTrabajadores, getTrabajadorById, createTrabajador, deleteTrabajadorById } from "../services/trabajadores.service.js";
+import { getTrabajadores, getTrabajadorById, createTrabajador, deleteTrabajadorById, updateTrabajadorById } from "../services/trabajadores.service.js";
 
 /** controlador de trabajadores
  * aquí se implementarán las funciones que manejarán las peticiones relacionadas con los trabajadores
@@ -144,6 +144,76 @@ export async function removeTrabajador(req, res, next){
         return res.status(204).send()
     } 
     catch (error) {
+        next(error)
+    }
+}
+
+
+//editar trabajador
+export async function editTrabajador(req, res, next){
+    try {
+        //validar id del trabajador que sea número entero positivo
+        const id = Number(req.params.id)
+        if(!Number.isInteger(id) || id <= 0){
+            return res.status(400).json({
+                ok:false,
+                code: "VALIDATION_ERROR",
+                message: "ID de trabajador inválido",
+                details: { field: "id", value: req.params.id },
+                //error: "ID de trabajador inválido"
+            })
+        }
+
+         const {empresa_id,nombre, apellidos, dni} = req.body
+        if(!nombre|| !apellidos || !dni|| !empresa_id){
+            return res.status(400).json({
+                ok: false,
+                code: "VALIDATION_ERROR",
+                message: "Campos obligatorios: empresa_id, nombre, apellidos, dni",
+                details: { missing_fields: ["empresa_id", "nombre", "apellidos", "dni"].filter(f => !req.body[f]) },
+                //error: "Campos obligatorios: id, empresa_id, nombre, apellidos, dni"
+            })
+        }
+
+        //validar empresa_id que sea número y positivo
+        const empresa_id_num = Number(req.body.empresa_id)
+            if(!Number.isInteger(empresa_id_num) || empresa_id_num <= 0){
+                return res.status(400).json({
+                    ok:false,
+                    code: "VALIDATION_ERROR",
+                    message: "ID de empresa inválido",
+                    details: { field: "empresa_id", value: req.body.empresa_id },
+                    //error: "ID de empresa inválido"
+                })
+            }
+       
+        const payload = { ...req.body, empresa_id: empresa_id_num }
+        const updated = await updateTrabajadorById(id, payload)
+
+        if(!updated){
+            return res.status(404).json({
+                ok:false,
+                code: "NOT_FOUND",
+                message: "Trabajador no encontrado",
+                details: {id},
+                //error: "Trabajador no encontrado"
+            })
+        }
+        return res.status(200).json({ 
+            ok: true, 
+            data: updated 
+        })
+    }
+     catch (error) {
+        if(error?.code === "23505"){
+            return res.status(409).json({
+                ok:false,
+                code: "DNI_DUPLICADO",
+                message: "Ya existe un trabajador con ese DNI",
+                details: { field: "dni", value: req.body.dni },
+                //error: "Ya existe un trabajador con ese DNI"
+            })
+        }
         next(error)
     }
 }
