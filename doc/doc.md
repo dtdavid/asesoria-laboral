@@ -41,6 +41,7 @@
   - [Modelo de datos (Diagrama E/R)](#modelo-de-datos-diagrama-er)
   - [Infraestructura y arquitectura técnica](#infraestructura-y-arquitectura-técnica)
     - [Componentes principales](#componentes-principales)
+    - [Decisiones tecnológicas (justificación)](#decisiones-tecnológicas-justificación)
     - [Comunicación entre componentes](#comunicación-entre-componentes)
     - [Autenticación y autorización (nivel conceptual)](#autenticación-y-autorización-nivel-conceptual)
     - [Despliegue y ejecución en desarrollo (entorno local)](#despliegue-y-ejecución-en-desarrollo-entorno-local)
@@ -365,6 +366,27 @@ La aplicación se plantea con una arquitectura web en tres capas, separando la i
 - **Base de datos (PostgreSQL)**  
   Sistema de persistencia relacional para almacenar la información del dominio (clientes/empresas, trabajadores, incidencias y usuarios).  
   El backend accede a la base de datos mediante un cliente PostgreSQL (p. ej. `pg`) y consultas parametrizadas.
+
+#### Decisiones tecnológicas (justificación)
+
+- La aplicación se ha planteado con una arquitectura **SPA + API REST + base de datos relacional**. Esta separación permite desarrollar por módulos, validar el sistema por prototipos y mantener desacopladas la interfaz, la lógica de servidor y la persistencia.
+
+- **React + Vite (frontend):**
+  Se ha elegido React para construir una SPA basada en componentes reutilizables y un estado controlado desde la interfaz. Frente a alternativas más “tradicionales” (páginas renderizadas en servidor o HTML/JS sin estructura), React facilita organizar la UI por vistas y componentes, y mantener un flujo claro de datos y renderizado.
+  Vite se utiliza como entorno de desarrollo por su rapidez durante la implementación (arranque y recarga), lo que reduce tiempo de iteración en un proyecto académico con entregas por prototipos.
+  Además, a nivel formativo, React es una tecnología con presencia real en el mercado, por lo que su uso aporta valor en términos de empleabilidad y dominio de herramientas actuales.
+
+- **Node.js + Express (backend):**
+  Se ha optado por Node.js con Express para construir la API REST de forma ligera y modular. Express es un framework minimalista que permite definir rutas y middlewares con una curva de aprendizaje asumible y sin imponer demasiada estructura.
+  En este proyecto encaja bien porque el objetivo es exponer endpoints claros en JSON, mantener una separación por capas (routes/controllers/services) y evolucionar el backend conforme crecen las entidades del dominio (empresas, trabajadores, incidencias).
+
+- **PostgreSQL + pg (persistencia):**
+  Se ha elegido PostgreSQL por su enfoque relacional y por la facilidad para modelar el dominio con integridad (claves primarias, restricciones y claves foráneas). Frente a soluciones no relacionales, permite representar relaciones entre empresas, trabajadores e incidencias de forma consistente.
+  El backend accede mediante `pg` y un `Pool` de conexiones, centralizando la configuración y reutilizando conexiones para mejorar la eficiencia en ejecución local.
+
+- **Tailwind CSS (estilos):**
+  Se utiliza Tailwind CSS para mantener coherencia visual y reducir CSS específico mediante clases utilitarias. Facilita aplicar diseño responsive con sus breakpoints (`sm`, `md`, `lg`, etc.) sin necesidad de escribir media queries manuales en la mayoría de casos.
+  A nivel formativo, su uso también se justifica por su adopción actual en muchos proyectos y por la rapidez para prototipar interfaces manteniendo consistencia.
 
 #### Comunicación entre componentes
 
