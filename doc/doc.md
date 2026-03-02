@@ -73,7 +73,7 @@
     - [Prototipo 1](#prototipo-1)
     - [Prototipo 2](#prototipo-2)
   - [Autenticación y seguridad (JWT + roles)](#autenticación-y-seguridad-jwt--roles)
-  - [Endpoints scoped (/me)](#endpoints-scoped-me)
+  - [Endpoints /me (acotados al usuario)](#endpoints-me-acotados-al-usuario)
   - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
   - [Documentación oficial](#documentación-oficial)
@@ -748,7 +748,7 @@ Las pruebas realizadas en este prototipo han sido de tipo manual, centradas en v
 
 #### Prototipo 2
 
-**Fecha:** Febrero de 2026
+**Fecha:** 2 marzo de 2026
 
 **Descripción:**
 
@@ -867,11 +867,11 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
 **Autorización aplicada**
 
 - Se restringen todos los endpoints de `/empresas` y `/trabajadores` (incluidos los `GET`) a usuarios con rol **GESTOR**, aplicando `requireAuth` + `requireRole("GESTOR")`.
-- Los usuarios con rol **CLIENTE** no acceden a esos módulos y trabajan mediante endpoints “scoped” bajo `/me/*`.
+- Los usuarios con rol **CLIENTE** no acceden a esos módulos y trabajan mediante endpoints **acotados al usuario** bajo `/me/*`.
 
-### Endpoints scoped (/me)
+### Endpoints /me (acotados al usuario)
 
-Se añade un router `/me` para devolver datos asociados al usuario autenticado, tomando como referencia `req.user.empresa_id`:
+Se añade un router `/me` para devolver datos asociados al usuario autenticado, tomando como referencia `req.user.empresa_id` (token obligatorio):
 
 - `GET /me/empresa`: devuelve la empresa asociada al usuario autenticado.
 - `GET /me/trabajadores`: devuelve los trabajadores de la empresa asociada al usuario autenticado.
@@ -879,7 +879,7 @@ Se añade un router `/me` para devolver datos asociados al usuario autenticado, 
 Control de acceso:
 
 - Si `empresa_id` es `null`, se devuelve `403` con el código `NO_EMPRESA_ASIGNADA`.
-- Estos endpoints están disponibles para **CLIENTE** y **GESTOR** autenticados, pero su objetivo principal es dar acceso al perfil CLIENTE sin exponer módulos completos.
+- Estos endpoints están disponibles para usuarios autenticados (CLIENTE y GESTOR), pero su objetivo principal es dar acceso al perfil CLIENTE sin exponer los módulos completos.
 
   **Uso de códigos de estado HTTP:**
 
