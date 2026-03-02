@@ -1,3 +1,4 @@
+import { API_URL } from "../config/api"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom" 
 import Button from "../components/ui/Button"
@@ -10,7 +11,6 @@ import Button from "../components/ui/Button"
  */
 export default function Empresas() {
 
-  const API = import.meta.env.VITE_API_URL || "http://localhost:3000" // URL del backend desde variables de entorno o valor por defecto
   const [items, setItems] = useState([]) // empresas
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
@@ -47,7 +47,7 @@ export default function Empresas() {
   if (!confirmDelete) return
 
   try {
-    const res = await fetch(`${API}/empresas/${id}`, {
+    const res = await fetch(`${API_URL}/empresas/${id}`, {
       method: "DELETE",
     })
 
@@ -86,7 +86,7 @@ export default function Empresas() {
           </p>
         </div>
 
-        {/* POST nueva empresa  className={newCompany}*/}
+        {/* POST nueva empresa */}
 
         <Button  variant="secondary"className="ml-auto" onClick={() => navigate("/app/empresas/nueva")}>Nueva empresa</Button>
         
@@ -108,7 +108,7 @@ export default function Empresas() {
           </p>
           <p className="mt-2 text-sm text-brand-muted">
             Comprueba que el backend está arrancado en{" "}
-            <span className="font-medium">http://localhost:3000</span>.
+            <span className="font-medium">{API_URL}</span>.
           </p>
         </section>
       ) : (

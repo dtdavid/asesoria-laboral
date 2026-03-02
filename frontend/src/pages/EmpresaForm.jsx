@@ -1,10 +1,11 @@
+import { API_URL } from "../config/api"
 import Button from "../components/ui/Button"
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 
 export default function EmpresasForm() {
 
-  const API = import.meta.env.VITE_API_URL || "http://localhost:3000" // URL del backend desde variables de entorno o valor por defecto
+  
   const navigate = useNavigate()
   const { id } = useParams() // si hay id, es edición; si no, creación
   const isEdit = Boolean(id) // true si id existe, false si es undefined
@@ -35,7 +36,7 @@ export default function EmpresasForm() {
     const loadEmpresa = async () => {
       try {
         setError("")
-        const res = await fetch(`${API}/empresas/${id}`)
+        const res = await fetch(`${API_URL}/empresas/${id}`)
         const data = await res.json()
 
         if(!res.ok) {
@@ -45,7 +46,7 @@ export default function EmpresasForm() {
 
         // data.data trae la empresa
         setForm(prev => ({...prev, ...data.data})) // actualizamos el formulario con los datos de la empresa
-    } catch  {
+    } catch (err) {
         setError("Error de conexión con el servidor.")
     }
   }
@@ -83,7 +84,7 @@ export default function EmpresasForm() {
       return
     }
     // Si es edición, la URL es /empresas/:id con método PUT; si es creación, es /empresas con método POST
-    const url = isEdit ? `${API}/empresas/${id}` : `${API}/empresas`
+    const url = isEdit ? `${API_URL}/empresas/${id}` : `${API_URL}/empresas`
     const method = isEdit ? "PUT" : "POST"
     const payload = form
     

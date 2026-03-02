@@ -34,6 +34,9 @@ function App() {
             <Route path="empresas/nueva" element={<EmpresaForm />} />
             <Route path="empresas/:id/editar" element={<EmpresaForm />} />
             <Route path="trabajadores" element={<Trabajadores />} />
+            <Route path="trabajadores/:id" element={<Trabajadores />} />
+            <Route path="trabajadores/nuevo" element={<Trabajadores />} />
+            <Route path="trabajadores/:id/editar" element={<Trabajadores />} />
             <Route path="incidencias" element={<Incidencias />} />
           </Route>
         </Route>
