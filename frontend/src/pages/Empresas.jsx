@@ -22,7 +22,7 @@ export default function Empresas() {
         setLoading(true)
         setError("")
 
-        const res = await fetch(`${API}/empresas`)
+        const res = await fetch(`${API_URL}/empresas`)
         const data = await res.json()
 
         if (!res.ok) {
