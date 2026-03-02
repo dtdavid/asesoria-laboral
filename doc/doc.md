@@ -44,6 +44,7 @@
     - [Decisiones tecnológicas (justificación)](#decisiones-tecnológicas-justificación)
     - [Comunicación entre componentes](#comunicación-entre-componentes)
     - [Autenticación y autorización (nivel conceptual)](#autenticación-y-autorización-nivel-conceptual)
+  - [Autenticación y autorización (implementación en Prototipo 2)](#autenticación-y-autorización-implementación-en-prototipo-2)
     - [Despliegue y ejecución en desarrollo (entorno local)](#despliegue-y-ejecución-en-desarrollo-entorno-local)
     - [Consideraciones de escalabilidad (conceptual)](#consideraciones-de-escalabilidad-conceptual)
 - [Planificación](#planificación)
@@ -71,6 +72,9 @@
   - [Prototipos realizados](#prototipos-realizados)
     - [Prototipo 1](#prototipo-1)
     - [Prototipo 2](#prototipo-2)
+  - [Autenticación y seguridad (JWT + roles)](#autenticación-y-seguridad-jwt--roles)
+  - [Endpoints scoped (/me)](#endpoints-scoped-me)
+  - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
   - [Documentación oficial](#documentación-oficial)
   - [Recursos conceptuales](#recursos-conceptuales)
@@ -340,13 +344,16 @@ El siguiente diagrama de casos de uso muestra las principales interacciones entr
 
 ### Modelo de datos (Diagrama E/R)
 
-El siguiente diagrama Entidad–Relación representa la estructura actual del modelo de datos del sistema, incluyendo las entidades principales (`empresas`, `trabajadores` e `incidencias`) y sus relaciones. Este modelo sirve como base para la implementación en PostgreSQL y garantiza la integridad referencial mediante el uso de claves primarias y foráneas.
+El modelo relacional se organiza en torno a la entidad **Empresas** y sus relaciones con **Trabajadores** e **Incidencias**.  
+En este prototipo se añade la entidad **Usuarios** para soportar autenticación y roles, vinculada opcionalmente a una empresa (según el tipo de usuario).
 
-![Modelo entidad-relación actualizado](img/modelo-er-v2.png)
+![Modelo E/R (v3)](img/modelo-er-v3.png)
 
-El diagrama muestra cómo se relacionan las empresas, los trabajadores y las incidencias.
-Una empresa puede tener varios trabajadores y registrar múltiples incidencias.
-Las relaciones entre tablas se controlan mediante claves foráneas para mantener la integridad de los datos.
+**Notas de integridad referencial:**
+
+- `trabajadores.empresa_id` e `incidencias.empresa_id` usan borrado en cascada para eliminar registros dependientes cuando se elimina una empresa.
+- `incidencias.trabajador_id` y `usuarios.empresa_id` usan `ON DELETE SET NULL` para conservar el registro (incidencia/usuario) aunque desaparezca el trabajador o la empresa asociada.
+- `usuarios.email` se define como único para evitar duplicados y los campos `role/status` se validan mediante restricciones (CHECK).
 
 ### Infraestructura y arquitectura técnica
 
@@ -409,6 +416,15 @@ En esta fase del proyecto, este planteamiento se recoge a nivel conceptual y se 
 En el frontend se ha implementado un componente `ProtectedRoute` que controla el acceso a la zona privada de la aplicación. Actualmente, la autenticación se simula mediante una condición booleana, con el objetivo de comprobar el funcionamiento de la navegación y la separación entre rutas públicas y privadas.
 
 Este enfoque permite avanzar en el desarrollo y validar la estructura de la aplicación sin introducir todavía un sistema completo de autenticación. En fases posteriores, esta lógica se sustituirá por un sistema real basado en JWT, integrado con el backend.
+
+### Autenticación y autorización (implementación en Prototipo 2)
+
+En el Prototipo 2 se ha incorporado un sistema de autenticación basado en credenciales y tokens JWT para controlar el acceso a operaciones sensibles de la API.
+
+Para ello se añade la tabla **usuarios** (con email único, hash de contraseña y rol), y se definen middlewares de seguridad para:
+
+- Verificar la identidad del usuario mediante token (autenticación).
+- Restringir acciones según el rol (autorización), por ejemplo operaciones reservadas a GESTOR.
 
 #### Despliegue y ejecución en desarrollo (entorno local)
 
@@ -810,7 +826,62 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
 - Eliminación de empresas con confirmación previa (diálogo confirm) y recarga del listado para reflejar el cambio en la interfaz. **Mejora futura**: añadir feedback visual tras la eliminación (toast/alert) sin depender solo de la recarga.
 - Configuración del frontend para consumir la API mediante variable de entorno `VITE_API_URL`, evitando valores hardcodeados y facilitando pruebas en distintos entornos (local y red).
 
-**Uso de códigos de estado HTTP:**
+### Autenticación y seguridad (JWT + roles)
+
+**Cambios en base de datos**
+
+- Se añade la tabla `usuarios` para soportar autenticación y roles, con campos clave: `email`, `password_hash`, `role`, `status`, `empresa_id`.
+- Restricciones: `email` UNIQUE, validación de `role/status` mediante CHECK y clave foránea `empresa_id → empresas(id)` con `ON DELETE SET NULL` para conservar el usuario aunque se elimine la empresa asociada.
+- Scripts: `08_usuarios_schema.sql` y `09_usuarios_seed.sql` (usuarios demo: gestor + cliente).
+
+**Dependencias añadidas (backend)**
+
+- `jsonwebtoken` (JWT).
+- `bcryptjs` (hash/verificación de contraseñas).
+- Se ejecutó `npm audit fix` tras instalar dependencias para resolver una vulnerabilidad indirecta detectada por auditoría.
+- Se actualiza `.env.example` incorporando `JWT_SECRET`.
+
+**Endpoints de autenticación**
+
+- `POST /auth/registro`: crea un usuario de tipo CLIENTE con `status=PENDIENTE` y `empresa_id=null`. El rol recibido en el body se ignora para evitar escalado de privilegios.
+- Respuestas: `201` OK, `409` email duplicado, `400` validación.
+- `POST /auth/login`: valida credenciales y devuelve JWT.
+- Respuestas: `200` OK, `401` credenciales inválidas (sin revelar si el email existe), `400` validación.
+
+**Contraseñas (bcrypt)**
+
+- En base de datos se almacena `password_hash` (nunca contraseñas en texto plano).
+- Registro: hash de contraseña. Login: comparación `password` vs `hash`.
+
+**JWT (uso en el proyecto)**
+
+- Payload: `user_id`, `role`, `status`, `empresa_id`.
+- Firma con `JWT_SECRET` y caducidad configurada (`expiresIn: "1d"`).
+- Cabecera esperada: `Authorization: Bearer <token>`.
+
+**Middlewares**
+
+- `requireAuth`: verifica token, rellena `req.user` y devuelve `401` si falta/es inválido/caducado.
+- `requireRole("GESTOR")`: restringe acciones por rol y devuelve `403` si no cumple.
+
+**Autorización aplicada**
+
+- Se restringen todos los endpoints de `/empresas` y `/trabajadores` (incluidos los `GET`) a usuarios con rol **GESTOR**, aplicando `requireAuth` + `requireRole("GESTOR")`.
+- Los usuarios con rol **CLIENTE** no acceden a esos módulos y trabajan mediante endpoints “scoped” bajo `/me/*`.
+
+### Endpoints scoped (/me)
+
+Se añade un router `/me` para devolver datos asociados al usuario autenticado, tomando como referencia `req.user.empresa_id`:
+
+- `GET /me/empresa`: devuelve la empresa asociada al usuario autenticado.
+- `GET /me/trabajadores`: devuelve los trabajadores de la empresa asociada al usuario autenticado.
+
+Control de acceso:
+
+- Si `empresa_id` es `null`, se devuelve `403` con el código `NO_EMPRESA_ASIGNADA`.
+- Estos endpoints están disponibles para **CLIENTE** y **GESTOR** autenticados, pero su objetivo principal es dar acceso al perfil CLIENTE sin exponer módulos completos.
+
+  **Uso de códigos de estado HTTP:**
 
 La API utiliza códigos de estado coherentes con el estándar HTTP y el estilo REST, permitiendo representar adecuadamente el resultado de cada operación:
 
@@ -884,6 +955,15 @@ El orden de declaración de los middlewares en Express es determinante, ya que s
 
 El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` durante el desarrollo para facilitar la iteración.
 
+### Evidencias de pruebas (Thunder Client o similar)
+
+- Login con usuario gestor → obtención de token.
+- `POST /empresas` con token de gestor → permitido.
+- `POST /empresas` con token de cliente → `403` (rol insuficiente).
+- Usuario **GESTOR**: accede correctamente a `/empresas` y `/trabajadores`.
+- Usuario **CLIENTE**: accede a `/me/*` y recibe `403` al intentar acceder a `/empresas` y `/trabajadores`.
+- Acceso a rutas protegidas sin token → `401`.
+
 **Mejoras futuras registradas:**
 
 - ajustes de usabilidad y diseño responsive del listado de Empresas en móvil (issue abierta en GitLab).
@@ -915,6 +995,8 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
 - [bcryptjs – documentación oficial](https://github.com/dcodeIO/bcrypt.js)
 - [jsonwebtoken – documentación oficial](https://github.com/auth0/node-jsonwebtoken)
 - [Nodemon – documentación oficial](https://nodemon.io/)
+- [PostgreSQL – documentación oficial (constraints)](https://www.postgresql.org/docs/current/ddl-constraints.html)
+- [RFC 7519 – JSON Web Token (JWT)](https://datatracker.ietf.org/doc/rfc7519/)
 
 ### Recursos conceptuales
 
