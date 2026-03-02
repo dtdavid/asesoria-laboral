@@ -2,8 +2,9 @@ import express from "express"
 import cors from "cors"
 import empresasRoutes from "./routes/empresas.routes.js"
 import trabajadoresRoutes from "./routes/trabajadores.routes.js"
+import authRoutes from "./routes/auth.routes.js"
 import { pool } from "./db.js"
-
+import { requireAuth } from "./middlewares/requireAuth.js"
 
 
 const app = express()
@@ -43,9 +44,21 @@ app.post("/echo", (req, res) => {
 app.use("/empresas", empresasRoutes)
 
 //Monta el router de trabajadores bajo el prefijo /trabajadores
+
 app.use("/trabajadores", trabajadoresRoutes)
 
+// Monta el router de auth bajo el prefijo /auth
+
+app.use("/auth", authRoutes)
+
+
+// Ruta protegida de ejemplo para verificar que el middleware de autenticación funciona
+app.get("/me", requireAuth, (req, res) => {
+  res.json({ ok: true, data: req.user })
+})
+
 // Handler de rutas no existentes (404 de API)
+
 app.use((_req, res) => {
   res.status(404).json({ ok: false, error: "Not Found" })
 })
