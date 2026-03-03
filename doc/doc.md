@@ -74,6 +74,7 @@
     - [Prototipo 2](#prototipo-2)
   - [Autenticación y seguridad (JWT + roles)](#autenticación-y-seguridad-jwt--roles)
   - [Endpoints /me (acotados al usuario)](#endpoints-me-acotados-al-usuario)
+  - [Helper de llamadas a la API (`apiFetch`)](#helper-de-llamadas-a-la-api-apifetch)
   - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
   - [Documentación oficial](#documentación-oficial)
@@ -895,6 +896,16 @@ La API utiliza códigos de estado coherentes con el estándar HTTP y el estilo R
 - `500 Internal Server Error`: error inesperado del servidor.
 
 El uso adecuado de estos códigos permite que el cliente interprete correctamente el resultado de cada petición.
+
+### Helper de llamadas a la API (`apiFetch`)
+
+Se crea `src/lib/apiFetch.js` para centralizar las llamadas del frontend a la API.
+
+- Evita repetir `VITE_API_URL` en múltiples archivos.
+- Adjunta automáticamente el token JWT en `Authorization: Bearer <token>`.
+- Unifica el tratamiento de errores (mensaje/código) y simplifica el código de las páginas.
+
+Esta centralización mejora la mantenibilidad y reduce errores al cambiar de entorno (URL base y autenticación quedan en un único punto).
 
 **Organización interna del backend:**
 
