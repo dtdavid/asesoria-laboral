@@ -1,8 +1,9 @@
-import { API_URL } from "../config/api"
+
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom" 
 import Button from "../components/ui/Button"
-
+import { apiFetch } from "../lib/apiFetch"
+import { useAuth } from "../context/AuthContext"
 /**
  * Página privada: Trabajadores (placeholder)
  * En prototipos posteriores se implementará el listado y CRUD.
@@ -14,26 +15,28 @@ export default function Trabajadores() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const navigate = useNavigate()
+  const { token, user } = useAuth()
 
   async function loadTrabajadores() {
-      try {
-        setLoading(true)
-        setError("")
-        const empresaId = 5 // ID de la empresa para filtrar trabajadores (puede ser dinámico en el futuro)
-        const res = await fetch(`${API_URL}/trabajadores?empresa_id=${empresaId}`)
-        const data = await res.json()
+  try {
+    setLoading(true)
+    setError("")
 
-        if (!res.ok) {
-          // Si el backend devuelve ok:false o error, lo mostramos
-          throw new Error(data?.message || data?.error || "Error al cargar trabajadores")
-        }
-          setItems(data.data || [])
-      } catch (err) {
-          setError(err?.message || "Error inesperado")
-      } finally {
-          setLoading(false)
-      }
-    }
+    const empresaId = 5 // dinámico para gestor
+    const path =
+    user?.role === "CLIENTE"
+    ? "/me/trabajadores"
+    : `/trabajadores?empresa_id=${empresaId}`
+
+    const data = await apiFetch(path)
+
+    setItems(data?.data || [])
+  } catch (err) {
+    setError(err?.message || "Error inesperado")
+  } finally {
+    setLoading(false)
+  }
+}
 
     //Manejador DELETE empresa handleDelete
   const handleDelete = async (id) => {
@@ -45,31 +48,19 @@ export default function Trabajadores() {
   if (!confirmDelete) return
 
   try {
-    const res = await fetch(`${API_URL}/trabajadores/${id}`, {
-      method: "DELETE",
-    })
-
-    if (!res.ok) {
-      setError("No se pudo eliminar el trabajador.")
-      return
-    }
-
-    // recargar listado
+    await apiFetch(`/trabajadores/${id}`, { method: "DELETE" })
     loadTrabajadores()
-
   } catch (err) {
-    setError("Error de conexión con el servidor.")
+    setError(err?.message || "No se pudo eliminar el trabajador.")
   }
 }
-
-
     useEffect(() => {
 
-    // Recarga la lista completa tras una operación (DELETE/PUT)
-    
-    loadTrabajadores()
+  if (!token) return
 
-  }, [])
+  loadTrabajadores()
+
+}, [token])
 
   const card = "rounded-2xl bg-white p-5 shadow-sm"
 

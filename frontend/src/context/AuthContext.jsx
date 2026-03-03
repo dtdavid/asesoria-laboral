@@ -11,28 +11,34 @@ const AuthContext = createContext(null)
  * Provider: envuelve la app y comparte el estado de autentificación.
  */
 export function AuthProvider({children}) {
-    //estado global: indica si el usuario está autenticado
-    //se inicializa leyendo localStorage para mantener sesión tras recargar. 
-    const [isAuthenticated, setIsAuthenticated] = useState(() => {
-        const saved = localStorage.getItem("isAuthenticated")
-        return saved === "true"
-    })
+    // Estado de autentificación: token, user, isAuthenticated
+    // la función de inicialización de useState lee el token y user del localStorage para mantener la sesión entre recargas
+    const [token, setToken] = useState(() => localStorage.getItem("token") || "")
+    const [user, setUser] = useState(() => {
+    const raw = localStorage.getItem("user")
+    return raw ? JSON.parse(raw) : null
+  })
 
-    //login simulado: actualiza estado y persiste la sesión en localStorage
-    //En el futuro, aquí guardaremos el token JWT 
-    const login = () => {
-        setIsAuthenticated(true)
-        localStorage.setItem("isAuthenticated", "true")
-    }
-    //Logout simulado: limpia estado y persiste el cierre de sesión
-    //En el futuro, aquí eliminaremos el token JWT
+    //isAuthenticated se calcula a partir de la existencia de un token válido 
+    const isAuthenticated = Boolean(token)
+
+    //login con JWT: guarda token y user en estado y localStorage 
+    const login = ({ token: newToken, user: newUser }) => {
+    setToken(newToken)
+    setUser(newUser)
+    localStorage.setItem("token", newToken)
+    localStorage.setItem("user", JSON.stringify(newUser))
+  }
+    //Logout con JWT: limpia estado y localStorage
     const logout = () => {
-        setIsAuthenticated(false)
-        localStorage.setItem("isAuthenticated", "false")
-    }
+    setToken("")
+    setUser(null)
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+  }
 
     return (
-        <AuthContext.Provider value={{isAuthenticated, login, logout}}>
+        <AuthContext.Provider value={{ token, user, isAuthenticated, login, logout }}>
             {children}
         </AuthContext.Provider>
     )

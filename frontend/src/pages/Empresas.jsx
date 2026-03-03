@@ -1,8 +1,9 @@
-import { API_URL } from "../config/api"
+
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom" 
 import Button from "../components/ui/Button"
-
+import { apiFetch } from "../lib/apiFetch"
+import { useAuth } from "../context/AuthContext"
 /**
  * Página privada: Empresas
  * - Consume el backend (GET /empresas)
@@ -15,21 +16,21 @@ export default function Empresas() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const navigate = useNavigate()
-
+  const { token, user } = useAuth()
+  const isCliente = user?.role === "CLIENTE"
 
   async function loadEmpresas() {
       try {
         setLoading(true)
         setError("")
 
-        const res = await fetch(`${API_URL}/empresas`)
-        const data = await res.json()
+        // apiFetch realiza la llamada a GET /empresas con el token adjunto y maneja errores
+        const data = await apiFetch(isCliente ? "/me/empresa" : "/empresas")
+        // /me/empresa devuelve { ok:true, data: {..empresa..} } (objeto)
+        // /empresas devuelve { ok:true, data: [..] } (array)
+        const empresas = isCliente ? (data?.data ? [data.data] : []) : (data?.data || [])
+        setItems(empresas)
 
-        if (!res.ok) {
-          // Si el backend devuelve ok:false o error, lo mostramos
-          throw new Error(data?.error || "Error al cargar empresas")
-        }
-          setItems(data.data || [])
       } catch (err) {
           setError(err?.message || "Error inesperado")
       } finally {
@@ -47,20 +48,15 @@ export default function Empresas() {
   if (!confirmDelete) return
 
   try {
-    const res = await fetch(`${API_URL}/empresas/${id}`, {
-      method: "DELETE",
-    })
-
-    if (!res.ok) {
-      setError("No se pudo eliminar la empresa.")
-      return
-    }
+    //apiFetch realiza la llamada a DELETE /empresas/:id con el token adjunto y maneja errores
+    await apiFetch(`/empresas/${id}`, { method: "DELETE" })
 
     // recargar listado
     loadEmpresas()
 
-  } catch {
-    setError("Error de conexión con el servidor.")
+  } catch (err) {
+    //se muestra error real del backend o un mensaje genérico si no se obtiene detalle
+    setError(err?.message || "Error de conexión con el servidor.")
   }
 }
 
@@ -68,10 +64,11 @@ export default function Empresas() {
   useEffect(() => {
 
     // Recarga la lista completa tras una operación (DELETE/PUT)
+    if(!token) return
     
     loadEmpresas()
 
-  }, [])
+  }, [token])
 
   const card = "rounded-2xl bg-white p-5 shadow-sm"
   
@@ -127,7 +124,7 @@ export default function Empresas() {
                     <th className="py-3 pr-4">CIF</th>
                     <th className="py-3 pr-4">Provincia</th>
                     <th className="py-3 pr-4">Activa</th>
-                    <th className="py-3 pr-4">Acciones</th>
+                    <th className="py-3 pr-4">{isCliente ? "Ver" : "Acciones"}</th>
                   </tr>
                 </thead>
 
@@ -155,9 +152,21 @@ export default function Empresas() {
                         </span>
                       </td>
                       <td className="py-3 pr-4 text-brand-text">
-                        <Button onClick={() => navigate(`/app/empresas/${e.id}/editar`)}>Editar</Button>
-                        <Button variant="ghost" className="ml-3" onClick={() => handleDelete(e.id)}>Eliminar</Button>
-                      </td>
+                        {isCliente ? (
+                          <Button onClick={() => navigate(`/app/empresas/${e.id}`)}>Ver</Button>
+                        ) : (
+                          <>
+                          <Button onClick={() => navigate(`/app/empresas/${e.id}/editar`)}>Editar</Button>
+                          <Button
+                            variant="ghost"
+                            className="ml-3"
+                            onClick={() => handleDelete(e.id)}
+                          >
+                          Eliminar
+                          </Button>
+                          </>
+                          )}
+                        </td>
                     </tr>
                   ))}
                 </tbody>

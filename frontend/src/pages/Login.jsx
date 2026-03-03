@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
 import Button from "../components/ui/Button"
+import { API_URL } from "../config/api"
 
 export default function Login() {
   const navigate = useNavigate()
@@ -14,23 +15,38 @@ export default function Login() {
 
   // Validación mínima (frontend)
   const isValidEmail = email.includes("@") && email.includes(".")
-  const isValidPassword = password.length >= 6
+  const isValidPassword = password.length >= 8
   const canSubmit = isValidEmail && isValidPassword
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setError("")
+  const handleSubmit = async (e) => {
+  e.preventDefault()
+  setError("")
 
-    if (!canSubmit) {
-      setError(
-        "Por favor, introduce un email válido y una contraseña de al menos 6 caracteres."
-      )
-      return
+  if (!canSubmit) {
+    setError("Por favor, introduce un email válido y una contraseña de al menos 8 caracteres.")
+    return
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+
+    const data = await res.json()
+
+    if (!res.ok || !data?.ok) {
+      throw new Error(data?.message || data?.error || "Credenciales inválidas")
     }
 
-    login()
+    // tu response: { ok:true, data: { token, user } }
+    login({ token: data.data.token, user: data.data.user })
     navigate("/app", { replace: true })
+  } catch (err) {
+    setError(err?.message || "Error inesperado")
   }
+}
 
   return (
     <div className="max-w-md mx-auto">
@@ -40,7 +56,7 @@ export default function Login() {
         <header className="space-y-2 text-center">
           <h2 className="text-2xl font-semibold text-brand-text">Login</h2>
           <p className="text-sm text-brand-muted">
-            Acceso de usuarios registrados (simulado).
+            Acceso de usuarios registrados.
           </p>
         </header>
 
@@ -74,7 +90,7 @@ export default function Login() {
               autoComplete="current-password"
               className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             />
-            <p className="text-xs text-brand-muted">Mínimo 6 caracteres</p>
+            <p className="text-xs text-brand-muted">Mínimo 8 caracteres</p>
           </div>
 
           {error && (
@@ -92,7 +108,7 @@ export default function Login() {
           </Button>
 
           <p className="text-xs text-brand-muted text-center">
-            Nota: login simulado. En próximos prototipos se conectará con backend y JWT.
+            Acceso con credenciales.
           </p>
         </form>
       </div>

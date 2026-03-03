@@ -1,7 +1,8 @@
-import { API_URL } from "../config/api"
+
 import Button from "../components/ui/Button"
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { apiFetch} from "../lib/apiFetch"
 
 export default function EmpresasForm() {
 
@@ -31,29 +32,25 @@ export default function EmpresasForm() {
   })
 
   useEffect(() => {
-    if (!isEdit) return // si no es edición, no necesitamos cargar datos
-    // Aquí cargaríamos los datos de la empresa a editar usando el id, por ejemplo:
-    const loadEmpresa = async () => {
-      try {
-        setError("")
-        const res = await fetch(`${API_URL}/empresas/${id}`)
-        const data = await res.json()
+  if (!isEdit) return
 
-        if(!res.ok) {
-          setError(data?.message ?? "No se pudo cargar la empresa.")
-          return
-        }
+  const loadEmpresa = async () => {
+    try {
+      setError("")
 
-        // data.data trae la empresa
-        setForm(prev => ({...prev, ...data.data})) // actualizamos el formulario con los datos de la empresa
+      // apiFetch hace GET /empresas/:id con JWT y maneja errores
+      const data = await apiFetch(`/empresas/${id}`)
+
+      // data.data trae la empresa
+      setForm((prev) => ({ ...prev, ...data.data }))
     } catch (err) {
-        setError("Error de conexión con el servidor.")
+      // mostramos el mensaje real si viene del backend
+      setError(err?.message || "No se pudo cargar la empresa.")
     }
   }
 
-    loadEmpresa()
-
-  }, [isEdit, id])
+  loadEmpresa()
+}, [isEdit, id])
 
 
   // Validación mínima
@@ -89,43 +86,35 @@ export default function EmpresasForm() {
     const payload = form
     
       try {
-        // Enviamos los datos al backend
-        const res = await fetch(url, {
-          method: method,
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        })
+  // apiFetch añade JWT y devuelve JSON ya parseado
+  if (isEdit) {
+    await apiFetch(`/empresas/${id}`, {
+      method: "PUT",
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+    })
+  } else {
+    await apiFetch("/empresas", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" },
+    })
+  }
 
-        let data = null
-       
-        try {
-          data = await res.json()
-        } catch  {
-          data = null // si no es JSON, dejamos data como null
-        }
+  navigate("/app/empresas")
+  return
+} catch (err) {
+  // apiFetch lanza Error con message/error del backend
+  const msg = err?.message || "Error de conexión con el servidor."
 
-        if (res.ok) {
-          //data trae {ok:true, data:nuevaEmpresa}
-          navigate("/app/empresas")
-          return
-        }
-        //error controlado 409
-        if (data?.code === "CIF_DUPLICADO" || res.status === 409){
-          setError("Ya existe una empresa con ese CIF.")
-          return
-        }
-        //error controlado 400
-        if (data?.code === "VALIDATION_ERROR" || res.status === 400){
-          setError(data?.message ?? "Error de validación. Revisa los campos e inténtalo de nuevo.")
-          return
-        }
-        //error genérico
-        
-        setError(data?.message ??"Error al crear la empresa.")
-        
-      } catch (err) {
-        setError("Error de conexión con el servidor.")
-      }
+  
+  if (msg.toLowerCase().includes("cif")) {
+    setError("Ya existe una empresa con ese CIF.")
+    return
+  }
+
+  setError(msg)
+}
   }
 
 
