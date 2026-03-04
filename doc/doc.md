@@ -72,10 +72,22 @@
   - [Prototipos realizados](#prototipos-realizados)
     - [Prototipo 1](#prototipo-1)
     - [Prototipo 2](#prototipo-2)
-  - [Autenticación y seguridad (JWT + roles)](#autenticación-y-seguridad-jwt--roles)
-  - [Endpoints /me (acotados al usuario)](#endpoints-me-acotados-al-usuario)
-  - [Helper de llamadas a la API (`apiFetch`)](#helper-de-llamadas-a-la-api-apifetch)
-  - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
+      - [Autenticación y seguridad (JWT + roles)](#autenticación-y-seguridad-jwt--roles)
+      - [Endpoints /me (acotados al usuario)](#endpoints-me-acotados-al-usuario)
+      - [Helper de llamadas a la API (`apiFetch`)](#helper-de-llamadas-a-la-api-apifetch)
+      - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
+    - [Prototipo 3 (FINAL)](#prototipo-3-final)
+- [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
+  - [Requisitos](#requisitos)
+  - [Variables de entorno](#variables-de-entorno)
+  - [Puesta en marcha](#puesta-en-marcha)
+- [Manual de usuario y usabilidad (resumen)](#manual-de-usuario-y-usabilidad-resumen)
+  - [Acceso](#acceso)
+  - [Flujo básico (GESTOR)](#flujo-básico-gestor)
+  - [Flujo básico (CLIENTE)](#flujo-básico-cliente)
+  - [Ayudas al usuario](#ayudas-al-usuario)
+- [Propuestas de mejora](#propuestas-de-mejora)
+- [Conclusiones](#conclusiones)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
   - [Documentación oficial](#documentación-oficial)
   - [Recursos conceptuales](#recursos-conceptuales)
@@ -827,7 +839,7 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
 - Eliminación de empresas con confirmación previa (diálogo confirm) y recarga del listado para reflejar el cambio en la interfaz. **Mejora futura**: añadir feedback visual tras la eliminación (toast/alert) sin depender solo de la recarga.
 - Configuración del frontend para consumir la API mediante variable de entorno `VITE_API_URL`, evitando valores hardcodeados y facilitando pruebas en distintos entornos (local y red).
 
-### Autenticación y seguridad (JWT + roles)
+##### Autenticación y seguridad (JWT + roles)
 
 **Cambios en base de datos**
 
@@ -870,7 +882,7 @@ El objetivo principal de este prototipo es validar la arquitectura cliente-servi
 - Se restringen todos los endpoints de `/empresas` y `/trabajadores` (incluidos los `GET`) a usuarios con rol **GESTOR**, aplicando `requireAuth` + `requireRole("GESTOR")`.
 - Los usuarios con rol **CLIENTE** no acceden a esos módulos y trabajan mediante endpoints **acotados al usuario** bajo `/me/*`.
 
-### Endpoints /me (acotados al usuario)
+##### Endpoints /me (acotados al usuario)
 
 Se añade un router `/me` para devolver datos asociados al usuario autenticado, tomando como referencia `req.user.empresa_id` (token obligatorio):
 
@@ -897,7 +909,7 @@ La API utiliza códigos de estado coherentes con el estándar HTTP y el estilo R
 
 El uso adecuado de estos códigos permite que el cliente interprete correctamente el resultado de cada petición.
 
-### Helper de llamadas a la API (`apiFetch`)
+##### Helper de llamadas a la API (`apiFetch`)
 
 Se crea `src/lib/apiFetch.js` para centralizar las llamadas del frontend a la API.
 
@@ -966,7 +978,7 @@ El orden de declaración de los middlewares en Express es determinante, ya que s
 
 El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` durante el desarrollo para facilitar la iteración.
 
-### Evidencias de pruebas (Thunder Client o similar)
+##### Evidencias de pruebas (Thunder Client o similar)
 
 - Login con usuario gestor → obtención de token.
 - `POST /empresas` con token de gestor → permitido.
@@ -985,6 +997,94 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
 - Ajustes responsive en listados/tablas para pantallas pequeñas (overflow, columnas y espaciado).
 - Revisar comportamiento del sidebar en móvil (cierre automático al navegar y coherencia de estado).
 - Completar y enlazar recursos informativos del footer (FAQ, términos, privacidad, contacto), dejando los no operativos como pendiente.
+
+#### Prototipo 3 (FINAL)
+
+**Fecha:** 16 de marzo del 2026  
+**Descripción:** versión final funcional del proyecto, consolidando la integración SPA–API–BD, el control de acceso por roles y el estado estable de los módulos implementados.  
+**Funcionalidades implementadas:**
+
+- Autenticación real con endpoints `/auth` (registro y login) y emisión de JWT.
+- Autorización por roles (GESTOR/CLIENTE) aplicada a la API mediante middleware.
+- Endpoints acotados al usuario bajo `/me/*` para acceso del perfil CLIENTE.
+- Módulo Empresas: CRUD completo en backend y frontend.
+- Módulo Trabajadores: CRUD backend y acceso según permisos (GESTOR en módulo completo / CLIENTE vía `/me/*`).
+- Helper `apiFetch` en frontend para centralizar `VITE_API_URL`, adjuntar JWT y unificar errores.
+- Evidencias de pruebas con Thunder Client (login, 401/403, operaciones permitidas por rol).
+
+**Pendiente / mejora futura:**
+
+- Despliegue en entorno accesible por tutores (actualmente ejecución local).
+- Completar interfaz de Incidencias.
+
+## Instalación / puesta en marcha (entorno local)
+
+### Requisitos
+
+- Node.js y npm.
+- PostgreSQL.
+
+### Variables de entorno
+
+Backend:
+
+- Copiar `.env.example` a `.env` y configurar `DATABASE_URL` (o variables equivalentes) y `JWT_SECRET`.
+
+Frontend:
+
+- Configurar `VITE_API_URL` apuntando al backend (por ejemplo `http://localhost:3000`).
+
+### Puesta en marcha
+
+1. Crear la base de datos y ejecutar scripts SQL de esquema/seed (según carpeta `backend/db`).
+2. Backend:
+   - `npm install`
+   - `npm run dev` (o el script equivalente)
+3. Frontend:
+   - `npm install`
+   - `npm run dev`
+4. Acceso en navegador:
+   - Frontend: `http://localhost:5173`
+
+**Nota:** en este prototipo final la ejecución se realiza en entorno local.
+
+## Manual de usuario y usabilidad (resumen)
+
+### Acceso
+
+- El usuario se autentica mediante login.
+- Según su rol, la aplicación muestra opciones distintas:
+  - **GESTOR:** acceso a módulos completos (Empresas, Trabajadores).
+  - **CLIENTE:** acceso a vistas acotadas a su empresa mediante `/me/*`.
+
+### Flujo básico (GESTOR)
+
+1. Iniciar sesión.
+2. Consultar listado de Empresas y acceder a detalle/operaciones disponibles.
+3. Consultar listado de Trabajadores y acceder a detalle/operaciones disponibles.
+
+### Flujo básico (CLIENTE)
+
+1. Iniciar sesión.
+2. Consultar información asociada (empresa y trabajadores) a través de la sección correspondiente.
+
+### Ayudas al usuario
+
+- Mensajes de error coherentes cuando faltan permisos (`401/403`) o no hay empresa asignada (`NO_EMPRESA_ASIGNADA`).
+- Validaciones básicas en formularios (si aplica).
+
+## Propuestas de mejora
+
+- Despliegue en un entorno accesible por el profesorado (por ejemplo hosting del frontend y backend).
+- Completar el módulo de Incidencias (CRUD e integración completa).
+- Mejorar feedback visual en operaciones (notificaciones tipo toast tras altas/ediciones/borrados).
+- Añadir recuperación de contraseña y gestión de estado de usuario (activación/cambios de rol).
+- Añadir tests automatizados para API (y/o colección de pruebas versionada).
+
+## Conclusiones
+
+El proyecto ha permitido diseñar y construir una aplicación web modular basada en una SPA (React) y una API REST (Express) conectada a PostgreSQL. El principal aprendizaje ha estado en la integración entre capas, el diseño de un modelo relacional coherente y la incorporación de autenticación/autorización por roles para proteger la información y las operaciones.  
+Como trabajo futuro queda el despliegue en un entorno accesible por terceros y la ampliación funcional de los módulos pendientes, manteniendo la misma estructura técnica y criterios de calidad aplicados en los prototipos.
 
 ## Referencias y recursos externos
 
