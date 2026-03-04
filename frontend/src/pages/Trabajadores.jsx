@@ -16,7 +16,9 @@ export default function Trabajadores() {
   const [error, setError] = useState("")
   const navigate = useNavigate()
   const { token, user } = useAuth()
+  const isCliente = user?.role === "CLIENTE"
 
+  
   async function loadTrabajadores() {
   try {
     setLoading(true)
@@ -119,11 +121,14 @@ export default function Trabajadores() {
                         <th className="py-3 pr-4">Nombre</th>
                         <th className="py-3 pr-4">Apellidos</th>
                         <th className="py-3 pr-4">DNI</th>
-                        <th className="py-3 pr-4">Acciones</th>
+                        <th className="py-3 pr-4">{isCliente ? "Ver" : "Acciones"}</th>
                         </tr>
                       </thead>
       
                       <tbody className="divide-y divide-brand-border">
+
+                        {/* recorremos los trabajadores */}
+
                         {items.map((e) => (
                           <tr key={e.id} className="align-top">
                             <td className="py-3 pr-4 text-brand-muted">{e.id}</td>
@@ -135,8 +140,20 @@ export default function Trabajadores() {
                               {e.dni || "—"}
                             </td>
                             <td className="py-3 pr-4 text-brand-text">
-                              <Button onClick={() => navigate(`/app/trabajadores/${e.id}/editar`)}>Ver</Button>
-                              <Button variant="ghost" className="ml-3" onClick={() => handleDelete(e.id)}>Eliminar</Button>
+                              {isCliente ? (
+                                <Button onClick={() => navigate(`/app/trabajadores/${e.id}`)}>Ver</Button>
+                              ) : (
+                              <>
+                                <Button onClick={() => navigate(`/app/trabajadores/${e.id}/editar`)}>Editar</Button>
+                                <Button
+                                  variant="ghost"
+                                  className="ml-3"
+                                  onClick={() => handleDelete(e.id)}
+                                >
+                                  Eliminar
+                                </Button>
+                              </>
+                              )}
                             </td>
                           </tr>
                         ))}

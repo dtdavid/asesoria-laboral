@@ -14,6 +14,8 @@ import Incidencias from './pages/Incidencias'
 import NotFound from './pages/NotFound'
 import EmpresaForm from './pages/EmpresaForm'
 import EmpresaDetalle from "./pages/EmpresaDetalle"
+import TrabajadorDetalle  from "./pages/TrabajadorDetalle"
+import TrabajadorForm from './pages/TrabajadorForm'
 
 function App() {
   
@@ -36,9 +38,9 @@ function App() {
             <Route path="empresas/:id/editar" element={<EmpresaForm />} />
             <Route path="empresas/:id" element={<EmpresaDetalle />} />
             <Route path="trabajadores" element={<Trabajadores />} />
-            <Route path="trabajadores/:id" element={<Trabajadores />} />
-            <Route path="trabajadores/nuevo" element={<Trabajadores />} />
-            <Route path="trabajadores/:id/editar" element={<Trabajadores />} />
+            <Route path="trabajadores/:id" element={<TrabajadorDetalle />} />
+            <Route path="trabajadores/nuevo" element={<TrabajadorForm />} />
+            <Route path="trabajadores/:id/editar" element={<TrabajadorForm />} /> 
             <Route path="incidencias" element={<Incidencias />} />
           </Route>
         </Route>
