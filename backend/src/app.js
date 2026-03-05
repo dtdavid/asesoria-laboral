@@ -6,7 +6,8 @@ import authRoutes from "./routes/auth.routes.js"
 import { pool } from "./db.js"
 //import { requireAuth } from "./middlewares/requireAuth.js"
 import meRoutes from "./routes/me.routes.js"
-import usuariosRoutes from "./routes/usuarios.router.js"
+import usuariosRoutes from "./routes/usuarios.routes.js"
+import { requireAuth } from "./middlewares/requireAuth.js"
 
 const app = express()
 
@@ -58,6 +59,8 @@ app.use("/me", meRoutes)
 
 // Monta el router de usuarios con role = CLIENTE"
  app.use("/usuarios", usuariosRoutes)
+
+
 
 // Ruta protegida de ejemplo para verificar que el middleware de autenticación funciona
 // app.get("/me", requireAuth, (req, res) => {

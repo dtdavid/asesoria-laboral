@@ -17,6 +17,16 @@ export async function getUserByEmail(email) {
     return result.rows[0] || null
 }
 
+// opbtenemos un usuario por su id
+
+export async function getUserById(id) {
+    const result = await pool.query(
+        `SELECT id, email, role, status, empresa_id FROM usuarios WHERE id = $1`,
+        [id]
+    )
+    return result.rows[0] || null
+}
+
 
 // creamos un nuevo usuario
 export async function createUser(payload) {
