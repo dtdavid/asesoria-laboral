@@ -7,7 +7,7 @@ import { apiFetch} from "../lib/apiFetch"
 export default function EmpresasForm() {
 
   
-  const navigate = useNavigate()
+  const navigate = useNavigate() // para redirigir después de guardar
   const { id } = useParams() // si hay id, es edición; si no, creación
   const isEdit = Boolean(id) // true si id existe, false si es undefined
    
@@ -55,8 +55,10 @@ export default function EmpresasForm() {
 
   // Validación mínima
   // Requerimos al menos razón social y CIF para crear una empresa
-
-  const canSubmit = Boolean(form.razon_social.trim() && form.cif.trim()) 
+  //console.log(form)
+  // CIF mínimo: 1 letra + 7 dígitos + 1 carácter alfanumérico (forma básica)
+  const isValidCif = /^[A-Za-z]\d{7}[A-Za-z0-9]$/.test(form.cif.trim())
+  const canSubmit = Boolean(form.razon_social.trim() && isValidCif) 
 
   //manejador checkbox
   const handleChange = (e) => {
@@ -71,18 +73,16 @@ export default function EmpresasForm() {
   const handleSubmit = async (e) => {
     e.preventDefault() // evita que el navegador recargue la página
     setError("") // reseteamos el error antes de intentar registrar
-
-    console.log(form)
+    
+    //console.log(form)
     //verificamos validación mínima antes de enviar al backend
     if (!canSubmit) {
       setError(
-        "Por favor, introduce una Razón Social y un CIF válidos para crear la empresa."
+      "Por favor, introduce una Razón Social y un CIF válidos para crear la empresa."
       )
       return
     }
-    // Si es edición, la URL es /empresas/:id con método PUT; si es creación, es /empresas con método POST
-    const url = isEdit ? `${API_URL}/empresas/${id}` : `${API_URL}/empresas`
-    const method = isEdit ? "PUT" : "POST"
+
     const payload = form
     
       try {
@@ -141,13 +141,13 @@ export default function EmpresasForm() {
 
               <div className="space-y-1">
                 <label htmlFor="razon_social" className="text-sm font-medium text-brand-text">
-                  Razón Social
+                  Razón Social<span className="text-red-600 ml-1">*</span> 
                 </label>
                 <input
                   type="text"
                   id="razon_social"
                   name ="razon_social"
-                  value={form.razon_social}
+                  value={form.razon_social ?? ""} // para evitar el error de componente controlado/no controlado cuando form.razon_social es undefined
                   onChange={handleChange}
                   placeholder="Razón Social"
                   autoComplete="organization"
@@ -159,18 +159,19 @@ export default function EmpresasForm() {
               
               <div className="space-y-1">
                 <label htmlFor="cif" className="text-sm font-medium text-brand-text">
-                  CIF
+                  CIF<span className="text-red-600 ml-1">*</span>
                 </label>
                 <input
                   type="text"
                   id="cif"
                   name="cif"
-                  value={form.cif}
+                  value={form.cif ?? ""} // para evitar el error de componente controlado/no controlado cuando form.cif es undefined  
                   onChange={handleChange}
                   placeholder="CIF"
                   autoComplete="cif"
                   className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
+                
               </div>
 
               {/* Nombre Comercial */}
@@ -183,7 +184,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="nombre_comercial"
                   name="nombre_comercial"
-                  value={form.nombre_comercial}
+                  value={form.nombre_comercial ?? ""} // para evitar el error de componente controlado/no controlado cuando form.nombre_comercial es undefined
                   onChange={handleChange}
                   placeholder="Nombre Comercial"
                   autoComplete="nombre_comercial"
@@ -201,7 +202,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="direccion"
                   name="direccion"
-                  value={form.direccion}
+                  value={form.direccion ?? ""} // para evitar el error de componente controlado/no controlado cuando form.direccion es undefined
                   onChange={handleChange}
                   placeholder="Dirección"
                   autoComplete="direccion"
@@ -219,7 +220,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="codigo_postal"
                   name="codigo_postal"
-                  value={form.codigo_postal}
+                  value={form.codigo_postal ?? ""} // para evitar el error de componente controlado/no controlado cuando form.codigo_postal es undefined
                   onChange={handleChange}
                   placeholder="Código Postal"
                   autoComplete="codigo_postal"
@@ -237,7 +238,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="ciudad"
                   name="ciudad"
-                  value={form.ciudad}
+                  value={form.ciudad ?? ""} // para evitar el error de componente controlado/no controlado cuando form.ciudad es undefined
                   onChange={handleChange}
                   placeholder="Ciudad"
                   autoComplete="ciudad"
@@ -255,7 +256,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="provincia"
                   name="provincia"
-                  value={form.provincia}
+                  value={form.provincia ?? ""} // para evitar el error de componente controlado/no controlado cuando form.provincia es undefined
                   onChange={handleChange}
                   placeholder="Provincia"
                   autoComplete="provincia"
@@ -273,7 +274,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="pais"
                   name="pais"
-                  value={form.pais}
+                  value={form.pais ?? ""} // para evitar el error de componente controlado/no controlado cuando form.pais es undefined
                   onChange={handleChange}
                   placeholder="País"
                   autoComplete="pais"
@@ -291,7 +292,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="telefono"
                   name="telefono"
-                  value={form.telefono}
+                  value={form.telefono ?? ""} // para evitar el error de componente controlado/no controlado cuando form.telefono es undefined
                   onChange={handleChange}
                   placeholder="Teléfono"
                   autoComplete="tel"
@@ -309,7 +310,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="email"
                   name="email"
-                  value={form.email}
+                  value={form.email ?? ""} // para evitar el error de componente controlado/no controlado cuando form.email es undefined
                   onChange={handleChange}
                   placeholder="Email"
                   autoComplete="email"
@@ -327,7 +328,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="codigo_cuenta_cotizacion"
                   name="codigo_cuenta_cotizacion"
-                  value={form.codigo_cuenta_cotizacion}
+                  value={form.codigo_cuenta_cotizacion ?? ""}
                   onChange={handleChange}
                   placeholder="Código Cuenta Cotización"
                   autoComplete="codigo_cuenta_cotizacion"
@@ -345,7 +346,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="convenio_colectivo"
                   name="convenio_colectivo"
-                  value={form.convenio_colectivo}
+                  value={form.convenio_colectivo ?? ""}
                   onChange={handleChange}
                   placeholder="Convenio Colectivo"
                   autoComplete="convenio_colectivo"
@@ -363,7 +364,7 @@ export default function EmpresasForm() {
                   type="text"
                   id="sector_actividad"
                   name="sector_actividad"
-                  value={form.sector_actividad}
+                  value={form.sector_actividad ?? ""}
                   onChange={handleChange}
                   placeholder="Sector de Actividad"
                   autoComplete="sector_actividad"
@@ -381,7 +382,7 @@ export default function EmpresasForm() {
                   type="checkbox"
                   id="activa"
                   name="activa"
-                  checked={form.activa}
+                  checked={Boolean(form.activa)}
                   onChange={handleChange}
                   className="w-4 h-4 text-brand-primary border border-brand-border rounded focus:ring-brand-secondary focus:ring-2 mx-2"
                 />                  

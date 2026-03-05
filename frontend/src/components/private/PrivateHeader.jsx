@@ -15,8 +15,8 @@ import Button from "../ui/Button"
 
 export default function PrivateHeader() {
   const navigate = useNavigate()
-  const { logout } = useAuth()
-
+  const { logout, user } = useAuth()
+  
   const handleLogout = () => {
     logout()
     navigate("/login", { replace: true })
@@ -35,8 +35,9 @@ export default function PrivateHeader() {
 
         {/* Usuario + acción */}
         <div className="flex items-center gap-3">
-          <span className="hidden sm:inline text-sm text-brand-muted">
-            Usuario
+          
+          <span className="text-xs sm:text-sm text-brand-muted truncate max-w-[160px] sm:max-w-none">
+            {user?.email || "—"} <span className="hidden sm:inline">({user?.role || "—"})</span>
           </span>
 
           <Button
