@@ -1,6 +1,5 @@
 import { Router } from "express"
 import { requireAuth } from "../middlewares/requireAuth.js"
-import { requireRole } from "../middlewares/requireRole.js"
 import { getMyEmpresa, getMyTrabajadores } from "../controllers/me.controller.js"
 
 

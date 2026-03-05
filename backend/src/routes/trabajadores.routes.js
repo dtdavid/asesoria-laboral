@@ -26,7 +26,7 @@ router.post("/", requireAuth, requireRole("GESTOR"), addTrabajador)
 router.put("/:id", requireAuth, requireRole("GESTOR"), editTrabajador)
 
 // DELETE /trabajadores/:id
-router.delete("/:id", removeTrabajador)
+router.delete("/:id", requireAuth, requireRole("GESTOR"), removeTrabajador)
 
 
 export default router
