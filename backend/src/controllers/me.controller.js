@@ -1,5 +1,6 @@
 import { getEmpresaById } from "../services/empresas.service.js"
 import { getTrabajadores } from "../services/trabajadores.service.js"
+import { getIncidenciasByEmpresaId } from "../services/incidencias.service.js"
 
 /**
  * GET /me/empresa
@@ -57,4 +58,33 @@ export async function getMyTrabajadores(req, res, next) {
   } catch (err) {
     next(err)
   }
+}
+
+/**
+ * GET /me/incidencias
+ * Devuelve incidencias asociadas a una empresa
+ */
+
+export async function getMyIncidencias(req, res, next) {
+
+  try {
+    const empresaId = req.user?.empresa_id
+
+    if (empresaId == 0) {
+
+      return res.status(403).json({
+        ok: false,
+        code: "NO_EMPRESA_ASIGNADA",
+        message: "Cliente pendiente de asignación.",
+        details: { empresa_id: null },
+      })
+    }
+
+    const incidencias = await getIncidenciasByEmpresaId(empresaId)
+     return res.status(200).json({ ok: true, data: incidencias })
+  } 
+  catch (error) {
+    next(error)
+  }
+
 }
