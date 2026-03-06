@@ -1029,6 +1029,15 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
 - Se añade `incidencias.service.js` con `getIncidenciasByEmpresaId(empresa_id)` para consultar incidencias filtrando por empresa y ordenando por fecha.
 - Se actualiza el seed `07_incidencias_seed.sql` para generar datos de demo (dos incidencias por trabajador) y permitir su re-ejecución evitando duplicados (TRUNCATE + RESTART IDENTITY).
 
+**Endpoint de backoffice (GESTOR) para Incidencias:**
+
+- `GET /incidencias?empresa_id=<id>` (requiere JWT + rol GESTOR).
+- Valida `empresa_id` como entero positivo; si es inválido devuelve `400` con `VALIDATION_ERROR`.
+- Devuelve `{ ok: true, data: [...] }` con incidencias filtradas por `empresa_id` y ordenadas por fecha.
+- Implementación: se crea `incidencias.routes.js` y `incidencias.controller.js`, reutilizando el servicio `getIncidenciasByEmpresaId`.
+
+**Objetivo:** permitir al perfil GESTOR consultar incidencias por empresa desde backoffice (interfaz prevista), sin depender de endpoints acotados al usuario (`/me/*`).
+
 **Pendiente / mejora futura:**
 
 - Despliegue en entorno accesible por tutores (actualmente ejecución local).
