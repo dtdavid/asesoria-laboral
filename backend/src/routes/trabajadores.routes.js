@@ -1,5 +1,5 @@
-import { Router } from "express";
-import { listTrabajadores, getTrabajador, addTrabajador, removeTrabajador, editTrabajador } from "../controllers/trabajadores.controller.js";
+import { Router } from "express"
+import { listTrabajadores, getTrabajador, addTrabajador, removeTrabajador, editTrabajador } from "../controllers/trabajadores.controller.js"
 import { requireAuth } from "../middlewares/requireAuth.js"
 import { requireRole } from "../middlewares/requireRole.js"
 
