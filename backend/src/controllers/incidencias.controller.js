@@ -8,7 +8,7 @@ export async function listIncidencias(req, res, next) {
         const empresa_id = Number(req.query.empresa_id)
 
         if(!Number.isInteger(empresa_id) || empresa_id <= 0) {
-            return resizeBy.status(400).json({
+            return res.status(400).json({
                 ok: false,
                 code: "VALIDATION_ERROR",
                 message: "ID de empresa inválido",
