@@ -77,6 +77,8 @@
       - [Helper de llamadas a la API (`apiFetch`)](#helper-de-llamadas-a-la-api-apifetch)
       - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
     - [Prototipo 3 (FINAL)](#prototipo-3-final)
+      - [Autenticación con JWT (justificación breve)](#autenticación-con-jwt-justificación-breve)
+      - [JWT (estructura del token)](#jwt-estructura-del-token)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
   - [Requisitos](#requisitos)
   - [Variables de entorno](#variables-de-entorno)
@@ -86,6 +88,7 @@
   - [Flujo básico (GESTOR)](#flujo-básico-gestor)
   - [Flujo básico (CLIENTE)](#flujo-básico-cliente)
   - [Ayudas al usuario](#ayudas-al-usuario)
+    - [Evidencias (Thunder Client)](#evidencias-thunder-client)
 - [Propuestas de mejora](#propuestas-de-mejora)
 - [Conclusiones](#conclusiones)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
@@ -1024,6 +1027,27 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
   - Frontend: página de asignaciones con selección de cliente/empresa y ejecución del `PATCH`.
 - Evidencias de pruebas con Thunder Client (login, 401/403, operaciones permitidas por rol).
 
+##### Autenticación con JWT (justificación breve)
+
+Se ha elegido JWT para la autenticación porque permite un modelo **sin estado**: el backend valida el token en cada petición sin necesidad de mantener sesión en servidor. Esto simplifica la integración SPA–API, facilita el control de acceso por roles (GESTOR/CLIENTE) y encaja con una API REST basada en cabeceras (`Authorization: Bearer <token>`).
+
+Alternativas consideradas (a nivel conceptual):
+
+- **Sesiones con cookies** (sesión en servidor): opción válida, pero requiere almacenar y gestionar estado de sesión en el backend.
+- **OAuth2/OpenID Connect**: se usa cuando se delega autenticación en un proveedor externo; no es necesario para el alcance actual del proyecto.
+
+##### JWT (estructura del token)
+
+El JWT se compone de tres partes separadas por puntos: `header.payload.signature`.
+
+- **Header**: indica el tipo de token y el algoritmo de firma (por ejemplo `HS256`).
+- **Payload**: incluye las claims usadas por la aplicación (p. ej. `user_id`, `role`, `empresa_id`) y marcas de tiempo como `iat/exp`.
+- **Signature**: firma generada con `JWT_SECRET` que permite al backend verificar que el token no ha sido manipulado.
+
+> Nota: el payload es legible (no cifrado), por lo que no se deben incluir datos sensibles en él.
+
+![Estructura de un JWT (header/payload/signature)](img/jwt-decoder.png)
+
 **Implementación destacada (Incidencias):**
 
 - Se añade `incidencias.service.js` con `getIncidenciasByEmpresaId(empresa_id)` para consultar incidencias filtrando por empresa y ordenando por fecha.
@@ -1099,6 +1123,25 @@ Frontend:
 
 - Mensajes de error coherentes cuando faltan permisos (`401/403`) o no hay empresa asignada (`NO_EMPRESA_ASIGNADA`).
 - Validaciones básicas en formularios (si aplica).
+
+##### Evidencias (Thunder Client)
+
+A continuación se incluyen capturas representativas de las pruebas de autenticación y autorización:
+
+- Login correcto (200) y obtención de token.  
+  ![Thunder login 200](img/thunder/thunder-login-200.png)
+
+- Acceso sin token a endpoint protegido (401).  
+  ![Thunder 401](img/thunder/thunder-empresas-401.png)
+
+- Acceso con rol CLIENTE a módulo restringido (403).  
+  ![Thunder 403 cliente](img/thunder/thunder-empresas-403-cliente.png)
+
+- Acceso CLIENTE a recursos propios vía /me (200).  
+  ![Thunder /me incidencias 200](img/thunder/thunder-me-incidencias-200.png)
+
+* Acceso CLIENTE a recursos empresa no asignada /me/empresa (403).  
+   ![Thunder no empresa 403](img/thunder/thunder-no-empresa-403.png)
 
 ## Propuestas de mejora
 
