@@ -8,7 +8,7 @@ import { pool } from "../db.js";
 //optenemos un usuario por su role
 export async function getUsuariosByRole(role){
     const result = await pool.query(
-        `SELECT id, email, role, status, empresa_id FROM usuarios WHERE role = $1 ORDER BY status = 'PENDIENTE' DESC`,
+        `SELECT id, email, role, status, empresa_id FROM usuarios WHERE role = $1 ORDER BY (status = 'PENDIENTE') DESC, id ASC`,
         [role]
     )
     return result.rows 

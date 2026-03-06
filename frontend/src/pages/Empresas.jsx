@@ -105,7 +105,7 @@ export default function Empresas() {
           </p>
           <p className="mt-2 text-sm text-brand-muted">
             Comprueba que el backend está arrancado en{" "}
-            <span className="font-medium">{API_URL}</span>.
+            <span className="font-medium">{apiFetch}</span>.
           </p>
         </section>
       ) : (

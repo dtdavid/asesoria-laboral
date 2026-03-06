@@ -12,7 +12,8 @@ import { getUsuariosByRole } from "../services/listUsuarios.service.js"
  export async function listUsuarios(req, res, next) {
     try {
        const role = req.query.role
-       if(!role || (role !== "CLIENTE" && role !== "GESTOR")){
+    //    if(!role || (role !== "CLIENTE" && role !== "GESTOR"))
+       if(role  !== "CLIENTE" ){
             return res.status(400).json({
                 ok: false,
                 code:"VALIDATION_ERROR",

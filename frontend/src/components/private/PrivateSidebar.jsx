@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom"
+import { useAuth } from "../../context/AuthContext"
 
 /**
  * Sidebar del área privada
@@ -12,6 +13,9 @@ import { NavLink } from "react-router-dom"
  * Desktop: visible siempre
  */
 export default function PrivateSidebar() {
+
+  const { user } = useAuth()
+  const isGestor = user?.role === "GESTOR"
   // Clase base común a todos los enlaces
   const baseItem =
     "block px-3 py-2 rounded-lg text-sm font-medium transition-colors"
@@ -30,6 +34,11 @@ export default function PrivateSidebar() {
       <NavLink to="/app" end className={linkClass} onClick={onNavigate}>
         Dashboard
       </NavLink>
+      {isGestor && (
+        <NavLink to="/app/asignaciones" className={linkClass} onClick={onNavigate}>
+          Asignaciones
+        </NavLink>
+      )}
       <NavLink to="/app/empresas" className={linkClass} onClick={onNavigate}>
         Empresas
       </NavLink>

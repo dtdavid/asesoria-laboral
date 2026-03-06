@@ -16,6 +16,7 @@ import EmpresaForm from './pages/EmpresaForm'
 import EmpresaDetalle from "./pages/EmpresaDetalle"
 import TrabajadorDetalle  from "./pages/TrabajadorDetalle"
 import TrabajadorForm from './pages/TrabajadorForm'
+import AsignarEmpresas from './pages/AsignarEmpresa'
 
 function App() {
   
@@ -42,6 +43,7 @@ function App() {
             <Route path="trabajadores/nuevo" element={<TrabajadorForm />} />
             <Route path="trabajadores/:id/editar" element={<TrabajadorForm />} /> 
             <Route path="incidencias" element={<Incidencias />} />
+            <Route path = "asignaciones" element = {<AsignarEmpresas />} />
           </Route>
         </Route>
 

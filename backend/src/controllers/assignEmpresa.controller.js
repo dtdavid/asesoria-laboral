@@ -1,4 +1,4 @@
-import { assignEmpresaToUsuario } from "../services/assingEmpresa.service.js"
+import { assignEmpresaToUsuario } from "../services/assignEmpresa.service.js"
 import  { getUserById } from "../services/usuarios.service.js"
 import { getEmpresaById } from "../services/empresas.service.js"
 
@@ -38,7 +38,7 @@ export async function assignEmpresa(req, res, next) {
             })
         }
         const user = await getUserById(id)
-        console.log("assignEmpresa user:", user)
+        
         if(!user){
             return res.status(404).json({
                 ok:false, 
