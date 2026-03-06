@@ -1001,21 +1001,39 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
 #### Prototipo 3 (FINAL)
 
 **Fecha:** 16 de marzo del 2026  
-**Descripción:** versión final funcional del proyecto, consolidando la integración SPA–API–BD, el control de acceso por roles y el estado estable de los módulos implementados.  
+**Descripción:** versión final funcional del proyecto, consolidando la integración SPA–API–BD, el control de acceso por roles y el estado estable de los módulos implementados.
+
 **Funcionalidades implementadas:**
 
 - Autenticación real con endpoints `/auth` (registro y login) y emisión de JWT.
+- Integración de JWT en frontend mediante `AuthContext` y persistencia en `localStorage`.
 - Autorización por roles (GESTOR/CLIENTE) aplicada a la API mediante middleware.
 - Endpoints acotados al usuario bajo `/me/*` para acceso del perfil CLIENTE.
-- Módulo Empresas: CRUD completo en backend y frontend.
+  - `GET /me/empresa`
+  - `GET /me/trabajadores`
+  - `GET /me/incidencias` (devuelve incidencias de la empresa del usuario; si no hay empresa asignada → `403 NO_EMPRESA_ASIGNADA`)
+- Módulo Empresas: CRUD completo en backend y frontend (acceso GESTOR).
 - Módulo Trabajadores: CRUD backend y acceso según permisos (GESTOR en módulo completo / CLIENTE vía `/me/*`).
-- Helper `apiFetch` en frontend para centralizar `VITE_API_URL`, adjuntar JWT y unificar errores.
+- Helper `apiFetch` en frontend para centralizar `VITE_API_URL`, adjuntar JWT en `Authorization: Bearer <token>` y unificar el tratamiento de errores.
+- Mejora de la UI privada:
+  - visualización de usuario/rol en el header,
+  - footer dentro del layout privado,
+  - dashboard con tarjetas navegables a secciones.
+- Flujo de asignación de empresa a cliente (solo GESTOR):
+  - Backend: `GET /usuarios?role=CLIENTE` y `PATCH /usuarios/:id/asignar-empresa` (asigna `empresa_id` y activa el usuario).
+  - Frontend: página de asignaciones con selección de cliente/empresa y ejecución del `PATCH`.
 - Evidencias de pruebas con Thunder Client (login, 401/403, operaciones permitidas por rol).
+
+**Implementación destacada (Incidencias):**
+
+- Se añade `incidencias.service.js` con `getIncidenciasByEmpresaId(empresa_id)` para consultar incidencias filtrando por empresa y ordenando por fecha.
+- Se actualiza el seed `07_incidencias_seed.sql` para generar datos de demo (dos incidencias por trabajador) y permitir su re-ejecución evitando duplicados (TRUNCATE + RESTART IDENTITY).
 
 **Pendiente / mejora futura:**
 
 - Despliegue en entorno accesible por tutores (actualmente ejecución local).
-- Completar interfaz de Incidencias.
+- Completar la interfaz de Incidencias en la SPA (si aún no está integrada al mismo nivel que Empresas/Trabajadores).
+- Seguridad adicional: limitación de intentos de login y refresco de token / caducidad configurable.
 
 ## Instalación / puesta en marcha (entorno local)
 
@@ -1080,6 +1098,10 @@ Frontend:
 - Mejorar feedback visual en operaciones (notificaciones tipo toast tras altas/ediciones/borrados).
 - Añadir recuperación de contraseña y gestión de estado de usuario (activación/cambios de rol).
 - Añadir tests automatizados para API (y/o colección de pruebas versionada).
+- Verificación y asociación automatizada: permitir que el cliente vincule su cuenta a una empresa mediante verificación por email o código de invitación generado por la asesoría.
+- Mejora UX en asignaciones: añadir buscador y filtros en listados y selects, mostrando más información (razón social, CIF) para reducir errores de selección.
+- Gestión de estados y auditoría: ampliar estados del usuario (PENDIENTE/ACTIVO/BLOQUEADO) y registrar quién realizó asignaciones o cambios relevantes.
+- Seguridad adicional: limitar intentos de login y añadir refresco de token / caducidad configurable.
 
 ## Conclusiones
 
