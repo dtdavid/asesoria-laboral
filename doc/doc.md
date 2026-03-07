@@ -1169,8 +1169,17 @@ A continuación se incluyen capturas representativas de las pruebas de autentica
 - Acceso CLIENTE a recursos propios vía /me (200).  
   ![Thunder /me incidencias 200](img/thunder/thunder-me-incidencias-200.png)
 
-* Acceso CLIENTE a recursos empresa no asignada /me/empresa (403).  
+- Acceso CLIENTE a recursos empresa no asignada /me/empresa (403).  
    ![Thunder no empresa 403](img/thunder/thunder-no-empresa-403.png)
+
+- Backoffice incidencias por empresa (GESTOR) → 200.  
+  ![Thunder incidencias gestor 200](doc/img/thunder/thunder-incidencias-gestor-200.png)
+
+- Backoffice incidencias por empresa (CLIENTE) → 403.  
+  ![Thunder incidencias cliente 403](doc/img/thunder/thunder-incidencias-cliente-403.png)
+
+- Validación de empresa_id inválido → 400 (VALIDATION_ERROR).  
+  ![Thunder incidencias 400](doc/img/thunder/thunder-incidencias-validacion-400.png)
 
 ## Propuestas de mejora
 
