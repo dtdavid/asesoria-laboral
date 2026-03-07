@@ -71,11 +71,11 @@ export default function Registro() {
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="******"
+              placeholder="********"
               autoComplete="new-password"
               className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             />
-            <p className="text-xs text-brand-muted">Mínimo 6 caracteres</p>
+            <p className="text-xs text-brand-muted">Mínimo 8 caracteres</p>
           </div>
 
           <div className="space-y-1">
