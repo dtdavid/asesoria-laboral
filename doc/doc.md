@@ -79,6 +79,7 @@
     - [Prototipo 3 (FINAL)](#prototipo-3-final)
       - [Autenticación con JWT (justificación breve)](#autenticación-con-jwt-justificación-breve)
       - [JWT (estructura del token)](#jwt-estructura-del-token)
+      - [Incidencias (GESTOR) por empresa](#incidencias-gestor-por-empresa)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
   - [Requisitos](#requisitos)
   - [Variables de entorno](#variables-de-entorno)
@@ -1060,7 +1061,35 @@ El JWT se compone de tres partes separadas por puntos: `header.payload.signature
 - Devuelve `{ ok: true, data: [...] }` con incidencias filtradas por `empresa_id` y ordenadas por fecha.
 - Implementación: se crea `incidencias.routes.js` y `incidencias.controller.js`, reutilizando el servicio `getIncidenciasByEmpresaId`.
 
-**Objetivo:** permitir al perfil GESTOR consultar incidencias por empresa desde backoffice (interfaz prevista), sin depender de endpoints acotados al usuario (`/me/*`).
+##### Incidencias (GESTOR) por empresa
+
+**Objetivo:** permitir que el perfil GESTOR consulte incidencias de una empresa concreta desde un backoffice, sin depender de endpoints acotados al usuario (`/me/*`).
+
+**Backend implementado**
+
+- Endpoint (GESTOR): `GET /incidencias?empresa_id=<id>`
+- Seguridad: protegido con `requireAuth` + `requireRole("GESTOR")`.
+- Validación: `empresa_id` debe ser un entero mayor que 0; en caso contrario devuelve `400` con `VALIDATION_ERROR`.
+- Consulta: se reutiliza el servicio de incidencias con una consulta SQL que:
+  - hace `JOIN` con **empresas** para incluir `razon_social`,
+  - y `LEFT JOIN` con **trabajadores** para traer nombre/apellidos cuando exista `trabajador_id`, manteniendo incidencias con `trabajador_id = NULL`.
+
+**Campos devueltos (resumen):**
+
+- Empresa: `empresa_id`, `razon_social`
+- Trabajador (si aplica): `trabajador_id`, `trabajador_nombre`, `trabajador_apellidos`
+- Incidencia: `tipo`, `estado`, `fecha_inicio`, `fecha_fin`, `descripcion`, `created_at`, `updated_at`
+
+**Respuesta:**
+
+- `200` → `{ ok: true, data: [...] }` (array; puede venir vacío si no hay incidencias)
+
+**Frontend (vista gestor)**
+
+- Se carga el listado de empresas (`GET /empresas`) para poblar un selector.
+- Al seleccionar una empresa, se consulta `GET /incidencias?empresa_id=...`.
+- Se renderiza una tabla con: empresa (id + razón social), tipo, trabajador (nombre/apellidos), estado y fecha de inicio.
+- Se deja un placeholder para “Acciones / Nueva incidencia” como base de un CRUD completo en una evolución posterior.
 
 **Pendiente / mejora futura:**
 
