@@ -92,6 +92,9 @@
   - [Ayudas al usuario](#ayudas-al-usuario)
     - [Evidencias (Thunder Client)](#evidencias-thunder-client)
 - [Propuestas de mejora](#propuestas-de-mejora)
+- [Licencia del proyecto y licencias de terceros](#licencia-del-proyecto-y-licencias-de-terceros)
+  - [Backend](#backend)
+  - [Frontend](#frontend)
 - [Conclusiones](#conclusiones)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
   - [Documentación oficial](#documentación-oficial)
@@ -1225,6 +1228,36 @@ A continuación se incluyen capturas representativas de las pruebas de autentica
 - Mejora UX en asignaciones: añadir buscador y filtros en listados y selects, mostrando más información (razón social, CIF) para reducir errores de selección.
 - Gestión de estados y auditoría: ampliar estados del usuario (PENDIENTE/ACTIVO/BLOQUEADO) y registrar quién realizó asignaciones o cambios relevantes.
 - Seguridad adicional: limitar intentos de login y añadir refresco de token / caducidad configurable.
+
+## Licencia del proyecto y licencias de terceros
+
+Este proyecto se publica bajo licencia **MIT** (véase el archivo `LICENSE` en la raíz del repositorio).
+
+A continuación se resumen las principales dependencias de terceros utilizadas y su licencia, según la documentación oficial de cada proyecto:
+
+### Backend
+
+- `express`: MIT
+- `cors`: MIT
+- `pg` (node-postgres): MIT
+- `jsonwebtoken`: MIT
+- `dotenv`: BSD-2-Clause
+- `bcryptjs`: BSD-3-Clause
+- `nodemon` (devDependency): MIT
+
+### Frontend
+
+- `react` / `react-dom`: MIT
+- `react-router-dom`: MIT
+- `vite` / `@vitejs/plugin-react`: MIT
+- `tailwindcss`: MIT
+- `postcss`: MIT
+- `autoprefixer`: MIT
+- `eslint` / `@eslint/js` / `eslint-plugin-react-hooks` / `eslint-plugin-react-refresh`: MIT
+- `globals`: MIT
+- `@types/react` / `@types/react-dom`: MIT
+
+**Nota sobre iconos (`react-icons`):** es un agregador de librerías de iconos. La licencia final depende del set concreto de iconos utilizado (MIT/Apache/CC BY, etc.). En este proyecto se usa como dependencia de interfaz y se revisará la licencia del set concreto si se amplía su uso o se redistribuyen assets.
 
 ## Conclusiones
 
