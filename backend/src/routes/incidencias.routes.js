@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { listIncidencias } from "../controllers/incidencias.controller.js"
+import { listIncidencias, addIncidencia, getIncidencia } from "../controllers/incidencias.controller.js"
 import { requireAuth } from "../middlewares/requireAuth.js"
 import { requireRole } from "../middlewares/requireRole.js"
 
@@ -10,6 +10,18 @@ const router = Router()
 // listar incidencias a partir de una empresa_id
 
 router.get("/", requireAuth, requireRole("GESTOR"), listIncidencias)
+
+// obtener incidencia por id
+
+router.get("/:id", requireAuth, requireRole("GESTOR"), getIncidencia)
+
+// añadir incidencia
+
+router.post("/", requireAuth, requireRole("GESTOR"), addIncidencia)
+
+
+
+
 
 
 export default router
