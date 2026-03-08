@@ -80,6 +80,7 @@
       - [Autenticación con JWT (justificación breve)](#autenticación-con-jwt-justificación-breve)
       - [JWT (estructura del token)](#jwt-estructura-del-token)
       - [Incidencias (GESTOR) por empresa](#incidencias-gestor-por-empresa)
+      - [CRUD de Incidencias (perfil GESTOR)](#crud-de-incidencias-perfil-gestor)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
   - [Requisitos](#requisitos)
   - [Variables de entorno](#variables-de-entorno)
@@ -1097,6 +1098,23 @@ El JWT se compone de tres partes separadas por puntos: `header.payload.signature
 - Completar la interfaz de Incidencias en la SPA (si aún no está integrada al mismo nivel que Empresas/Trabajadores).
 - Seguridad adicional: limitación de intentos de login y refresco de token / caducidad configurable.
 
+##### CRUD de Incidencias (perfil GESTOR)
+
+Se completa el CRUD de incidencias para el perfil **GESTOR** bajo `/incidencias`. Todas las rutas requieren JWT y `requireRole("GESTOR")`.
+
+- `GET /incidencias?empresa_id=<id>`: listado filtrado por empresa (valida `empresa_id`).
+- `POST /incidencias`: crea incidencia. Obligatorios `empresa_id`, `tipo`, `fecha_inicio`; opcionales `trabajador_id` (nullable), `estado` (por defecto `ABIERTA`), `fecha_fin`, `descripcion`.
+  - `400` `VALIDATION_ERROR` si faltan campos o son inválidos.
+  - `409` `FK_ERROR` si `empresa_id` o `trabajador_id` no existen (FK 23503).
+- `GET /incidencias/:id`: detalle por id (`400` si id inválido, `404` si no existe).
+- `PUT /incidencias/:id`: actualización (valida id y campos; `updated_at = NOW()`; `404` si no existe; `409` `FK_ERROR` si hay FK inválida).
+- `DELETE /incidencias/:id`: borrado (`204` si borra; `404` si no existe; `400` si id inválido).
+
+**Endpoint acotado al usuario (perfil CLIENTE):**
+
+- `GET /me/incidencias`: devuelve incidencias de la empresa asociada al token (`req.user.empresa_id`).  
+  Si no hay empresa asignada → `403` `NO_EMPRESA_ASIGNADA`.
+
 ## Instalación / puesta en marcha (entorno local)
 
 ### Requisitos
@@ -1173,13 +1191,28 @@ A continuación se incluyen capturas representativas de las pruebas de autentica
    ![Thunder no empresa 403](img/thunder/thunder-no-empresa-403.png)
 
 - Backoffice incidencias por empresa (GESTOR) → 200.  
-  ![Thunder incidencias gestor 200](doc/img/thunder/thunder-incidencias-gestor-200.png)
+  ![Thunder incidencias gestor 200](img/thunder/thunder-incidencias-gestor-200.png)
 
 - Backoffice incidencias por empresa (CLIENTE) → 403.  
-  ![Thunder incidencias cliente 403](doc/img/thunder/thunder-incidencias-cliente-403.png)
+  ![Thunder incidencias cliente 403](img/thunder/thunder-incidencias-cliente-403.png)
 
 - Validación de empresa_id inválido → 400 (VALIDATION_ERROR).  
-  ![Thunder incidencias 400](doc/img/thunder/thunder-incidencias-validacion-400.png)
+  ![Thunder incidencias 400](img/thunder/thunder-incidencias-validacion-400.png)
+
+- CRUD Incidencias (GESTOR): alta (201).  
+  ![Thunder incidencias POST 201](img/thunder/thunder-incidencias-post-201.png)
+
+- CRUD Incidencias (GESTOR): actualización (200).  
+  ![Thunder incidencias PUT 200](img/thunder/thunder-incidencias-put-200.png)
+
+- CRUD Incidencias (GESTOR): borrado (204).  
+  ![Thunder incidencias DELETE 204](img/thunder/thunder-incidencias-delete-204.png)
+
+- Incidencias (GESTOR): detalle por id (200).  
+  ![Thunder incidencias GET id 200](img/thunder/thunder-incidencias-getid-200.png)
+
+- Incidencias (GESTOR): no encontrado (404).  
+  ![Thunder incidencias 404](img/thunder/thunder-incidencias-notfound-404.png)
 
 ## Propuestas de mejora
 
