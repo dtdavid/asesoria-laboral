@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { listIncidencias, addIncidencia, getIncidencia } from "../controllers/incidencias.controller.js"
+import { listIncidencias, addIncidencia, getIncidencia, editIncidencia, removeIncidencia } from "../controllers/incidencias.controller.js"
 import { requireAuth } from "../middlewares/requireAuth.js"
 import { requireRole } from "../middlewares/requireRole.js"
 
@@ -19,9 +19,13 @@ router.get("/:id", requireAuth, requireRole("GESTOR"), getIncidencia)
 
 router.post("/", requireAuth, requireRole("GESTOR"), addIncidencia)
 
+// actualizar incidencia
 
+router.put("/:id", requireAuth, requireRole("GESTOR"), editIncidencia)
 
+// eliminar incidencia
 
+router.delete("/:id", requireAuth, requireRole("GESTOR"), removeIncidencia)
 
 
 export default router

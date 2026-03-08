@@ -98,3 +98,39 @@ export async function createIncidencia(payload){
 }
 
 
+// PUT actualizar incidencia de trabajador por id
+
+export async function updateIncidenciaById(id, payload){
+    const {
+        tipo, 
+        estado, 
+        fecha_inicio,
+        trabajador_id = null,
+        fecha_fin = null,
+        descripcion = null
+    } = payload
+    const result = await pool.query(
+        `UPDATE incidencias
+        SET tipo = $1,
+        estado = $2, 
+        fecha_inicio = $3, 
+        trabajador_id = $4, 
+        fecha_fin = $5, 
+        descripcion = $6,  
+        updated_at = NOW()
+        WHERE id = $7
+        RETURNING id, tipo, estado, fecha_inicio, trabajador_id, fecha_fin, descripcion, updated_at`,
+        [tipo, estado, fecha_inicio, trabajador_id, fecha_fin, descripcion, id]
+    )
+    return result.rows[0] || null // devuelve la incidencia actualizado o null si no se ha encontrado
+}
+
+// DELETE eliminar incidencia por id
+
+export async function deleteIncidenciaById(id){
+    const result = await pool.query(
+        `DELETE FROM incidencias WHERE id = $1`,
+         [id]
+    )
+    return result.rowCount // 1 si se ha eliminado (204), 0 si no se ha encontrado (404)
+}

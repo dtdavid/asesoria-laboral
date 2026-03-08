@@ -1,6 +1,7 @@
-import { getIncidenciasByEmpresaId, createIncidencia, getIncidenciaById } from "../services/incidencias.service.js"
+import { getIncidenciasByEmpresaId, createIncidencia, getIncidenciaById, updateIncidenciaById, deleteIncidenciaById } from "../services/incidencias.service.js"
 
 // listar incidencia por empresa a partir de empresa_id
+
 export async function listIncidencias(req, res, next) {
 
     try {
@@ -70,8 +71,7 @@ export async function addIncidencia(req, res, next){
                 details: { field: "trabajador_id", value: trabajador_id },
             })
             }
-        }
-            
+        }  
 
         //paso el payload con la validación numérica del empresa_id y trabajador_id
         const payload = { ...req.body, empresa_id: empresa_id_num, trabajador_id: trabajador_id_num }
@@ -133,6 +133,118 @@ export async function getIncidencia(req, res, next){
             ok:true, 
             data: incidencia
         })
+
+    } catch (error) {
+        next(error)
+    }
+}
+
+// actualizar incidencia por id
+
+export async function editIncidencia(req, res, next){
+    try {
+        
+        const id = Number(req.params.id)
+        if(!Number.isInteger(id) || id <= 0){
+            return res.status(400).json({
+                ok:false,
+                code: "VALIDATION_ERROR",
+                message: "ID de incidencia inválido",
+                details: { field: "id", value: req.params.id },
+                 //error: "ID de incidencia inválido"
+            })
+        }
+        const { tipo, estado, fecha_inicio} = req.body
+        if(!tipo|| !estado || !fecha_inicio){
+            return res.status(400).json({
+                ok: false,
+                code: "VALIDATION_ERROR",
+                message: "Campos obligatorios: tipo, estado, fecha_inicio",
+                details: { 
+                    missing_fields: ["tipo", "estado", "fecha_inicio"].filter(f => !req.body[f]) },
+                    //error: "Campos obligatorios: tipo, estado, fecha_inicio"
+            })
+        }
+        const { trabajador_id } = req.body
+        let trabajador_id_num = null
+
+        if(trabajador_id != null && trabajador_id !== ""){
+            trabajador_id_num = Number(trabajador_id)
+            if (!Number.isInteger(trabajador_id_num) || trabajador_id_num <= 0)
+         {
+            return res.status(400).json({
+                ok:false,
+                code: "VALIDATION_ERROR",
+                message: "ID del trabajador inválido.",
+                details: { 
+                    field: "trabajador_id", 
+                    value: trabajador_id },
+                    // error: Id del trabajador inválido.
+            })
+            }
+        }
+        const payload = {...req.body, trabajador_id: trabajador_id_num }
+        const updated = await updateIncidenciaById(id, payload)
+        if(!updated){
+            return res.status(404).json({
+                ok: false,
+                code: "NOT_FOUND",
+                message: "Incidencia no encontrada",
+                details: {id},
+                // error: "Incidencia no encontrada"
+            })
+        }
+        return res.status(200).json({
+                ok: true,
+                data:updated
+        })
+
+    } catch (error) {
+        if(error?.code === "23503"){
+            return res.status(409).json({
+                ok: false,
+                code: "FK_ERROR",
+                message: "trabajador_id no existe",
+                details: {
+                    field: "trabajador_id",
+                    value: req.body.trabajador_id },
+                    // error "Error en la FK trabajador_id"
+            })
+        }
+        next(error)
+    }
+}
+
+// eliminación de una incidencia por id
+
+export async function removeIncidencia(req, res, next){
+    try {
+        const id = Number(req.params.id)
+
+        if(!Number.isInteger(id) || id <= 0){
+            return res.status(400).json({
+                ok:false,
+                code: "VALIDATION_ERROR",
+                message: "ID de incidencia inválido",
+                details: { 
+                    field: "id", 
+                    value: req.params.id },
+                    //error: "ID de incidencia inválido"
+            })
+        }
+        const deleted = await deleteIncidenciaById(id)
+        
+        if(deleted === 0){
+            return res.status(404).json({
+                ok:false,
+                code: "NOT_FOUND",
+                message: "Incidencia no encontrada",
+                details: {id},
+                //error: "Incidencia no encontrada"
+            })
+        }
+
+        return res.status(204).send()
 
     } catch (error) {
         next(error)
