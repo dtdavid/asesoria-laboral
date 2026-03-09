@@ -77,6 +77,7 @@
       - [Helper de llamadas a la API (`apiFetch`)](#helper-de-llamadas-a-la-api-apifetch)
       - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
     - [Prototipo 3 (FINAL)](#prototipo-3-final)
+      - [Vista GESTOR – Incidencias (frontend)](#vista-gestor--incidencias-frontend)
       - [Autenticación con JWT (justificación breve)](#autenticación-con-jwt-justificación-breve)
       - [JWT (estructura del token)](#jwt-estructura-del-token)
       - [Incidencias (GESTOR) por empresa](#incidencias-gestor-por-empresa)
@@ -1017,6 +1018,36 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
   - Frontend: página de asignaciones con selección de cliente/empresa y ejecución del `PATCH`.
 - Evidencias de pruebas con Thunder Client (login, 401/403, operaciones permitidas por rol).
 
+##### Vista GESTOR – Incidencias (frontend)
+
+Se implementa la gestión de incidencias en la SPA para el perfil **GESTOR**, consumiendo el CRUD de `/incidencias` y reutilizando `apiFetch` para unificar URL base, JWT y errores.
+
+**Listado por empresa**
+
+- Se carga el listado de empresas (`GET /empresas`) para poblar un selector.
+- Al seleccionar una empresa, se consultan incidencias con `GET /incidencias?empresa_id=<id>` y se muestran en una tabla.
+
+**Acciones por fila (GESTOR)**
+
+- **Ver detalle:** navegación a `/app/incidencias/:id`, consumiendo `GET /incidencias/:id`.
+- **Eliminar:** confirmación con `window.confirm` y borrado mediante `DELETE /incidencias/:id`. Tras eliminar, se recarga el listado de la empresa seleccionada para reflejar el cambio.
+
+**Detalle de incidencia (`IncidenciaDetalle.jsx`)**
+
+- Vista de lectura con campos principales (empresa, trabajador, tipo, estado, fechas y descripción).
+- Incluye navegación de “Volver” y acceso a “Editar” si aplica.
+
+**Formulario (`IncidenciaForm.jsx`)**
+
+- **Crear:** desde `/app/incidencias/nueva` con `POST /incidencias`.
+- **Editar:** desde `/app/incidencias/:id/editar` con `GET /incidencias/:id` + `PUT /incidencias/:id`.
+- Validación mínima en frontend: `empresa_id`, `tipo` y `fecha_inicio` obligatorios.
+- Normalización antes de enviar: `empresa_id` a `Number` y `trabajador_id` opcional a `Number`/`null`.
+
+**Mensajes de confirmación (flash)**
+
+- Tras crear/editar, se navega al listado `/app/incidencias` incluyendo un mensaje en `state.flash` (por ejemplo “Incidencia creada/actualizada”).
+
 ##### Autenticación con JWT (justificación breve)
 
 Se ha elegido JWT para la autenticación porque permite un modelo **sin estado**: el backend valida el token en cada petición sin necesidad de mantener sesión en servidor. Esto simplifica la integración SPA–API, facilita el control de acceso por roles (GESTOR/CLIENTE) y encaja con una API REST basada en cabeceras (`Authorization: Bearer <token>`).
@@ -1078,13 +1109,13 @@ El JWT se compone de tres partes separadas por puntos: `header.payload.signature
 - Se carga el listado de empresas (`GET /empresas`) para poblar un selector.
 - Al seleccionar una empresa, se consulta `GET /incidencias?empresa_id=...`.
 - Se renderiza una tabla con: empresa (id + razón social), tipo, trabajador (nombre/apellidos), estado y fecha de inicio.
-- Se deja un placeholder para “Acciones / Nueva incidencia” como base de un CRUD completo en una evolución posterior.
+- Se habilitan acciones de gestión (ver, crear, editar y eliminar) apoyadas en el CRUD completo de `/incidencias`.
 
 **Pendiente / mejora futura:**
 
-- Despliegue en entorno accesible por tutores (actualmente ejecución local).
-- Completar la interfaz de Incidencias en la SPA (si aún no está integrada al mismo nivel que Empresas/Trabajadores).
-- Seguridad adicional: limitación de intentos de login y refresco de token / caducidad configurable.
+- Despliegue en un entorno accesible por tutores/profesorado (actualmente ejecución local).
+- Mejoras de seguridad: limitación de intentos de login y refresco de token / caducidad configurable.
+- Verificación y asociación automatizada de clientes a empresa (email/código de invitación) y registro de auditoría de asignaciones.
 
 ##### CRUD de Incidencias (perfil GESTOR)
 
@@ -1119,7 +1150,7 @@ Se completa el CRUD de incidencias para el perfil **GESTOR** bajo `/incidencias`
 
 Backend:
 
-- Copiar `.env.example` a `.env` y configurar `DATABASE_URL` (o variables equivalentes) y `JWT_SECRET`.
+- Copiar `.env.example` a `.env` y configurar las variables de conexión a PostgreSQL (`PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`) y `JWT_SECRET`.
 
 Frontend:
 
@@ -1130,7 +1161,7 @@ Frontend:
 1. Crear la base de datos y ejecutar scripts SQL de esquema/seed (según carpeta `backend/db`).
 2. Backend:
    - `npm install`
-   - `npm run dev` (o el script equivalente)
+   - `npm run dev` (desarrollo) **o** `npm start` (ejecución estándar)
 3. Frontend:
    - `npm install`
    - `npm run dev`
@@ -1210,7 +1241,6 @@ A continuación se incluyen capturas representativas de las pruebas de autentica
 ## Propuestas de mejora
 
 - Despliegue en un entorno accesible por el profesorado (por ejemplo hosting del frontend y backend).
-- Completar el módulo de Incidencias (CRUD e integración completa).
 - Mejorar feedback visual en operaciones (notificaciones tipo toast tras altas/ediciones/borrados).
 - Añadir recuperación de contraseña y gestión de estado de usuario (activación/cambios de rol).
 - Añadir tests automatizados para API (y/o colección de pruebas versionada).
