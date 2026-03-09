@@ -17,6 +17,7 @@ import EmpresaDetalle from "./pages/EmpresaDetalle"
 import TrabajadorDetalle  from "./pages/TrabajadorDetalle"
 import TrabajadorForm from './pages/TrabajadorForm'
 import AsignarEmpresas from './pages/AsignarEmpresa'
+import IncidenciaDetalle from './pages/IncidenciaDetalle'
 
 function App() {
   
@@ -43,12 +44,12 @@ function App() {
             <Route path="trabajadores/nuevo" element={<TrabajadorForm />} />
             <Route path="trabajadores/:id/editar" element={<TrabajadorForm />} /> 
             <Route path="incidencias" element={<Incidencias />} />
-            <Route path = "asignaciones" element = {<AsignarEmpresas />} />
+            <Route path="incidencias/:id" element={<IncidenciaDetalle />} />
+            <Route path ="asignaciones" element = {<AsignarEmpresas />} />
           </Route>
         </Route>
-
-        {/* 404 */}
-          <Route path="*" element={<NotFound />} />
+            {/* 404 */}
+            <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   )

@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react"
 import { apiFetch} from "../lib/apiFetch"
 import Button from "../components/ui/Button"
+import { useNavigate } from "react-router-dom"
 
 
 
@@ -18,9 +19,11 @@ export default function Incidencias() {
   const [empresaId, setEmpresaId] = useState("")
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+
+  const navigate = useNavigate()
   
 
-  //cargar las empresas en el estado setEmpresas
+  //cargar las empresas en el estado setEmpresas para poblar el select
 
   useEffect(() => {
     const loadEmpresas = async () => {
@@ -38,7 +41,7 @@ export default function Incidencias() {
     loadEmpresas()
 }, [])
 
-// carga las incidencias cuando cambia empresa_id
+// carga las incidencias cuando cambia empresa_id y las muestra en la tabla
 
   useEffect(() => {
 
@@ -74,9 +77,9 @@ return (
         </p>
       </div>
 
-      {/* Botón placeholder */}
-      
-      <Button variant="secondary" disabled>
+      {/** button (GESTOR) para navegar a IncidenciaForm.jsx */}
+
+      <Button variant="secondary" onClick = {() => navigate("/app/incidencias/nueva")}>
         Nueva incidencia
       </Button>
     </header>
@@ -152,7 +155,10 @@ return (
                     <td className="py-3 pr-4">{it.estado}</td>
                     <td className="py-3 pr-4">{it.fecha_inicio}</td>
                     <td className="py-3 pr-4">
-                      <Button variant="ghost" disabled title="Pendiente de implementar">
+
+                      {/** button VER (GESTOR) para navegar a IncidenciasDetalle.jsx */}
+
+                      <Button variant="ghost" onClick={() => navigate(`/app/incidencias/${it.id}`)}>
                         Acciones
                       </Button>
                     </td>
