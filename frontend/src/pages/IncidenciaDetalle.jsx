@@ -85,6 +85,17 @@ export default function IncidenciaDetalle(){
                 </div>
             ))}
             </dl>
+
+            {/** button (GESTOR) para navegar a IncidenciaForm.jsx */}
+            
+            <div className="mt-6">
+                <Button 
+                variant="secondary" 
+                onClick = {() => navigate(`/app/incidencias/${item.id}/editar`)}
+                >
+                Editar incidencia
+                </Button>
+            </div>
         </section>
         </div>
     )

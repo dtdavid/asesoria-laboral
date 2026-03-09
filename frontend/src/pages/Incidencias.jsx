@@ -3,6 +3,7 @@ import { useState, useEffect } from "react"
 import { apiFetch} from "../lib/apiFetch"
 import Button from "../components/ui/Button"
 import { useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 
 
@@ -21,6 +22,9 @@ export default function Incidencias() {
   const [error, setError] = useState("")
 
   const navigate = useNavigate()
+      
+  const location = useLocation()
+  const flash = location.state?.flash
   
 
   //cargar las empresas en el estado setEmpresas para poblar el select
@@ -83,6 +87,14 @@ return (
         Nueva incidencia
       </Button>
     </header>
+    
+      {/** Mensaje de Guardar Cambio */}
+
+      {flash && (
+        <section className="rounded-2xl border border-green-300 bg-green-50 p-4 shadow-sm">
+            <p className="text-sm sm:text-base font-medium text-green-800">{flash}</p>
+        </section>
+      )}
 
     {/* Select de empresa */}
 
