@@ -67,7 +67,21 @@ export default function Incidencias() {
     loadIncidencias()
 }, [empresaId])
 
+const handleDelete = async (id) => {
+  const ok = window.confirm("¿Seguro que quieres eliminar esta incidencia?")
+  if (!ok) return
 
+  try {
+    setError("")
+    await apiFetch(`/incidencias/${id}`, { method: "DELETE" })
+
+    // recargar incidencias de la empresa seleccionada
+    const data = await apiFetch(`/incidencias?empresa_id=${empresaId}`)
+    setItems(data?.data || [])
+  } catch (err) {
+    setError(err?.message || "No se pudo eliminar la incidencia.")
+  }
+}
 
 return (
   <div className="space-y-6 min-w-0">
@@ -166,12 +180,17 @@ return (
                     </td>
                     <td className="py-3 pr-4">{it.estado}</td>
                     <td className="py-3 pr-4">{it.fecha_inicio}</td>
-                    <td className="py-3 pr-4">
-
-                      {/** button VER (GESTOR) para navegar a IncidenciasDetalle.jsx */}
-
+                    <td className="py-3 pr-4 text-brand-text">
                       <Button variant="ghost" onClick={() => navigate(`/app/incidencias/${it.id}`)}>
-                        Acciones
+                        Ver
+                      </Button>
+
+                      <Button
+                        variant="ghost"
+                        className="ml-2"
+                        onClick={() => handleDelete(it.id)}
+                      >
+                        Eliminar
                       </Button>
                     </td>
                   </tr>
