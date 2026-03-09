@@ -12,6 +12,9 @@ export default function IncidenciaDetalle(){
     const navigate = useNavigate()
     const { id } = useParams()
 
+    // cambio de fecha sin ISO largo
+    const fmtDate = (v) => (v ? String(v).slice(0, 10) : "—")
+
     useEffect(()=> {
 
         const load = async () => {
@@ -61,8 +64,8 @@ export default function IncidenciaDetalle(){
         ["Trabajador", item.trabajador_nombre ? `${item.trabajador_nombre} ${item.trabajador_apellidos || ""}` : (item.trabajador_id ? `ID ${item.trabajador_id}` : "—")],
         ["Tipo", item.tipo],
         ["Estado", item.estado],
-        ["Fecha inicio", item.fecha_inicio],
-        ["Fecha fin", item.fecha_fin],
+        ["Fecha inicio", fmtDate(item.fecha_inicio)],
+        ["Fecha fin", fmtDate(item.fecha_fin)],
         ["Descripción", item.descripcion],
     ]
     //renderizado

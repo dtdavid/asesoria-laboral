@@ -25,6 +25,9 @@ export default function Incidencias() {
       
   const location = useLocation()
   const flash = location.state?.flash
+
+  // mostrar fechas sin ISO largo
+  const fmtDate = (v) => (v ? String(v).slice(0, 10) : "—")
   
 
   //cargar las empresas en el estado setEmpresas para poblar el select
@@ -179,7 +182,8 @@ return (
                           : "—"}
                     </td>
                     <td className="py-3 pr-4">{it.estado}</td>
-                    <td className="py-3 pr-4">{it.fecha_inicio}</td>
+                    {/* <td className="py-3 pr-4">{it.fecha_inicio}</td> */}
+                    <td className="py-3 pr-4">{fmtDate(it.fecha_inicio)}</td>
                     <td className="py-3 pr-4 text-brand-text">
                       <Button variant="ghost" onClick={() => navigate(`/app/incidencias/${it.id}`)}>
                         Ver
