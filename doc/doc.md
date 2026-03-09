@@ -23,7 +23,7 @@
 - [Análisis](#análisis)
   - [Análisis del problema](#análisis-del-problema)
   - [Descripción del proyecto](#descripción-del-proyecto)
-  - [Objetivos](#objetivos-1)
+  - [Objetivos específicos del frontend](#objetivos-específicos-del-frontend)
   - [Alcance](#alcance-1)
   - [Justificación del proyecto y estudio de necesidades](#justificación-del-proyecto-y-estudio-de-necesidades)
   - [Funcionalidades del proyecto y actores implicados](#funcionalidades-del-proyecto-y-actores-implicados)
@@ -225,33 +225,18 @@ El proyecto consiste en el diseño y desarrollo de una **aplicación web de apoy
 
 Se trata de un proyecto desarrollado en un **entorno académico**, planteado como un **prototipo funcional**, que utiliza datos de prueba y no realiza trámites oficiales reales. La aplicación está concebida como una herramienta de apoyo organizativo, no como un sustituto de las plataformas oficiales de las administraciones públicas.
 
-### Objetivos
+### Objetivos específicos del frontend
 
-El objetivo principal del proyecto es desarrollar una aplicación web que sirva como herramienta de apoyo al asesoramiento laboral, facilitando la organización y consulta de la información laboral de empresas y trabajadores.
-
-Este objetivo general se concreta en los siguientes aspectos, ya definidos en el anteproyecto y ampliados conforme avanza el desarrollo técnico del proyecto:
-
-- Analizar las necesidades básicas de una asesoría laboral en relación con la gestión y organización de la información.
+Estos objetivos concretan el apartado general de **Objetivos** aplicado a la interfaz de usuario (SPA), su navegación y la experiencia de uso:
 
 - Diseñar una estructura funcional clara y coherente, diferenciando zonas públicas y privadas dentro de una arquitectura SPA.
+- Implementar la interfaz utilizando **React**, aplicando el modelo de componentes y una estructura modular que facilite la escalabilidad y el mantenimiento.
+- Configurar el sistema de navegación mediante **React Router**, estableciendo rutas públicas y privadas y validando el flujo de acceso.
+- Aplicar **Tailwind CSS** para la maquetación, garantizando coherencia visual y diseño responsive.
+- Integrar autenticación basada en tokens para controlar el acceso a la zona privada y el consumo de endpoints protegidos.
+- Mantener buenas prácticas de desarrollo y control de versiones en el frontend, asegurando coherencia entre código y documentación.
 
-- Implementar un prototipo funcional en el frontend utilizando **React**, aplicando el modelo de componentes y una estructura modular que facilite la escalabilidad y el mantenimiento del código.
-
-- Configurar el sistema de navegación mediante **React Router**, estableciendo rutas públicas y privadas, así como validando el flujo de acceso a la aplicación.
-
-- Aplicar un framework de estilos como **Tailwind CSS** para la maquetación de la interfaz, garantizando coherencia visual, diseño responsive y reutilización de componentes.
-
-- Simular un sistema de autenticación en el frontend con el fin de validar la arquitectura de acceso a la zona privada, dejando preparada la aplicación para su futura integración con un sistema real basado en tokens.
-
-- Implementar en fases posteriores un backend con **Node.js y Express**, exponiendo una API REST para la gestión de empresas, trabajadores e incidencias.
-
-- Incorporar autenticación basada en **JSON Web Tokens (JWT)** en fases posteriores, integrando el frontend con el backend y protegiendo los recursos privados de la aplicación.
-
-- Diseñar e implementar la persistencia de datos mediante **PostgreSQL**, trasladando el modelo conceptual a un esquema relacional y realizando operaciones CRUD desde la API.
-
-- Aplicar buenas prácticas de desarrollo, control de versiones y documentación técnica, manteniendo coherencia entre el código implementado y la memoria del proyecto.
-
-Los objetivos servirán como referencia para evaluar el grado de cumplimiento del proyecto a lo largo de las distintas fases de análisis, diseño y desarrollo, permitiendo verificar que la evolución técnica del sistema se ajusta al alcance definido.
+**Nota:** los objetivos generales del proyecto se recogen en el apartado `## Objetivos`. Este bloque resume únicamente objetivos específicos del **frontend**.
 
 ### Alcance
 
@@ -1122,8 +1107,13 @@ Se completa el CRUD de incidencias para el perfil **GESTOR** bajo `/incidencias`
 
 ### Requisitos
 
-- Node.js y npm.
-- PostgreSQL.
+- Node.js (versión mínima recomendada: **>=18 LTS**).
+  Versión usada durante el desarrollo: **v22.22.0**.
+- npm (incluido con Node.js) o equivalente.
+  Versión usada durante el desarrollo: **10.9.4**.
+- PostgreSQL (versión mínima recomendada: **14**).
+- Git (para clonar el repositorio).
+  > Nota: se recomienda usar versiones LTS para reproducir el entorno de forma estable.
 
 ### Variables de entorno
 
