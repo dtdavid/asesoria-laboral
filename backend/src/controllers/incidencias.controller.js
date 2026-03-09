@@ -123,7 +123,8 @@ export async function getIncidencia(req, res, next){
         const incidencia = await getIncidenciaById(id)
         if(!incidencia){
             return res.status(404).json({
-                ok:false, code: "NOT_FOUND",
+                ok:false, 
+                code: "NOT_FOUND",
                 message: "Incidencia no encontrada",
                 details: {id},
                 //error: "Incidencia no encontrada"

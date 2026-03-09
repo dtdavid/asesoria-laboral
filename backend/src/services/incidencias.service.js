@@ -40,7 +40,7 @@ export async function getIncidenciasByEmpresaId(empresa_id){
 export async function getIncidenciaById(id) {
    
     const result = await pool.query (
-            `SELECT
+    `SELECT
         i.id,
         i.empresa_id,
         e.razon_social,
@@ -58,7 +58,7 @@ export async function getIncidenciaById(id) {
      JOIN empresas e ON e.id = i.empresa_id
      LEFT JOIN trabajadores t ON t.id = i.trabajador_id
      WHERE i.id = $1`,
-           [id]
+     [id]
     )
     return result.rows[0] || null
 
