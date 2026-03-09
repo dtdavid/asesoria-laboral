@@ -57,7 +57,8 @@ app.use("/auth", authRoutes)
 app.use("/me", meRoutes)
 
 // Monta el router de usuarios con role = CLIENTE"
- app.use("/usuarios", usuariosRoutes)
+
+app.use("/usuarios", usuariosRoutes)
 
 // Monta el router de listar incidencias
 
