@@ -2,9 +2,22 @@ import Button from "../components/ui/Button"
 import { useState, useEffect } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import { apiFetch} from "../lib/apiFetch"
+import { useAuth } from "../context/AuthContext"
 
 export default function TrabajadorForm() {
-    
+
+  // bloquear acceso por URL !isGestor
+
+  const { user } = useAuth()
+  const isGestor = user?.role === "GESTOR"
+
+  if (!isGestor) {
+    return (
+      <section className="rounded-2xl bg-white p-5 shadow-sm">
+        <p className="text-sm text-brand-muted">No autorizado.</p>
+      </section>
+    )
+  }
 
   const navigate = useNavigate()// para redirigir después de guardar
   const { id } = useParams() // si hay id, es edición; si no, creación
