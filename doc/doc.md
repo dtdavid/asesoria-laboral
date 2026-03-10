@@ -77,11 +77,16 @@
       - [Helper de llamadas a la API (`apiFetch`)](#helper-de-llamadas-a-la-api-apifetch)
       - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
     - [Prototipo 3 (FINAL)](#prototipo-3-final)
-      - [Vista GESTOR – Incidencias (frontend)](#vista-gestor--incidencias-frontend)
       - [Autenticación con JWT (justificación breve)](#autenticación-con-jwt-justificación-breve)
       - [JWT (estructura del token)](#jwt-estructura-del-token)
-      - [Incidencias (GESTOR) por empresa](#incidencias-gestor-por-empresa)
+      - [Incidencias (backend)](#incidencias-backend)
+      - [Endpoint de backoffice de incidencias (GESTOR)](#endpoint-de-backoffice-de-incidencias-gestor)
       - [CRUD de Incidencias (perfil GESTOR)](#crud-de-incidencias-perfil-gestor)
+      - [Incidencias (GESTOR) por empresa](#incidencias-gestor-por-empresa)
+      - [Vista GESTOR – Incidencias (frontend)](#vista-gestor--incidencias-frontend)
+      - [Restricción de acciones por rol (frontend)](#restricción-de-acciones-por-rol-frontend)
+      - [Evidencias (Thunder Client)](#evidencias-thunder-client)
+      - [Evidencias UI (navegador)](#evidencias-ui-navegador)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
   - [Requisitos](#requisitos)
   - [Variables de entorno](#variables-de-entorno)
@@ -91,7 +96,6 @@
   - [Flujo básico (GESTOR)](#flujo-básico-gestor)
   - [Flujo básico (CLIENTE)](#flujo-básico-cliente)
   - [Ayudas al usuario](#ayudas-al-usuario)
-    - [Evidencias (Thunder Client)](#evidencias-thunder-client)
 - [Propuestas de mejora](#propuestas-de-mejora)
 - [Licencia del proyecto y licencias de terceros](#licencia-del-proyecto-y-licencias-de-terceros)
   - [Backend](#backend)
@@ -1018,36 +1022,6 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
   - Frontend: página de asignaciones con selección de cliente/empresa y ejecución del `PATCH`.
 - Evidencias de pruebas con Thunder Client (login, 401/403, operaciones permitidas por rol).
 
-##### Vista GESTOR – Incidencias (frontend)
-
-Se implementa la gestión de incidencias en la SPA para el perfil **GESTOR**, consumiendo el CRUD de `/incidencias` y reutilizando `apiFetch` para unificar URL base, JWT y errores.
-
-**Listado por empresa**
-
-- Se carga el listado de empresas (`GET /empresas`) para poblar un selector.
-- Al seleccionar una empresa, se consultan incidencias con `GET /incidencias?empresa_id=<id>` y se muestran en una tabla.
-
-**Acciones por fila (GESTOR)**
-
-- **Ver detalle:** navegación a `/app/incidencias/:id`, consumiendo `GET /incidencias/:id`.
-- **Eliminar:** confirmación con `window.confirm` y borrado mediante `DELETE /incidencias/:id`. Tras eliminar, se recarga el listado de la empresa seleccionada para reflejar el cambio.
-
-**Detalle de incidencia (`IncidenciaDetalle.jsx`)**
-
-- Vista de lectura con campos principales (empresa, trabajador, tipo, estado, fechas y descripción).
-- Incluye navegación de “Volver” y acceso a “Editar” si aplica.
-
-**Formulario (`IncidenciaForm.jsx`)**
-
-- **Crear:** desde `/app/incidencias/nueva` con `POST /incidencias`.
-- **Editar:** desde `/app/incidencias/:id/editar` con `GET /incidencias/:id` + `PUT /incidencias/:id`.
-- Validación mínima en frontend: `empresa_id`, `tipo` y `fecha_inicio` obligatorios.
-- Normalización antes de enviar: `empresa_id` a `Number` y `trabajador_id` opcional a `Number`/`null`.
-
-**Mensajes de confirmación (flash)**
-
-- Tras crear/editar, se navega al listado `/app/incidencias` incluyendo un mensaje en `state.flash` (por ejemplo “Incidencia creada/actualizada”).
-
 ##### Autenticación con JWT (justificación breve)
 
 Se ha elegido JWT para la autenticación porque permite un modelo **sin estado**: el backend valida el token en cada petición sin necesidad de mantener sesión en servidor. Esto simplifica la integración SPA–API, facilita el control de acceso por roles (GESTOR/CLIENTE) y encaja con una API REST basada en cabeceras (`Authorization: Bearer <token>`).
@@ -1069,17 +1043,34 @@ El JWT se compone de tres partes separadas por puntos: `header.payload.signature
 
 ![Estructura de un JWT (header/payload/signature)](img/jwt-decoder.png)
 
-**Implementación destacada (Incidencias):**
+##### Incidencias (backend)
 
 - Se añade `incidencias.service.js` con `getIncidenciasByEmpresaId(empresa_id)` para consultar incidencias filtrando por empresa y ordenando por fecha.
 - Se actualiza el seed `07_incidencias_seed.sql` para generar datos de demo (dos incidencias por trabajador) y permitir su re-ejecución evitando duplicados (TRUNCATE + RESTART IDENTITY).
 
-**Endpoint de backoffice (GESTOR) para Incidencias:**
+##### Endpoint de backoffice de incidencias (GESTOR)
 
 - `GET /incidencias?empresa_id=<id>` (requiere JWT + rol GESTOR).
 - Valida `empresa_id` como entero positivo; si es inválido devuelve `400` con `VALIDATION_ERROR`.
 - Devuelve `{ ok: true, data: [...] }` con incidencias filtradas por `empresa_id` y ordenadas por fecha.
 - Implementación: se crea `incidencias.routes.js` y `incidencias.controller.js`, reutilizando el servicio `getIncidenciasByEmpresaId`.
+
+##### CRUD de Incidencias (perfil GESTOR)
+
+Se completa el CRUD de incidencias para el perfil **GESTOR** bajo `/incidencias`. Todas las rutas requieren JWT y `requireRole("GESTOR")`.
+
+- `GET /incidencias?empresa_id=<id>`: listado filtrado por empresa (valida `empresa_id`).
+- `POST /incidencias`: crea incidencia. Obligatorios `empresa_id`, `tipo`, `fecha_inicio`; opcionales `trabajador_id` (nullable), `estado` (por defecto `ABIERTA`), `fecha_fin`, `descripcion`.
+  - `400` `VALIDATION_ERROR` si faltan campos o son inválidos.
+  - `409` `FK_ERROR` si `empresa_id` o `trabajador_id` no existen (FK 23503).
+- `GET /incidencias/:id`: detalle por id (`400` si id inválido, `404` si no existe).
+- `PUT /incidencias/:id`: actualización (valida id y campos; `updated_at = NOW()`; `404` si no existe; `409` `FK_ERROR` si hay FK inválida).
+- `DELETE /incidencias/:id`: borrado (`204` si borra; `404` si no existe; `400` si id inválido).
+
+**Endpoint acotado al usuario (perfil CLIENTE):**
+
+- `GET /me/incidencias`: devuelve incidencias de la empresa asociada al token (`req.user.empresa_id`).  
+  Si no hay empresa asignada → `403` `NO_EMPRESA_ASIGNADA`.
 
 ##### Incidencias (GESTOR) por empresa
 
@@ -1117,22 +1108,103 @@ El JWT se compone de tres partes separadas por puntos: `header.payload.signature
 - Mejoras de seguridad: limitación de intentos de login y refresco de token / caducidad configurable.
 - Verificación y asociación automatizada de clientes a empresa (email/código de invitación) y registro de auditoría de asignaciones.
 
-##### CRUD de Incidencias (perfil GESTOR)
+##### Vista GESTOR – Incidencias (frontend)
 
-Se completa el CRUD de incidencias para el perfil **GESTOR** bajo `/incidencias`. Todas las rutas requieren JWT y `requireRole("GESTOR")`.
+Se implementa la gestión de incidencias en la SPA para el perfil **GESTOR**, consumiendo el CRUD de `/incidencias` y reutilizando `apiFetch` para unificar URL base, JWT y errores.
 
-- `GET /incidencias?empresa_id=<id>`: listado filtrado por empresa (valida `empresa_id`).
-- `POST /incidencias`: crea incidencia. Obligatorios `empresa_id`, `tipo`, `fecha_inicio`; opcionales `trabajador_id` (nullable), `estado` (por defecto `ABIERTA`), `fecha_fin`, `descripcion`.
-  - `400` `VALIDATION_ERROR` si faltan campos o son inválidos.
-  - `409` `FK_ERROR` si `empresa_id` o `trabajador_id` no existen (FK 23503).
-- `GET /incidencias/:id`: detalle por id (`400` si id inválido, `404` si no existe).
-- `PUT /incidencias/:id`: actualización (valida id y campos; `updated_at = NOW()`; `404` si no existe; `409` `FK_ERROR` si hay FK inválida).
-- `DELETE /incidencias/:id`: borrado (`204` si borra; `404` si no existe; `400` si id inválido).
+**Listado por empresa**
 
-**Endpoint acotado al usuario (perfil CLIENTE):**
+- Se carga el listado de empresas (`GET /empresas`) para poblar un selector.
+- Al seleccionar una empresa, se consultan incidencias con `GET /incidencias?empresa_id=<id>` y se muestran en una tabla.
 
-- `GET /me/incidencias`: devuelve incidencias de la empresa asociada al token (`req.user.empresa_id`).  
-  Si no hay empresa asignada → `403` `NO_EMPRESA_ASIGNADA`.
+**Acciones por fila (GESTOR)**
+
+- **Ver detalle:** navegación a `/app/incidencias/:id`, consumiendo `GET /incidencias/:id`.
+- **Eliminar:** confirmación con `window.confirm` y borrado mediante `DELETE /incidencias/:id`. Tras eliminar, se recarga el listado de la empresa seleccionada para reflejar el cambio.
+
+**Detalle de incidencia (`IncidenciaDetalle.jsx`)**
+
+- Vista de lectura con campos principales (empresa, trabajador, tipo, estado, fechas y descripción).
+- Incluye navegación de “Volver” y acceso a “Editar” si aplica.
+
+**Formulario (`IncidenciaForm.jsx`)**
+
+- **Crear:** desde `/app/incidencias/nueva` con `POST /incidencias`.
+- **Editar:** desde `/app/incidencias/:id/editar` con `GET /incidencias/:id` + `PUT /incidencias/:id`.
+- Validación mínima en frontend: `empresa_id`, `tipo` y `fecha_inicio` obligatorios.
+- Normalización antes de enviar: `empresa_id` a `Number` y `trabajador_id` opcional a `Number`/`null`.
+
+**Mensajes de confirmación (flash)**
+
+- Tras crear/editar, se navega al listado `/app/incidencias` incluyendo un mensaje en `state.flash` (por ejemplo “Incidencia creada/actualizada”).
+
+##### Restricción de acciones por rol (frontend)
+
+Además de la protección en backend (JWT + `requireRole("GESTOR")`), se aplican controles en frontend para evitar que el perfil **CLIENTE** acceda a operaciones de gestión incluso escribiendo la URL manualmente.
+
+| Caso                      | Usuario | Acción                             | Resultado esperado      | Evidencia     |
+| ------------------------- | ------- | ---------------------------------- | ----------------------- | ------------- |
+| Botón “Nueva empresa”     | CLIENTE | Abrir `/app/empresas`              | No aparece el botón     | UI (opcional) |
+| Crear empresa por URL     | CLIENTE | Ir a `/app/empresas/nueva`         | Muestra “No autorizado” | UI (opcional) |
+| Editar empresa por URL    | CLIENTE | Ir a `/app/empresas/1/editar`      | Muestra “No autorizado” | UI (opcional) |
+| Botón “Nuevo trabajador”  | CLIENTE | Abrir `/app/trabajadores`          | No aparece el botón     | UI (opcional) |
+| Crear trabajador por URL  | CLIENTE | Ir a `/app/trabajadores/nuevo`     | Muestra “No autorizado” | UI (opcional) |
+| Editar trabajador por URL | CLIENTE | Ir a `/app/trabajadores/1/editar`  | Muestra “No autorizado” | UI (opcional) |
+| Botón “Editar incidencia” | CLIENTE | Abrir `/app/incidencias/:id`       | No aparece el botón     | UI (opcional) |
+| Editar incidencia por URL | CLIENTE | Ir a `/app/incidencias/:id/editar` | Muestra “No autorizado” | UI (opcional) |
+
+**Nota:** estas restricciones en frontend son complementarias. La seguridad efectiva se garantiza en backend mediante autenticación (JWT) y autorización por rol en los endpoints de gestión.
+
+##### Evidencias (Thunder Client)
+
+A continuación se incluyen capturas representativas de las pruebas de autenticación y autorización:
+
+- Login correcto (200) y obtención de token.  
+  ![Thunder login 200](img/thunder/thunder-login-200.png)
+
+- Acceso sin token a endpoint protegido (401).  
+  ![Thunder 401](img/thunder/thunder-empresas-401.png)
+
+- Acceso con rol CLIENTE a módulo restringido (403).  
+  ![Thunder 403 cliente](img/thunder/thunder-empresas-403-cliente.png)
+
+- Acceso CLIENTE a recursos propios vía /me (200).  
+  ![Thunder /me incidencias 200](img/thunder/thunder-me-incidencias-200.png)
+
+- Acceso CLIENTE a recursos empresa no asignada /me/empresa (403).  
+   ![Thunder no empresa 403](img/thunder/thunder-no-empresa-403.png)
+
+- Backoffice incidencias por empresa (GESTOR) → 200.  
+  ![Thunder incidencias gestor 200](img/thunder/thunder-incidencias-gestor-200.png)
+
+- Backoffice incidencias por empresa (CLIENTE) → 403.  
+  ![Thunder incidencias cliente 403](img/thunder/thunder-incidencias-cliente-403.png)
+
+- Validación de empresa_id inválido → 400 (VALIDATION_ERROR).  
+  ![Thunder incidencias 400](img/thunder/thunder-incidencias-validacion-400.png)
+
+- CRUD Incidencias (GESTOR): alta (201).  
+  ![Thunder incidencias POST 201](img/thunder/thunder-incidencias-post-201.png)
+
+- CRUD Incidencias (GESTOR): actualización (200).  
+  ![Thunder incidencias PUT 200](img/thunder/thunder-incidencias-put-200.png)
+
+- CRUD Incidencias (GESTOR): borrado (204).  
+  ![Thunder incidencias DELETE 204](img/thunder/thunder-incidencias-delete-204.png)
+
+- Incidencias (GESTOR): detalle por id (200).  
+  ![Thunder incidencias GET id 200](img/thunder/thunder-incidencias-getid-200.png)
+
+- Incidencias (GESTOR): no encontrado (404).  
+  ![Thunder incidencias 404](img/thunder/thunder-incidencias-notfound-404.png)
+
+##### Evidencias UI (navegador)
+
+- Perfil CLIENTE en `/app/empresas`: no se muestra el botón “Nueva empresa”.  
+  ![CLIENTE sin botón Nueva empresa](img/ui/ui-cliente-empresas-sin-nueva.png)
+
+- Perfil CLIENTE intentando acceso directo a `/app/empresas/nueva`: se muestra “No autorizado”.  
+  ![CLIENTE no autorizado en crear empresa](img/ui/ui-cliente-empresas-nueva-no-autorizado.png)
 
 ## Instalación / puesta en marcha (entorno local)
 
@@ -1194,49 +1266,6 @@ Frontend:
 
 - Mensajes de error coherentes cuando faltan permisos (`401/403`) o no hay empresa asignada (`NO_EMPRESA_ASIGNADA`).
 - Validaciones básicas en formularios (si aplica).
-
-##### Evidencias (Thunder Client)
-
-A continuación se incluyen capturas representativas de las pruebas de autenticación y autorización:
-
-- Login correcto (200) y obtención de token.  
-  ![Thunder login 200](img/thunder/thunder-login-200.png)
-
-- Acceso sin token a endpoint protegido (401).  
-  ![Thunder 401](img/thunder/thunder-empresas-401.png)
-
-- Acceso con rol CLIENTE a módulo restringido (403).  
-  ![Thunder 403 cliente](img/thunder/thunder-empresas-403-cliente.png)
-
-- Acceso CLIENTE a recursos propios vía /me (200).  
-  ![Thunder /me incidencias 200](img/thunder/thunder-me-incidencias-200.png)
-
-- Acceso CLIENTE a recursos empresa no asignada /me/empresa (403).  
-   ![Thunder no empresa 403](img/thunder/thunder-no-empresa-403.png)
-
-- Backoffice incidencias por empresa (GESTOR) → 200.  
-  ![Thunder incidencias gestor 200](img/thunder/thunder-incidencias-gestor-200.png)
-
-- Backoffice incidencias por empresa (CLIENTE) → 403.  
-  ![Thunder incidencias cliente 403](img/thunder/thunder-incidencias-cliente-403.png)
-
-- Validación de empresa_id inválido → 400 (VALIDATION_ERROR).  
-  ![Thunder incidencias 400](img/thunder/thunder-incidencias-validacion-400.png)
-
-- CRUD Incidencias (GESTOR): alta (201).  
-  ![Thunder incidencias POST 201](img/thunder/thunder-incidencias-post-201.png)
-
-- CRUD Incidencias (GESTOR): actualización (200).  
-  ![Thunder incidencias PUT 200](img/thunder/thunder-incidencias-put-200.png)
-
-- CRUD Incidencias (GESTOR): borrado (204).  
-  ![Thunder incidencias DELETE 204](img/thunder/thunder-incidencias-delete-204.png)
-
-- Incidencias (GESTOR): detalle por id (200).  
-  ![Thunder incidencias GET id 200](img/thunder/thunder-incidencias-getid-200.png)
-
-- Incidencias (GESTOR): no encontrado (404).  
-  ![Thunder incidencias 404](img/thunder/thunder-incidencias-notfound-404.png)
 
 ## Propuestas de mejora
 
