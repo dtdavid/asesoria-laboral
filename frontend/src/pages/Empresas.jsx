@@ -18,6 +18,7 @@ export default function Empresas() {
   const navigate = useNavigate()
   const { token, user } = useAuth()
   const isCliente = user?.role === "CLIENTE"
+  
 
   async function loadEmpresas() {
       try {
@@ -84,8 +85,14 @@ export default function Empresas() {
         </div>
 
         {/* POST nueva empresa */}
-
-        <Button  variant="secondary"className="ml-auto" onClick={() => navigate("/app/empresas/nueva")}>Nueva empresa</Button>
+        {!isCliente && (
+        <Button  
+        variant="secondary"
+        className="ml-auto" 
+        onClick={() => navigate("/app/empresas/nueva")}>
+          Nueva empresa
+          </Button>
+        )}
         
       </header>
 
