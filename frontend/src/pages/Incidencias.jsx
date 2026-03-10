@@ -4,6 +4,7 @@ import { apiFetch} from "../lib/apiFetch"
 import Button from "../components/ui/Button"
 import { useNavigate } from "react-router-dom"
 import { useLocation } from "react-router-dom"
+import { useAuth } from "../context/AuthContext"
 
 
 
@@ -27,12 +28,21 @@ export default function Incidencias() {
   const flash = location.state?.flash
 
   // mostrar fechas sin ISO largo
+
   const fmtDate = (v) => (v ? String(v).slice(0, 10) : "—")
-  
+
+  //condición para PUT y DELETE
+  const { user } = useAuth()
+  const isGestor = user?.role === "GESTOR"
+
+  //mostrar tabla para CLIENTE
+  const canShowTable = isGestor ? Boolean(empresaId): true
 
   //cargar las empresas en el estado setEmpresas para poblar el select
 
   useEffect(() => {
+    if (!isGestor) return
+
     const loadEmpresas = async () => {
       try {
         setLoading(true)
@@ -46,12 +56,12 @@ export default function Incidencias() {
       }
     }
     loadEmpresas()
-}, [])
+}, [isGestor])
 
 // carga las incidencias cuando cambia empresa_id y las muestra en la tabla
 
   useEffect(() => {
-
+    if(!isGestor) return
     if (!empresaId) return
 
     const loadIncidencias = async () => {
@@ -68,7 +78,26 @@ export default function Incidencias() {
     }
 
     loadIncidencias()
-}, [empresaId])
+}, [isGestor,empresaId])
+
+useEffect(() => {
+  if (isGestor) return
+
+  const loadMyIncidencias = async () => {
+    try {
+      setLoading(true)
+      setError("")
+      const data = await apiFetch("/me/incidencias")
+      setItems(data?.data || [])
+    } catch (err) {
+      setError(err?.message || "No se pudieron cargar incidencias.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  loadMyIncidencias()
+}, [isGestor])
 
 const handleDelete = async (id) => {
   const ok = window.confirm("¿Seguro que quieres eliminar esta incidencia?")
@@ -92,17 +121,20 @@ return (
       <div className="space-y-1 min-w-0">
         <h1 className="text-2xl font-semibold text-brand-text">Incidencias</h1>
         <p className="text-sm text-brand-muted">
-          {empresaId
-            ? `Empresa: ${items[0]?.razon_social || "—"} (ID: ${empresaId})`
-            : "Selecciona una empresa para ver sus incidencias."}
+          {isGestor
+            ? (empresaId
+                ? `Empresa: ${items[0]?.razon_social || "—"} (ID: ${empresaId})`
+                : "Selecciona una empresa para ver sus incidencias.")
+            : "Incidencias de tu empresa."}
         </p>
       </div>
 
       {/** button (GESTOR) para navegar a IncidenciaForm.jsx */}
-
+      {isGestor && (
       <Button variant="secondary" onClick = {() => navigate("/app/incidencias/nueva")}>
         Nueva incidencia
       </Button>
+      )}
     </header>
     
       {/** Mensaje de Guardar Cambio */}
@@ -114,7 +146,7 @@ return (
       )}
 
     {/* Select de empresa */}
-
+    {isGestor && (
     <section className="rounded-2xl bg-white p-5 shadow-sm space-y-3">
       <label className="text-sm font-medium text-brand-text">
         Empresa <span className="text-red-600">*</span>
@@ -132,6 +164,7 @@ return (
         ))}
       </select>
     </section>
+    )}
 
     {/* Estados */}
 
@@ -150,10 +183,10 @@ return (
 
     {/* Tabla (solo cuando hay empresa seleccionada y no hay error) */}
 
-    {!loading && !error && empresaId && (
+    {!loading && !error && canShowTable && (
       <section className="rounded-2xl bg-white p-5 shadow-sm">
         {items.length === 0 ? (
-          <p className="text-sm text-brand-muted">No hay incidencias para esta empresa.</p>
+          <p className="text-sm text-brand-muted">No hay incidencias {isGestor ? "esta empresa" : "tu empresa"}.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
@@ -189,6 +222,7 @@ return (
                         Ver
                       </Button>
 
+                      { isGestor && (
                       <Button
                         variant="ghost"
                         className="ml-2"
@@ -196,6 +230,7 @@ return (
                       >
                         Eliminar
                       </Button>
+                      )}
                     </td>
                   </tr>
                 ))}

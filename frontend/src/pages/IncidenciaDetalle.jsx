@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import { apiFetch } from "../lib/apiFetch"
 import { useNavigate, useParams } from "react-router-dom"
 import Button from "../components/ui/Button"
+import { useAuth } from "../context/AuthContext"
 
 export default function IncidenciaDetalle(){
 
@@ -12,18 +13,26 @@ export default function IncidenciaDetalle(){
     const navigate = useNavigate()
     const { id } = useParams()
 
+    //condición para PUT y DELETE
+    const { user } = useAuth()
+    const isGestor = user?.role === "GESTOR"
+
     // cambio de fecha sin ISO largo
     const fmtDate = (v) => (v ? String(v).slice(0, 10) : "—")
 
     useEffect(()=> {
-
         const load = async () => {
             try {
               setLoading(true)
               setError("")
+              if (isGestor){
               const data = await apiFetch(`/incidencias/${id}`)
               setItem(data?.data || null)
-                
+               }else{
+                const data = await apiFetch("/me/incidencias")
+                const found = (data?.data || []).find((x) => String(x.id) === String(id))
+                setItem(found || null)
+               } 
             } catch (error) {
                 setError(error?.message || "No se pudo cargar la incidencia")
             } finally{
@@ -90,7 +99,7 @@ export default function IncidenciaDetalle(){
             </dl>
 
             {/** button (GESTOR) para navegar a IncidenciaForm.jsx */}
-            
+            {isGestor &&(
             <div className="mt-6">
                 <Button 
                 variant="secondary" 
@@ -99,6 +108,7 @@ export default function IncidenciaDetalle(){
                 Editar incidencia
                 </Button>
             </div>
+            )}
         </section>
         </div>
     )
