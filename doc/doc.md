@@ -85,8 +85,9 @@
       - [Incidencias (GESTOR) por empresa](#incidencias-gestor-por-empresa)
       - [Vista GESTOR – Incidencias (frontend)](#vista-gestor--incidencias-frontend)
       - [Restricción de acciones por rol (frontend)](#restricción-de-acciones-por-rol-frontend)
-      - [Evidencias (Thunder Client)](#evidencias-thunder-client)
       - [Evidencias UI (navegador)](#evidencias-ui-navegador)
+      - [Evidencias (Thunder Client)](#evidencias-thunder-client)
+      - [Evidencias UI (navegador)](#evidencias-ui-navegador-1)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
   - [Requisitos](#requisitos)
   - [Variables de entorno](#variables-de-entorno)
@@ -1154,6 +1155,38 @@ Además de la protección en backend (JWT + `requireRole("GESTOR")`), se aplican
 | Editar incidencia por URL | CLIENTE | Ir a `/app/incidencias/:id/editar` | Muestra “No autorizado” | UI (opcional) |
 
 **Nota:** estas restricciones en frontend son complementarias. La seguridad efectiva se garantiza en backend mediante autenticación (JWT) y autorización por rol en los endpoints de gestión.
+
+##### Evidencias UI (navegador)
+
+Las siguientes capturas recogen una sesión corta de pruebas manuales en navegador, centrada en control de acceso por rol y flujo principal de Incidencias.
+
+**Perfil CLIENTE**
+
+- Acceso a Empresas sin opción de alta.  
+  ![CLIENTE empresas sin “Nueva empresa”](img/tests-frontend/ui-test-cliente-empresas-sin-nueva.png)
+
+- Intento de alta por URL bloqueado.  
+  ![CLIENTE no autorizado en /app/empresas/nueva](img/tests-frontend/ui-test-cliente-empresas-nueva-no-autorizado.png)
+
+- Acceso a Trabajadores sin opción de alta.  
+  ![CLIENTE trabajadores sin “Nuevo”](img/tests-frontend/ui-test-cliente-trabajadores-sin-nuevo.png)
+
+- Intento de alta por URL bloqueado.  
+  ![CLIENTE no autorizado en /app/trabajadores/nuevo](img/tests-frontend/ui-test-cliente-trabajadores-nuevo-no-autorizado.png)
+
+- Listado de incidencias acotado a su empresa.  
+  ![CLIENTE incidencias listado](img/tests-frontend/ui-test-cliente-incidencias-listado.png)
+
+- Detalle de incidencia sin opción de edición.  
+  ![CLIENTE detalle incidencia sin “Editar”](img/tests-frontend/ui-test-cliente-incidencia-detalle-sin-editar.png)
+
+**Perfil GESTOR**
+
+- Listado de incidencias con filtro por empresa y acciones disponibles.  
+  ![GESTOR incidencias listado acciones](img/tests-frontend/ui-test-gestor-incidencias-listado-acciones.png)
+
+- Confirmación visual tras crear/editar (flash).  
+  ![GESTOR flash guardado](img/tests-frontend/ui-test-gestor-incidencias-flash-guardado.png)
 
 ##### Evidencias (Thunder Client)
 
