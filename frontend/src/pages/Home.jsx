@@ -1,5 +1,10 @@
 import Button from "../components/ui/Button"
 import { useNavigate } from "react-router-dom"
+import { FaBuilding, FaUsers, FaClipboardList, FaLock } from "react-icons/fa"
+import { FaGavel, FaBook, FaIdCard, FaExternalLinkAlt } from "react-icons/fa"
+import { FaLayerGroup, FaRegClock, FaSearch } from "react-icons/fa"
+import { FaUserCheck, FaRegBuilding, FaTasks } from "react-icons/fa"
+import { FaMapMarkerAlt, FaEnvelope, FaPhone } from "react-icons/fa"
 
 /**
  * Home (landing pública)
@@ -63,6 +68,13 @@ export default function Home() {
                 Acceder
               </Button>
             </div>
+            {/* Imagen hero */}
+            <img
+              src="/hero.jpg"
+              alt="Entorno de trabajo en asesoría"
+              className="mx-auto w-full max-w-4xl h-52 sm:h-64 object-cover rounded-2xl border border-brand-border shadow-sm"
+              loading="lazy"
+            />
           </div>
         </div>
       </section>
@@ -82,26 +94,43 @@ export default function Home() {
             </header>
 
             <div className="grid gap-4 md:grid-cols-3">
+
               <article className={card}>
-                <h3 className="font-semibold text-brand-text">Información dispersa</h3>
-                <p className="text-sm text-brand-muted">
-                  Empresas, trabajadores y gestiones organizadas en un mismo sitio.
-                </p>
+                <div className="flex items-start gap-3">
+                  <FaLayerGroup className="mt-0.5 text-2xl md:text-3xl text-brand-secondary" aria-hidden="true" />
+                  <div>
+                    <h3 className="font-semibold text-brand-text">Información dispersa</h3>
+                    <p className="text-sm text-brand-muted">
+                      Empresas, trabajadores y gestiones organizadas en un mismo sitio.
+                    </p>
+                  </div>
+                </div>
               </article>
 
               <article className={card}>
-                <h3 className="font-semibold text-brand-text">Seguimiento de incidencias</h3>
-                <p className="text-sm text-brand-muted">
-                  Registro y control de altas, bajas, vacaciones e IT.
-                </p>
+                <div className="flex items-start gap-3">
+                  <FaRegClock className="mt-0.5 text-2xl md:text-3xl text-brand-secondary" aria-hidden="true" />
+                  <div>
+                    <h3 className="font-semibold text-brand-text">Seguimiento de incidencias</h3>
+                    <p className="text-sm text-brand-muted">
+                      Registro y control de altas, bajas, vacaciones e IT.
+                    </p>
+                  </div>
+                </div>
               </article>
 
               <article className={card}>
-                <h3 className="font-semibold text-brand-text">Consulta rápida</h3>
-                <p className="text-sm text-brand-muted">
-                  Acceso sencillo a datos clave para el trabajo diario.
-                </p>
+                <div className="flex items-start gap-3">
+                  <FaSearch className="mt-0.5 text-2xl md:text-3xl text-brand-secondary" aria-hidden="true" />
+                  <div>
+                    <h3 className="font-semibold text-brand-text">Consulta rápida</h3>
+                    <p className="text-sm text-brand-muted">
+                      Acceso sencillo a datos clave para el trabajo diario.
+                    </p>
+                  </div>
+                </div>
               </article>
+
             </div>
           </div>
         </div>
@@ -119,33 +148,59 @@ export default function Home() {
             </header>
 
             <div className="grid gap-4 md:grid-cols-2">
-              <div className={card}>
-                <p className="font-semibold text-brand-text">Gestión de empresas</p>
-                <p className="text-sm text-brand-muted">
-                  Alta y consulta de clientes/empresas.
-                </p>
-              </div>
 
-              <div className={card}>
-                <p className="font-semibold text-brand-text">Gestión de trabajadores</p>
-                <p className="text-sm text-brand-muted">
-                  Ficha y estado laboral por empresa.
-                </p>
+              {/* Gestión de empresas */}
+            <div className={card}>
+              <div className="flex items-start gap-3">
+                <FaBuilding className="mt-0.5 text-2xl md:text-3xl text-brand-secondary" aria-hidden="true" />
+                <div>
+                  <p className="font-semibold text-brand-text">Gestión de empresas</p>
+                  <p className="text-sm text-brand-muted">
+                    Alta y consulta de clientes/empresas.
+                  </p>
+                </div>
               </div>
+            </div>
 
-              <div className={card}>
-                <p className="font-semibold text-brand-text">Incidencias laborales</p>
-                <p className="text-sm text-brand-muted">
-                  Vacaciones, IT, variaciones de datos.
-                </p>
+            {/* Gestión de trabajadores */}
+            <div className={card}>
+              <div className="flex items-start gap-3">
+                <FaUsers className="mt-0.5 text-2xl md:text-3xl text-brand-secondary" aria-hidden="true" />
+                <div>
+                  <p className="font-semibold text-brand-text">Gestión de trabajadores</p>
+                  <p className="text-sm text-brand-muted">
+                    Ficha y estado laboral por empresa.
+                  </p>
+                </div>
               </div>
+            </div>
 
-              <div className={card}>
-                <p className="font-semibold text-brand-text">Panel privado</p>
-                <p className="text-sm text-brand-muted">
-                  Dashboard con accesos rápidos.
-                </p>
+            {/* Incidencias laborales */}
+            <div className={card}>
+              <div className="flex items-start gap-3">
+                <FaClipboardList className="mt-0.5 text-2xl md:text-3xl text-brand-secondary" aria-hidden="true" />
+                <div>
+                  <p className="font-semibold text-brand-text">Incidencias laborales</p>
+                  <p className="text-sm text-brand-muted">
+                    Vacaciones, IT, variaciones de datos.
+                  </p>
+                </div>
               </div>
+            </div>
+
+            {/* Panel privado */}
+            <div className={card}>
+              <div className="flex items-start gap-3">
+                <FaLock className="mt-0.5 text-2xl md:text-3xl text-brand-secondary" aria-hidden="true" />
+                <div>
+                  <p className="font-semibold text-brand-text">Panel privado</p>
+                  <p className="text-sm text-brand-muted">
+                    Dashboard con accesos rápidos.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             </div>
           </div>
         </div>
@@ -153,8 +208,11 @@ export default function Home() {
 
       {/* CÓMO FUNCIONA */}
       <section className="py-10 scroll-mt-24" id="como-funciona">
+
         <div className={container}>
+
           <div className={`${sectionSurface} space-y-6`}>
+
             <header className="text-center space-y-2">
               <h2 className="text-2xl font-semibold text-brand-text">Cómo funciona</h2>
               <p className="text-sm text-brand-muted">Flujo básico de uso del sistema.</p>
@@ -162,25 +220,37 @@ export default function Home() {
 
             <ol className="grid gap-4 md:grid-cols-3">
               <li className={card}>
-                <p className="text-sm font-medium text-brand-muted">Paso 1</p>
+                <div className="flex items-center gap-2 text-sm font-medium text-brand-muted">
+                  <FaUserCheck aria-hidden="true" />
+                  <span>Paso 1</span>
+                </div>
                 <p className="font-semibold text-brand-text">Crear cuenta o iniciar sesión</p>
                 <p className="text-sm text-brand-muted">Accede al área privada.</p>
               </li>
 
               <li className={card}>
-                <p className="text-sm font-medium text-brand-muted">Paso 2</p>
+                <div className="flex items-center gap-2 text-sm font-medium text-brand-muted">
+                  <FaRegBuilding aria-hidden="true" />
+                  <span>Paso 2</span>
+                </div>
                 <p className="font-semibold text-brand-text">Registrar empresa y trabajadores</p>
                 <p className="text-sm text-brand-muted">Estructura la información.</p>
               </li>
 
               <li className={card}>
-                <p className="text-sm font-medium text-brand-muted">Paso 3</p>
+                <div className="flex items-center gap-2 text-sm font-medium text-brand-muted">
+                  <FaTasks aria-hidden="true" />
+                  <span>Paso 3</span>
+                </div>
                 <p className="font-semibold text-brand-text">Gestionar incidencias</p>
                 <p className="text-sm text-brand-muted">Lleva el seguimiento y estado.</p>
               </li>
             </ol>
+            
           </div>
+
         </div>
+
       </section>
 
       {/* RECURSOS */}
@@ -195,15 +265,99 @@ export default function Home() {
             </header>
 
             <div className={card}>
-              <ul className="list-disc pl-5 text-sm text-brand-text space-y-1">
-                <li>Estatuto de los Trabajadores (pendiente de enlazar)</li>
-                <li>Calendarios laborales (pendiente de enlazar)</li>
-                <li>Convenios colectivos (futura mejora)</li>
-              </ul>
+              <div className="space-y-3 text-sm">
+                <a
+                  href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                >
+                  <FaBook className="shrink-0" aria-hidden="true" />
+                  <span className="underline">Estatuto de los Trabajadores (BOE)</span>
+                  <FaExternalLinkAlt className="ml-auto shrink-0 opacity-60" aria-hidden="true" />
+                </a>
+
+                <a
+                  href="https://www.boe.es/buscar/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                >
+                  <FaGavel className="shrink-0" aria-hidden="true" />
+                  <span className="underline">Buscar convenios colectivos (BOE)</span>
+                  <FaExternalLinkAlt className="ml-auto shrink-0 opacity-60" aria-hidden="true" />
+                </a>
+
+                <a
+                  href="https://portal.seg-social.gob.es/wps/portal/importass/importass/inicio"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                >
+                  <FaIdCard className="shrink-0" aria-hidden="true" />
+                  <span className="underline">Import@ss (Seguridad Social)</span>
+                  <FaExternalLinkAlt className="ml-auto shrink-0 opacity-60" aria-hidden="true" />
+                </a>
+
+                <a
+                  href="https://sede.sepe.gob.es/portalSede/es/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                >
+                  <FaIdCard className="shrink-0" aria-hidden="true" />
+                  <span className="underline">SEPE – Sede electrónica</span>
+                  <FaExternalLinkAlt className="ml-auto shrink-0 opacity-60" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </section>
+
+      {/* CONTACTO */}
+      <section className="py-10 scroll-mt-24" id="contacto">
+        <div className={container}>
+          <div className={`${sectionWhite} space-y-6`}>
+            <header className="text-center space-y-2">
+              <h2 className="text-2xl font-semibold text-brand-text">Contacto</h2>
+              <p className="text-sm text-brand-muted">
+                Datos de contacto (entorno académico / demo).
+              </p>
+            </header>
+
+            <div className={card}>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-start gap-2">
+                  <FaMapMarkerAlt className="mt-0.5 text-brand-secondary" aria-hidden="true" />
+                  <p className="text-brand-text">
+                    R/ San Clemente s/n, 15705 – Santiago de Compostela
+                  </p>
+                </div>
+
+                <a
+                  href="mailto:ies.sanclemente@edu.xunta.gal"
+                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                >
+                  <FaEnvelope aria-hidden="true" />
+                  <span className="underline">ies.sanclemente@edu.xunta.gal</span>
+                </a>
+
+                <a
+                  href="tel:+34881867501"
+                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                >
+                  <FaPhone aria-hidden="true" />
+                  <span className="underline">(+34) 881 867 501</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
+
 
       {/* CTA FINAL */}
       <section className="py-10 scroll-mt-24" id="cta">
