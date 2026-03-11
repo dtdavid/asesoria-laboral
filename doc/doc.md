@@ -79,6 +79,7 @@
     - [Prototipo 3 (FINAL)](#prototipo-3-final)
       - [Autenticación con JWT (justificación breve)](#autenticación-con-jwt-justificación-breve)
       - [JWT (estructura del token)](#jwt-estructura-del-token)
+      - [Ajustes en el flujo de registro y validación](#ajustes-en-el-flujo-de-registro-y-validación)
       - [Incidencias (backend)](#incidencias-backend)
       - [Endpoint de backoffice de incidencias (GESTOR)](#endpoint-de-backoffice-de-incidencias-gestor)
       - [CRUD de Incidencias (perfil GESTOR)](#crud-de-incidencias-perfil-gestor)
@@ -1043,6 +1044,12 @@ El JWT se compone de tres partes separadas por puntos: `header.payload.signature
 > Nota: el payload es legible (no cifrado), por lo que no se deben incluir datos sensibles en él.
 
 ![Estructura de un JWT (header/payload/signature)](img/jwt-decoder.png)
+
+##### Ajustes en el flujo de registro y validación
+
+- Se corrige el flujo de **Registro** en el frontend: tras `POST /auth/registro` se ejecuta `POST /auth/login` para obtener el JWT e iniciar sesión automáticamente.
+- Se ajusta la validación de contraseña a un mínimo de **8 caracteres**, alineada con la validación del backend.
+- Se elimina cualquier referencia a autenticación “simulada” en la interfaz, al estar integrada la autenticación real con JWT.
 
 ##### Incidencias (backend)
 
