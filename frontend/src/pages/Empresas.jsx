@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import Button from "../components/ui/Button"
 import { apiFetch } from "../lib/apiFetch"
 import { useAuth } from "../context/AuthContext"
+import { API_URL } from "../config/api"
 /**
  * Página privada: Empresas
  * - Consume el backend (GET /empresas)
@@ -18,6 +19,8 @@ export default function Empresas() {
   const navigate = useNavigate()
   const { token, user } = useAuth()
   const isCliente = user?.role === "CLIENTE"
+
+  const isNoEmpresa = error?.includes("pendiente de asignación")
   
 
   async function loadEmpresas() {
@@ -104,16 +107,22 @@ export default function Empresas() {
         </section>
       ) : error ? (
         <section className={card}>
+
           <p className="text-sm font-medium text-brand-text">
             No se pudieron cargar las empresas
           </p>
+
           <p className="mt-1 text-sm text-red-600" role="alert">
             {error}
           </p>
-          <p className="mt-2 text-sm text-brand-muted">
-            Comprueba que el backend está arrancado en{" "}
-            <span className="font-medium">{apiFetch}</span>.
-          </p>
+
+          {!isNoEmpresa && (
+            <p className="mt-2 text-sm text-brand-muted">
+              Comprueba que el backend está arrancado en{" "}
+              <span className="font-medium">{API_URL}</span>.
+            </p>
+          )}
+
         </section>
       ) : (
         <section className={card}>
@@ -134,6 +143,7 @@ export default function Empresas() {
                     <th className="py-3 pr-4">{isCliente ? "Ver" : "Acciones"}</th>
                   </tr>
                 </thead>
+
 
                 <tbody className="divide-y divide-brand-border">
                   {items.map((e) => (

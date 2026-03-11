@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"
 import Button from "../components/ui/Button"
 import { apiFetch } from "../lib/apiFetch"
 import { useAuth } from "../context/AuthContext"
+import { API_URL } from "../config/api"
 /**
  * Página privada: Trabajadores (placeholder)
  * En prototipos posteriores se implementará el listado y CRUD.
@@ -17,6 +18,8 @@ export default function Trabajadores() {
   const navigate = useNavigate()
   const { token, user } = useAuth()
   const isCliente = user?.role === "CLIENTE"
+
+  const isNoEmpresa = error?.includes("pendiente de asignación")
 
   
   async function loadTrabajadores() {
@@ -34,7 +37,11 @@ export default function Trabajadores() {
 
     setItems(data?.data || [])
   } catch (err) {
-    setError(err?.message || "Error inesperado")
+    if (err?.status === 403 && err?.code === "NO_EMPRESA_ASIGNADA") {
+      setError("Usuario pendiente de asignación a una empresa. Contacta con tu gestor.")
+    } else {
+      setError(err?.message || "Error inesperado")
+    }
   } finally {
     setLoading(false)
   }
@@ -80,9 +87,15 @@ export default function Trabajadores() {
         </div>
 
       {/* POST nueva empresa */}
-        
-      <Button  variant="secondary"className="ml-auto" onClick={() => navigate("/app/trabajadores/nuevo")}>Nuevo trabajador</Button>
 
+       {!isCliente && ( 
+      <Button  
+      variant="secondary"
+      className="ml-auto" 
+      onClick={() => navigate("/app/trabajadores/nuevo")}>
+        Nuevo trabajador
+        </Button>
+      )}
 
       </header>
 
@@ -96,15 +109,19 @@ export default function Trabajadores() {
         ) : error ? (
           <section className={card}>
             <p className="text-sm font-medium text-brand-text">
-                  No se pudieron cargar los trabajadores
+              No se pudieron cargar los trabajadores
             </p>
+
             <p className="mt-1 text-sm text-red-600" role="alert">
-                  {error}
+              {error}
             </p>
-            <p className="mt-2 text-sm text-brand-muted">
-              Comprueba que el backend está arrancado en{" "}
-              <span className="font-medium">{API_URL}</span>.
-            </p>
+
+            {!isNoEmpresa && (
+              <p className="mt-2 text-sm text-brand-muted">
+                Comprueba que el backend está arrancado en{" "}
+                <span className="font-medium">{API_URL}</span>.
+              </p>
+            )}
           </section>
           ) : (
             <section className={card}>

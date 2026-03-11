@@ -36,7 +36,10 @@ export async function apiFetch(path, options = {}) {
   if (!res.ok) {
     // backend usa message/código en muchos endpoints
     const msg = data?.message || data?.error || `HTTP ${res.status}`
-    throw new Error(msg)
+    const err = new Error(msg)
+    err.status = res.status
+    err.code = data?.code
+    throw err
   }
 
   return data

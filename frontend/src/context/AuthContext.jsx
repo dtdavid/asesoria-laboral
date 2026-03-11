@@ -1,8 +1,7 @@
 import {createContext, useContext, useState} from 'react'
 
 /**
- * Contexto de autentificación simulado
- * más adelante, la autentificación será real con JWT + backend
+ * Contexto de autentificación con JWT + backend
  */
  
 const AuthContext = createContext(null)
@@ -24,6 +23,7 @@ export function AuthProvider({children}) {
 
     //login con JWT: guarda token y user en estado y localStorage 
     const login = ({ token: newToken, user: newUser }) => {
+    if (!newToken || !newUser) throw new Error("login requiere { token, user }")   
     setToken(newToken)
     setUser(newUser)
     localStorage.setItem("token", newToken)

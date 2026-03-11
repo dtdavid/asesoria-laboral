@@ -2,6 +2,7 @@ import Button from "../components/ui/Button"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../context/AuthContext"
+import { API_URL } from "../config/api"
 
 export default function Registro() {
   const navigate = useNavigate()
@@ -15,25 +16,50 @@ export default function Registro() {
 
   // Validación mínima (frontend)
   const isValidEmail = email.includes("@") && email.includes(".")
-  const isValidPassword = password.length >= 6
+  const isValidPassword = password.length >= 8
   const passwordsMatch = password === confirmPassword
   const canSubmit = isValidEmail && isValidPassword && passwordsMatch
 
-  const handleSubmit = (e) => {
-    e.preventDefault() // evita que el navegador recargue la página
-    setError("") // reseteamos el error antes de intentar registrar
+  const handleSubmit = async (e) => {
+  e.preventDefault()
+  setError("")
 
-    if (!canSubmit) {
-      setError(
-        "Por favor, introduce un email válido, una contraseña de al menos 6 caracteres y asegúrate de que las contraseñas coinciden."
-      )
-      return
+  if (!canSubmit) {
+    setError("Email inválido o contraseñas no válidas.")
+    return
+  }
+
+  try {
+    // 1) Registro: crea usuario (no devuelve token)
+    const resReg = await fetch(`${API_URL}/auth/registro`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+    const dataReg = await resReg.json().catch(() => null)
+
+    if (!resReg.ok || !dataReg?.ok) {
+      throw new Error(dataReg?.message || dataReg?.error || "No se pudo registrar.")
     }
 
-    //Registro simulado: en el futuro será API + JWT
-    login() // marcamos autenticado para poder acceder a /app
+    // 2) Login automático para obtener JWT y entrar en /app
+    const resLogin = await fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, password }),
+    })
+    const dataLogin = await resLogin.json().catch(() => null)
+
+    if (!resLogin.ok || !dataLogin?.ok) {
+      throw new Error(dataLogin?.message || dataLogin?.error || "Registro OK, pero fallo al iniciar sesión.")
+    }
+
+    login({ token: dataLogin.data.token, user: dataLogin.data.user })
     navigate("/app", { replace: true })
+  } catch (err) {
+    setError(err?.message || "Error inesperado")
   }
+}
 
   return (
     <div className="max-w-md mx-auto">
@@ -109,9 +135,7 @@ export default function Registro() {
             Registrarse
           </Button>
 
-          <p className="text-xs text-brand-muted text-center">
-            Nota: registro simulado. En próximos prototipos se conectará con backend y JWT.
-          </p>
+          
         </form>
       </div>
       </div>
