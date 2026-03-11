@@ -11,7 +11,7 @@ import PublicFooter from "../components/PublicFooter"
  */
 export default function PrivateLayout() {
   return (
-    <div className="min-h-screen bg-brand-surface text-brand-text overflow-x-clip">
+    <div className="min-h-screen flex flex-col bg-brand-bg text-brand-text overflow-x-clip">
 
       {/* Header privado */}
 
@@ -19,7 +19,7 @@ export default function PrivateLayout() {
 
       {/* Contenedor principal */}
 
-      <div className="w-full px-4 py-6">
+      <div className="w-full px-4 py-6 flex-1">
         <div className="mx-auto w-full max-w-7xl min-w-0">
           {/*
             grid-cols-1 en móvil (una columna)

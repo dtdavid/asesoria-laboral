@@ -118,23 +118,33 @@ const handleDelete = async (id) => {
 return (
   <div className="space-y-6 min-w-0">
     <header className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <div className="space-y-1 min-w-0">
-        <h1 className="text-2xl font-semibold text-brand-text">Incidencias</h1>
-        <p className="text-sm text-brand-muted">
-          {isGestor
-            ? (empresaId
-                ? `Empresa: ${items[0]?.razon_social || "—"} (ID: ${empresaId})`
-                : "Selecciona una empresa para ver sus incidencias.")
-            : "Incidencias de tu empresa."}
-        </p>
-      </div>
 
-      {/** button (GESTOR) para navegar a IncidenciaForm.jsx */}
+{/**Select de empresa (GESTOR) para listar incidencias */}
+
       {isGestor && (
-      <Button variant="secondary" onClick = {() => navigate("/app/incidencias/nueva")}>
-        Nueva incidencia
-      </Button>
-      )}
+        <div className="w-full flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <select
+            value={empresaId}
+            onChange={(e) => setEmpresaId(e.target.value)}
+            className="w-full sm:w-[520px] h-10 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-1"
+          >
+            <option value="">Selecciona empresa…</option>
+            {empresas.map((emp) => (
+              <option key={emp.id} value={emp.id}>
+                {emp.razon_social} (ID {emp.id})
+              </option>
+            ))}
+          </select>
+
+          <Button
+            variant="secondary"
+            className="w-full sm:w-auto h-10"
+            onClick={() => navigate("/app/incidencias/nueva")}
+          >
+            Nueva incidencia
+          </Button>
+        </div>
+    )}
     </header>
     
       {/** Mensaje de Guardar Cambio */}
@@ -144,27 +154,6 @@ return (
             <p className="text-sm sm:text-base font-medium text-green-800">{flash}</p>
         </section>
       )}
-
-    {/* Select de empresa */}
-    {isGestor && (
-    <section className="rounded-2xl bg-white p-5 shadow-sm space-y-3">
-      <label className="text-sm font-medium text-brand-text">
-        Empresa <span className="text-red-600">*</span>
-      </label>
-      <select
-        value={empresaId}
-        onChange={(e) => setEmpresaId(e.target.value)}
-        className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
-      >
-        <option value="">Selecciona empresa…</option>
-        {empresas.map((emp) => (
-          <option key={emp.id} value={emp.id}>
-            {emp.razon_social} (ID {emp.id})
-          </option>
-        ))}
-      </select>
-    </section>
-    )}
 
     {/* Estados */}
 
@@ -184,7 +173,7 @@ return (
     {/* Tabla (solo cuando hay empresa seleccionada y no hay error) */}
 
     {!loading && !error && canShowTable && (
-      <section className="rounded-2xl bg-white p-5 shadow-sm">
+      <section className="rounded-2xl bg-white p-1 sm:p-5 shadow-sm">
         {items.length === 0 ? (
           <p className="text-sm text-brand-muted">No hay incidencias {isGestor ? "esta empresa" : "tu empresa"}.</p>
         ) : (
@@ -192,45 +181,51 @@ return (
             <table className="w-full text-left text-sm">
               <thead className="border-b border-brand-border">
                 <tr className="text-xs font-semibold tracking-wide text-brand-muted uppercase">
-                  <th className="py-3 pr-4">Empresa</th>
-                  <th className="py-3 pr-4">Tipo</th>
-                  <th className="py-3 pr-4">Trabajador</th>
-                  <th className="py-3 pr-4">Estado</th>
-                  <th className="py-3 pr-4">Inicio</th>
-                  <th className="py-3 pr-4">Acciones</th>
+                  <th className="py-3 pr-4 hidden sm:table-cell">Empresa</th>
+                  <th className="py-3 pr-4 hidden sm:table-cell">Tipo</th>
+                  <th className="py-4 pr-6">Trabajador</th>
+                  <th className="py-3 pr-4 hidden sm:table-cell">Estado</th>
+                  <th className="py-3 pr-4 hidden sm:table-cell">Inicio</th>
+                  <th className="py-4 pr-4 text-right">Acciones</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-brand-border">
                 {items.map((it) => (
                   <tr key={it.id}>
-                    <td className="py-3 pr-4">
+                    <td className="py-3 pr-4 hidden sm:table-cell">
                       {it.razon_social} (ID {it.empresa_id})
                     </td>
-                    <td className="py-3 pr-4">{it.tipo}</td>
-                    <td className="py-3 pr-4">
+                    <td className="py-3 pr-4 hidden sm:table-cell">{it.tipo}</td>
+                    <td className="py-3 pr-6 break-words whitespace-nowrap">
                       {it.trabajador_nombre
                         ? `${it.trabajador_nombre} ${it.trabajador_apellidos || ""}`
                         : it.trabajador_id
                           ? `ID ${it.trabajador_id}`
                           : "—"}
                     </td>
-                    <td className="py-3 pr-4">{it.estado}</td>
+                    <td className="py-3 pr-4 whitespace-nowrap hidden sm:table-cell">{it.estado}</td>
                     {/* <td className="py-3 pr-4">{it.fecha_inicio}</td> */}
-                    <td className="py-3 pr-4">{fmtDate(it.fecha_inicio)}</td>
-                    <td className="py-3 pr-4 text-brand-text">
-                      <Button variant="ghost" onClick={() => navigate(`/app/incidencias/${it.id}`)}>
-                        Ver
-                      </Button>
+                    <td className="py-3 pr-4 hidden sm:table-cell">{fmtDate(it.fecha_inicio)}</td>
+                    <td className="py-3 pr-4 text-right">
+                      <div className="inline-flex gap-2">
+                        <Button
+                          variant="primary"
+                          className="px-3 py-1.5 text-xs"
+                          onClick={() => navigate(`/app/incidencias/${it.id}`)}
+                        >
+                          Ver
+                        </Button>
 
-                      { isGestor && (
-                      <Button
-                        variant="ghost"
-                        className="ml-2"
-                        onClick={() => handleDelete(it.id)}
-                      >
-                        Eliminar
-                      </Button>
-                      )}
+                        {isGestor && (
+                          <Button
+                            variant="ghost"
+                            className="px-2 py-1.5 text-xs border"
+                            onClick={() => handleDelete(it.id)}
+                          >
+                            Eliminar
+                          </Button>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 ))}

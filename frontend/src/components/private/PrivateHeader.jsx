@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import Button from "../ui/Button"
 
@@ -27,17 +27,24 @@ export default function PrivateHeader() {
       <div className="w-full max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
 
         {/* Identidad mínima */}
+
+        <Link to="/" className="flex items-center gap-2 shrink-0">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold text-brand-muted uppercase tracking-wide">
+          <img src="/logo.svg" alt="Home" className="h-8 w-auto" />
+          <span className="hidden sm:inline text-xs font-semibold text-brand-muted uppercase tracking-wide">
             Área privada
           </span>
         </div>
+        </Link>
 
         {/* Usuario + acción */}
         <div className="flex items-center gap-3">
           
-          <span className="text-xs sm:text-sm text-brand-muted truncate max-w-[160px] sm:max-w-none">
-            {user?.email || "—"} <span className="hidden sm:inline">({user?.role || "—"})</span>
+          <span className="text-xs sm:text-sm text-brand-muted truncate max-w-[140px] sm:max-w-none">
+            {user?.email || "—"} 
+            <span className="hidden sm:inline">
+            ({user?.role || "—"})
+            </span>
           </span>
 
           <Button
@@ -46,7 +53,8 @@ export default function PrivateHeader() {
             onClick={handleLogout}
             className="px-3"
           >
-            Cerrar sesión
+            <span className="sm:hidden">Salir</span>
+            <span className="hidden sm:inline">Cerrar sesión</span>
           </Button>
         </div>
 
