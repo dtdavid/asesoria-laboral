@@ -1,11 +1,6 @@
-“Work in progress. README will be completed during final delivery.”
+# Asesoría Laboral
 
-# Aplicación Web – Asesoría Laboral
-
-Proyecto Fin de Ciclo (DAW)
-
-Aplicación web académica orientada a la gestión interna de una asesoría laboral.  
-Permite organizar empresas, trabajadores e incidencias laborales.
+Aplicación web (React + Express + PostgreSQL) con autenticación JWT, roles (GESTOR/CLIENTE) y endpoints scoped (/me\*).
 
 ---
 
@@ -29,7 +24,15 @@ Permite organizar empresas, trabajadores e incidencias laborales.
 - pg (node-postgres)
 - dotenv
 - cors
+- jsonwebtoken (JWT)
+- bcryptjs (hash de contraseñas)
 - nodemon
+
+## Testing (backend)
+
+- Jest
+- Supertest
+- cross-env (Windows)
 
 ---
 
@@ -99,7 +102,11 @@ http://localhost:5173
 ```bash
 cd backend
 npm install
+npm run dev
 ```
+
+Backend disponible en:
+http://localhost:3000
 
 ---
 
@@ -107,7 +114,7 @@ npm install
 
 Archivo plantilla:
 
-```
+```bash
 backend/.env.example
 ```
 
@@ -120,6 +127,7 @@ PGPORT=5432
 PGDATABASE=asesoria_laboral
 PGUSER=postgres
 PGPASSWORD=tu_password
+JWT_SECRET=tu_clave_super_secreta
 ```
 
 Para desarrollo:
@@ -146,37 +154,88 @@ Comprobar:
 \l
 ```
 
----
+## 6.1 Inicialización de tablas y datos demo (schema + seed)
 
-# 7. Arranque del backend
+Los scripts SQL están en `backend/db` y están numerados para ejecutarse en orden.
+
+Ejemplo (desde la raíz del proyecto):
 
 ```bash
-npm run dev
+psql -U postgres -d asesoria_laboral -f backend/db/02_empresas_schema.sql
+psql -U postgres -d asesoria_laboral -f backend/db/03_empresas_seed.sql
+psql -U postgres -d asesoria_laboral -f backend/db/04_trabajadores_schema.sql
+psql -U postgres -d asesoria_laboral -f backend/db/05_trabajadores_seed.sql
+psql -U postgres -d asesoria_laboral -f backend/db/06_incidencias_schema.sql
+psql -U postgres -d asesoria_laboral -f backend/db/07_incidencias_seed.sql
+psql -U postgres -d asesoria_laboral -f backend/db/08_usuarios_schema.sql
+psql -U postgres -d asesoria_laboral -f backend/db/09_usuarios_seed.sql
 ```
 
-Backend disponible en:
+⚠ **Nota** (Windows/PowerShell - acentos/ñ):
+Antes de ejecutar seeds con psql, puede ser necesario forzar **UTF8**:
 
+```bash
+$env:PGCLIENTENCODING="UTF8"
+psql -U postgres -d asesoria_laboral -f backend/db/XX_archivo.sql
 ```
-http://localhost:3000
-```
+
+## 6.2 Usuarios demo
+
+- **GESTOR**: gestor@demo.test / Cliente1234!
+- **CLIENTE**: cliente1@demo.test / Cliente1234! (empresa_id=1)
 
 ---
 
-# 8. Endpoints disponibles
+# 7. Endpoints disponibles
 
-## GET /health
+## Utilidad
 
-Comprueba que la API está operativa.
+- GET `/health` → estado del servicio
+- GET `/db-time` → prueba de conexión a PostgreSQL (SELECT NOW())
+- POST `/echo` → devuelve el body recibido
 
-Respuesta ejemplo:
+## Auth
 
-```json
-{
-  "ok": true,
-  "service": "backend",
-  "ts": "2026-02-16T22:33:11.005Z"
-}
-```
+- POST `/auth/registro` → registro público (crea CLIENTE, status=PENDIENTE, empresa_id=NULL)
+- POST `/auth/login` → login, devuelve JWT (Bearer)
+
+## Scoped (CLIENTE) – requiere JWT
+
+- GET `/me/empresa` → empresa asociada al usuario autenticado
+- GET `/me/trabajadores` → trabajadores de su empresa
+- GET `/me/incidencias` → incidencias de su empresa
+  > Si `empresa_id` no está asignado → 403 `NO_EMPRESA_ASIGNADA`
+
+## Backoffice (GESTOR) – requiere JWT + rol GESTOR
+
+### Empresas (CRUD)
+
+- GET `/empresas`
+- GET `/empresas/:id`
+- POST `/empresas`
+- PUT `/empresas/:id`
+- DELETE `/empresas/:id`
+
+### Trabajadores (CRUD)
+
+- GET `/trabajadores?empresa_id=<id>`
+- GET `/trabajadores/:id`
+- POST `/trabajadores`
+- PUT `/trabajadores/:id`
+- DELETE `/trabajadores/:id`
+
+### Incidencias (CRUD)
+
+- GET `/incidencias?empresa_id=<id>`
+- GET `/incidencias/:id`
+- POST `/incidencias`
+- PUT `/incidencias/:id`
+- DELETE `/incidencias/:id`
+
+### Usuarios (asignación de empresa a clientes)
+
+- GET `/usuarios?role=CLIENTE` → lista clientes (ordenados: PENDIENTE primero)
+- PATCH `/usuarios/:id/asignar-empresa` body `{ "empresa_id": <id> }` → asigna empresa y activa status
 
 ---
 
@@ -208,7 +267,7 @@ Ejemplo:
 
 ---
 
-# 9. Scripts disponibles
+# 8. Scripts disponibles
 
 ## Backend
 
@@ -231,14 +290,37 @@ Ejemplo:
 
 ---
 
-# 10. Estado actual (Prototipo 1)
+## 9. Testing (Backend)
+
+Se incluyen pruebas de integración con Jest + Supertest.
+
+Ejecución:
+
+```bash
+cd backend
+npm test
+```
+
+Ubicación:
+backend/\_\_tests\_\_/
+
+Casos cubiertos (resumen):
+
+- Login devuelve token
+- 401 sin token en endpoint protegido
+- 403 por rol CLIENTE en endpoints de GESTOR
+- 403 NO_EMPRESA_ASIGNADA en /me/empresa para usuario PENDIENTE
+- POST /incidencias (GESTOR) crea incidencia (201)
+
+---
+
+# 10. Estado actual (Prototipo final)
 
 ✔ SPA con rutas públicas y privadas  
-✔ Layout público y privado  
-✔ Autenticación simulada  
-✔ Backend Express operativo  
-✔ Conexión verificada con PostgreSQL  
-✔ Base preparada para JWT
+✔ Autenticación JWT (roles GESTOR / CLIENTE)  
+✔ Endpoints scoped para cliente: /me/empresa, /me/trabajadores, /me/incidencias  
+✔ CRUD completo para GESTOR: empresas, trabajadores, incidencias  
+✔ UI responsive (Home + área privada) y recursos oficiales enlazados
 
 ---
 
@@ -261,29 +343,60 @@ CFGS Desarrollo de Aplicaciones Web (DAW)
 
 ---
 
-# 13. Licencia
+## 13. Licencia y dependencias de terceros
 
-Proyecto académico bajo licencia MIT.
+Este proyecto se publica bajo licencia **MIT** (ver archivo [LICENSE](LICENSE)).
 
-> _TODO_: Brevísimamente. Indica qué licencia usarás y crea un link a ella. Hay miles de ejemplos en Github.
-> _TODO_: Es requisito INDISPENSABLE el licenciar explícitamente el proyecto software. Se recomienda licenciar con _MIT License_ (como viene en la plantilla) o _GNU Free Documentation License Version 1.3_. Presencia de un fichero `LICENSE` en la raiz del repo, con tu fichero de licencia. Recuerda que si empleas una licencia de software libre estás autorizando la derivación de tu obra bajo la misma licencia que elijas, pudiendo dar continuidad, p. e. otro alumno, para continuar tu proyecto en otro curso.
-> Si tu proyecto tiene además otro tipo contenido documental, recomendamos los términos de _GNU Free Documentation License Version 1.3_, crea igualmente el fichero `LICENSE`. Será especialmente valorado en este caso, la claridad de la especificación para que el proyecto pueda ser ejecutado partiendo de lo proyectado.
-> Ten en cuenta que estás cediendo el uso de este software y sus subproductos generados a la comunidad.
+Dependencias principales (según `package.json`):
 
-## Documentación
+### Frontend
 
-> _TODO_: Emplaza a quien se haya interesado en tu proyecto a leer una guía o documentación extendida del mismo. Haz un link a ella en este punto.
+- react
+- react-dom
+- react-router-dom
+- react-icons
+- vite
+- tailwindcss
+- postcss
+- autoprefixer
+- eslint + plugins
 
-## Documentación
+### Backend
 
-La documentación técnica y funcional del proyecto se encuentra desarrollada en un documento independiente, donde se detallan el análisis, el diseño, la planificación y las decisiones técnicas adoptadas.
+- express
+- pg (node-postgres)
+- cors
+- dotenv
+- jsonwebtoken
+- bcryptjs
+- nodemon
 
-Puede consultarse en el siguiente enlace:
+### Testing (backend)
 
-[Documentación del proyecto](doc/doc.md)
+- jest
+- supertest
+- cross-env (Windows)
+
+> Nota: las licencias exactas de cada dependencia se pueden consultar en sus repositorios oficiales o en el fichero `package-lock.json`.
+
+## 14. Documentación
+
+La documentación técnica y funcional del proyecto se encuentra en:
+
+- [`doc/doc.md`](doc/doc.md)
+
+Incluye: análisis y alcance, diseño (diagramas y wireframes), arquitectura, prototipos (1–3), instalación/puesta en marcha, manual de usuario, pruebas (Thunder + evidencias UI) y propuestas de mejora.
+
+### Exportación a PDF (entrega)
+
+La documentación se exporta a PDF desde VS Code con la extensión **Markdown PDF**:
+
+1. Abrir `doc/doc.md`.
+2. Click derecho → **Markdown PDF: Export (pdf)**.
+3. Subir el PDF resultante a la tarea correspondiente del aula virtual.
+
+> Nota: las evidencias gráficas usadas en la documentación se encuentran en la carpeta `img/`.
 
 ## Guía de contribución
 
 Este proyecto tiene un carácter **académico** y forma parte de un Proyecto Fin de Ciclo. No obstante, cualquier sugerencia de mejora, corrección o ampliación puede proponerse mediante revisiones del código o comentarios, siempre respetando el alcance definido en la documentación.
-
-> _TODO_: Tratándose de un proyecto de software libre, es muy importante que expongas cómo se puede contribuir con tu proyecto. Algunos ejemplos de esto son realizar nuevas funcionalidades, corrección y/u optimización del código, realización de tests automatizados, nuevas interfaces de integración, desarrollo de plugins, etc. etc. Sé lo más conciso que puedas.
