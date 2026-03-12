@@ -177,16 +177,16 @@ useEffect(() => {
               </p>
               ) : (
                 <div className="overflow-x-auto">
-                  <table className="w-full text-left text-sm">
+                  <table className="w-full min-w-0 text-left text-sm">
                     <thead className="border-b border-brand-border">
                       <tr className="text-xs font-semibold tracking-wide text-brand-muted uppercase">
-                        <th className="py-3 pr-4">ID</th>
+                        <th className="py-3 pr-4 hidden sm:table-cell">ID</th>
                         <th className="py-3 pr-4">Nombre</th>
-                        <th className="py-3 pr-4">Apellidos</th>
-                        <th className="py-3 pr-4">DNI</th>
-                        <th className="py-3 pr-4">{isCliente ? "Ver" : "Acciones"}</th>
-                        </tr>
-                      </thead>
+                        <th className="py-3 pr-4 hidden md:table-cell">Apellidos</th>
+                        <th className="py-3 pr-4 hidden lg:table-cell">DNI</th>
+                        <th className="py-3">{isCliente ? "Ver" : "Acciones"}</th>
+                      </tr>
+                    </thead>
       
                       <tbody className="divide-y divide-brand-border">
 
@@ -194,30 +194,42 @@ useEffect(() => {
 
                         {items.map((e) => (
                           <tr key={e.id} className="align-top">
-                            <td className="py-3 pr-4 text-brand-muted">{e.id}</td>
+                            <td className="py-3 pr-4 text-brand-muted hidden sm:table-cell">{e.id}</td>
                             <td className="py-3 pr-4 font-medium text-brand-text">
                               {e.nombre}
                             </td>
-                            <td className="py-3 pr-4 text-brand-text">{e.apellidos}</td>
-                            <td className="py-3 pr-4 text-brand-text">
+                            <td className="py-3 pr-4 text-brand-text hidden md:table-cell">{e.apellidos}</td>
+                            <td className="py-3 pr-4 text-brand-text hidden lg:table-cell">
                               {e.dni || "—"}
                             </td>
-                            <td className="py-3 pr-4 text-brand-text">
+
+                            <td className="py-3 text-brand-text">
                               {isCliente ? (
-                                <Button onClick={() => navigate(`/app/trabajadores/${e.id}`)}>Ver</Button>
-                              ) : (
-                              <>
-                                <Button onClick={() => navigate(`/app/trabajadores/${e.id}/editar`)}>Editar</Button>
                                 <Button
-                                  variant="ghost"
-                                  className="ml-3"
-                                  onClick={() => handleDelete(e.id)}
+                                  className="w-full sm:w-auto"
+                                  onClick={() => navigate(`/app/trabajadores/${e.id}`)}
                                 >
-                                  Eliminar
+                                  Ver
                                 </Button>
-                              </>
+                              ) : (
+                                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+                                  <Button
+                                    className="w-full sm:w-auto"
+                                    onClick={() => navigate(`/app/trabajadores/${e.id}/editar`)}
+                                  >
+                                    Editar
+                                  </Button>
+                                  <Button
+                                    variant="ghost"
+                                    className="w-full sm:w-auto"
+                                    onClick={() => handleDelete(e.id)}
+                                  >
+                                    Eliminar
+                                  </Button>
+                                </div>
                               )}
                             </td>
+
                           </tr>
                         ))}
                       </tbody>
