@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
 import Button from "../components/ui/Button"
 
 /**
@@ -9,14 +8,8 @@ import Button from "../components/ui/Button"
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const { logout } = useAuth()
-
-  const handleLogout = () => {
-    logout()
-    navigate("/login")
-  }
-
-  const card = "rounded-2xl bg-brand-surface p-5 shadow-sm border border-brand-border flex flex-col h-full"
+  
+  const card = "rounded-2xl bg-brand-surface p-5 shadow-sm border border-brand-border flex flex-col min-h-[170px]"
 
   return (
     <div className="space-y-6">
@@ -30,65 +23,72 @@ export default function Dashboard() {
             Área privada del usuario autenticado.
           </p>
         </div>
-
-        <Button type="button" variant="ghost" onClick={handleLogout} className="sm:mt-1">
-          Cerrar sesión
-        </Button>
       </header>
 
       {/* KPIs (placeholder) */}
       <section className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
         <div className={card}>
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => navigate("/app/empresas")}
-            className="p-0 h-auto text-xs font-semibold tracking-wide text-brand-muted uppercase hover:underline"
-          >
+          <p className="text-xs font-semibold tracking-wide text-brand-muted uppercase">
             Empresas
-          </Button>
+          </p>
           <p className="mt-2 text-center text-2xl font-semibold text-brand-text">—</p>
-          <p className="mt-auto text-center pt-2 text-sm text-brand-muted ">Total registradas</p>
+          <p className="mt-auto pt-2 text-center text-sm text-brand-muted">
+            Total registradas
+          </p>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => navigate("/app/empresas")}
+            className="mt-4 w-full"
+          >
+            Ir a empresas
+          </Button>
         </div>
 
         <div className={card}>
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => navigate("/app/trabajadores")}
-            className="p-0 h-auto text-xs font-semibold tracking-wide text-brand-muted uppercase hover:underline"
-          >
+          <p className="text-xs font-semibold tracking-wide text-brand-muted uppercase">
             Trabajadores
-          </Button>
+          </p>
           <p className="mt-2 text-center text-2xl font-semibold text-brand-text">—</p>
-          <p className="mt-auto text-center pt-2 text-sm text-brand-muted">Total activos</p>
+          <p className="mt-auto pt-2 text-center text-sm text-brand-muted">
+            Total activos
+          </p>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => navigate("/app/trabajadores")}
+            className="mt-4 w-full"
+          >
+            Ir a trabajadores
+          </Button>
         </div>
 
         <div className={card}>
-          <Button
-            type="button"
-            variant="ghost"
-            onClick={() => navigate("/app/incidencias")}
-            className="p-0 h-auto text-xs font-semibold tracking-wide text-brand-muted uppercase hover:underline"
-          >
+          <p className="text-xs font-semibold tracking-wide text-brand-muted uppercase">
             Incidencias
-          </Button>
+          </p>
           <p className="mt-2 text-center text-2xl font-semibold text-brand-text">—</p>
-          <p className="mt-auto text-center pt-2 text-sm text-brand-muted">En curso</p>
+          <p className="mt-auto pt-2 text-center text-sm text-brand-muted">
+            En curso
+          </p>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => navigate("/app/incidencias")}
+            className="mt-4 w-full"
+          >
+            Ir a incidencias
+          </Button>
         </div>
 
         <div className={card}>
-          <Button
-            type="button"
-            variant="ghost"
-            disabled
-            title = "Pendiente de implementar"
-            className="p-0 h-auto text-xs font-semibold tracking-wide text-brand-muted uppercase disabled:opacity-60"
-          >
-            Pendientes
-          </Button>
-          <p className="mt-2 text-center text-2xl font-semibold text-brand-text">—</p>
-          <p className="mt-auto text-center pt-2 text-sm text-brand-muted">Acciones</p>
+          <p className="text-xs font-semibold tracking-wide text-brand-muted uppercase">
+            Estado
+          </p>
+          <p className="mt-2 text-center text-2xl font-semibold text-brand-text">Demo</p>
+          <p className="mt-auto pt-2 text-center text-sm text-brand-muted">
+            Panel operativo del prototipo
+          </p>
         </div>
       </section>
 
@@ -97,14 +97,25 @@ export default function Dashboard() {
         <div className={card}>
           <p className="text-sm font-medium text-brand-text">Accesos rápidos</p>
           <p className="mt-1 text-sm text-brand-muted">
-            Aquí habrá enlaces a crear empresa, alta de trabajador e incidencias.
+            Accede a las secciones principales del panel para consultar o gestionar información.
           </p>
+          <div className="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <Button variant="secondary" onClick={() => navigate("/app/empresas")}>
+              Empresas
+            </Button>
+            <Button variant="secondary" onClick={() => navigate("/app/trabajadores")}>
+              Trabajadores
+            </Button>
+            <Button variant="secondary" onClick={() => navigate("/app/incidencias")}>
+              Incidencias
+            </Button>
+          </div>
         </div>
 
         <div className={card}>
-          <p className="text-sm font-medium text-brand-text">Actividad reciente</p>
+          <p className="text-sm font-medium text-brand-text">Resumen</p>
           <p className="mt-1 text-sm text-brand-muted">
-            Aquí se listarán cambios recientes cuando exista backend.
+            Desde este panel puedes entrar a empresas, trabajadores e incidencias según tu rol.
           </p>
         </div>
       </section>
