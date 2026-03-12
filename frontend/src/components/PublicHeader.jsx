@@ -32,7 +32,7 @@ export default function PublicHeader() {
           <img
             src="/logo.svg"
             alt="Consultoría Gestión Laboral"
-            className="h-10 w-auto"
+            className="h-10 md:h-16 w-auto"
           />
         </Link>
 

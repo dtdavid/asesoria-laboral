@@ -8,7 +8,7 @@ import { FiPhone } from "react-icons/fi"
  */
 export default function PublicFooter() {
   return (
-    <footer className="mt-12 bg-brand-footer">
+    <footer className="bg-brand-footer">
       <div className="w-full max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 items-start md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-24">
           {/* ENLACES PROYECTO */}
