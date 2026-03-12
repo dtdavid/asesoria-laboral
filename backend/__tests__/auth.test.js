@@ -64,6 +64,25 @@ describe("Auth & Authorization", () => {
   expect(res.body.ok).toBe(false)
   expect(res.body.code).toBe("NO_EMPRESA_ASIGNADA")
   })
+
+  test("POST /incidencias (GESTOR) -> 201 crea incidencia", async () => {
+  const tokenGestor = await loginAndGetToken("gestor@demo.test", "Cliente1234!")
+
+  const res = await request(app)
+    .post("/incidencias")
+    .set("Authorization", `Bearer ${tokenGestor}`)
+    .send({
+      empresa_id: 1,
+      tipo: "IT",
+      fecha_inicio: "2026-03-12",
+      descripcion: "Test Jest: creación incidencia",
+      trabajador_id: 1
+    })
+
+  expect(res.status).toBe(201)
+  expect(res.body.ok).toBe(true)
+  expect(res.body.data?.id).toBeTruthy()
+  })
 })
 
 afterAll(async () => {
