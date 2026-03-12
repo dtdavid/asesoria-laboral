@@ -28,8 +28,7 @@ export default function Home() {
 
   // Wrapper visual para cada sección: una “tarjeta de sección” sutil (sin borde duro)
   // Regla: fondo global único + secciones como tarjetas alternando blanco/surface.
-  const sectionBase =
-    "rounded-2xl shadow-sm px-6 py-12 sm:px-10 sm:py-16"
+  const sectionBase = "rounded-2xl shadow-sm px-6 py-12 sm:px-10 sm:py-16 md:py-20"
 
   const sectionWhite = `${sectionBase} bg-white`
   const sectionSurface = `${sectionBase} bg-brand-surface`
@@ -51,6 +50,7 @@ export default function Home() {
             </div>
 
             {/* CTAs: acciones principales */}
+
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button
                 variant="primary"
@@ -68,11 +68,16 @@ export default function Home() {
                 Acceder
               </Button>
             </div>
+
+            {/* Separador */}
+
+            <div className="mx-auto h-px w-full max-w-4xl bg-brand-border/60" />
+
             {/* Imagen hero */}
             <img
               src="/hero.jpg"
               alt="Entorno de trabajo en asesoría"
-              className="mx-auto w-full max-w-4xl h-52 sm:h-64 object-cover rounded-2xl border border-brand-border shadow-sm"
+              className="mx-auto w-full max-w-4xl h-52 sm:h-64 object-cover rounded-2xl border border-brand-border/70 shadow-sm"
               loading="lazy"
             />
           </div>
