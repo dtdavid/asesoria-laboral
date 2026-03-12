@@ -77,6 +77,8 @@
       - [Helper de llamadas a la API (`apiFetch`)](#helper-de-llamadas-a-la-api-apifetch)
       - [Evidencias de pruebas (Thunder Client o similar)](#evidencias-de-pruebas-thunder-client-o-similar)
     - [Prototipo 3 (FINAL)](#prototipo-3-final)
+      - [Funcionalidades implementadas](#funcionalidades-implementadas)
+      - [Ajustes UX (área privada e incidencias)](#ajustes-ux-área-privada-e-incidencias)
       - [Autenticación con JWT (justificación breve)](#autenticación-con-jwt-justificación-breve)
       - [JWT (estructura del token)](#jwt-estructura-del-token)
       - [Ajustes en el flujo de registro y validación](#ajustes-en-el-flujo-de-registro-y-validación)
@@ -1003,7 +1005,7 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
 **Fecha:** 16 de marzo del 2026  
 **Descripción:** versión final funcional del proyecto, consolidando la integración SPA–API–BD, el control de acceso por roles y el estado estable de los módulos implementados.
 
-**Funcionalidades implementadas:**
+##### Funcionalidades implementadas
 
 - Autenticación real con endpoints `/auth` (registro y login) y emisión de JWT.
 - Integración de JWT en frontend mediante `AuthContext` y persistencia en `localStorage`.
@@ -1023,6 +1025,13 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
   - Backend: `GET /usuarios?role=CLIENTE` y `PATCH /usuarios/:id/asignar-empresa` (asigna `empresa_id` y activa el usuario).
   - Frontend: página de asignaciones con selección de cliente/empresa y ejecución del `PATCH`.
 - Evidencias de pruebas con Thunder Client (login, 401/403, operaciones permitidas por rol).
+
+##### Ajustes UX (área privada e incidencias)
+
+- Se ajusta el layout privado para que el contenido empuje correctamente al footer y se eviten “franjas” en pantallas grandes.
+- Se mejora el header privado en móvil: acceso a Home mediante logo/enlace y acciones más compactas para pantallas pequeñas.
+- En Incidencias (perfil GESTOR) se reorganiza el bloque superior integrando el selector de empresa y el botón “Nueva incidencia” en el header.
+- Se optimiza la tabla de incidencias en móvil para reducir scroll horizontal: ocultación de columnas no esenciales y compactación/alineación de acciones.
 
 ##### Autenticación con JWT (justificación breve)
 
