@@ -52,6 +52,18 @@ describe("Auth & Authorization", () => {
     // opcional: comprobar que viene una empresa
     expect(res.body.data).toBeTruthy()
   })
+
+  test("GET /me/empresa con cliente PENDIENTE -> 403 NO_EMPRESA_ASIGNADA", async () => {
+  const tokenPendiente = await loginAndGetToken("ines.galan@demo.test", "Cliente1234!")
+
+  const res = await request(app)
+    .get("/me/empresa")
+    .set("Authorization", `Bearer ${tokenPendiente}`)
+
+  expect(res.status).toBe(403)
+  expect(res.body.ok).toBe(false)
+  expect(res.body.code).toBe("NO_EMPRESA_ASIGNADA")
+  })
 })
 
 afterAll(async () => {
