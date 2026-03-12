@@ -24,13 +24,16 @@ export default function PrivateHeader() {
 
   return (
     <header className="border-b border-brand-border bg-brand-surface">
-      <div className="w-full max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
 
         {/* Identidad mínima */}
 
         <Link to="/" className="flex items-center gap-2 shrink-0">
         <div className="flex items-center gap-3">
-          <img src="/logo.svg" alt="Home" className="h-8 w-auto" />
+
+          {/* LOGO */}
+
+          <img src="/logo.svg" alt="Home" className="h-9 sm:h-10 md:h-14 w-auto" />
           <span className="hidden sm:inline text-xs font-semibold text-brand-muted uppercase tracking-wide">
             Área privada
           </span>
@@ -38,9 +41,9 @@ export default function PrivateHeader() {
         </Link>
 
         {/* Usuario + acción */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
           
-          <span className="text-xs sm:text-sm text-brand-muted truncate max-w-[140px] sm:max-w-none">
+          <span className="text-xs sm:text-sm text-brand-muted truncate max-w-[120px] sm:max-w-[220px]">
             {user?.email || "—"} 
             <span className="hidden sm:inline">
             ({user?.role || "—"})

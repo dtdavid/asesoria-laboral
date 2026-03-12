@@ -24,8 +24,8 @@ export default function PrivateSidebar() {
   const linkClass = ({ isActive }) =>
     `${baseItem} ${
       isActive
-        ? "bg-brand-surface text-brand-text border-l-4 border-brand-primary pl-2"
-        : "text-brand-muted hover:bg-brand-surface hover:text-brand-text"
+        ? "bg-brand-surface text-brand-text border-l-4 border-brand-primary pl-3 shadow-sm"
+        : "text-brand-muted hover:bg-brand-surface hover:text-brand-text hover:shadow-sm"
     }`
 
   // Links del panel (lo reutilizamos en móvil y desktop)
@@ -61,9 +61,9 @@ export default function PrivateSidebar() {
     <aside className="w-full">
       {/* MÓVIL: details colapsable */}
       <div className="md:hidden">
-        <details className="w-full min-w-0 overflow-hidden rounded-2xl bg-white shadow-sm">
+        <details className="w-full min-w-0 overflow-hidden rounded-2xl bg-white shadow-sm border border-brand-border">
           {/* summary = “cabecera” clickable */}
-          <summary className="cursor-pointer select-none px-4 py-3 text-xs font-semibold tracking-wide text-brand-muted uppercase">
+          <summary className="cursor-pointer select-none px-4 py-3 text-xs font-semibold tracking-wide text-brand-muted uppercase bg-brand-surface/60">
             Panel
           </summary>
 
@@ -77,7 +77,7 @@ export default function PrivateSidebar() {
 
       {/* DESKTOP: sidebar fijo */}
       <div className="hidden md:block">
-        <div className="rounded-2xl bg-white p-4 shadow-sm min-w-0 overflow-hidden">
+        <div className="rounded-2xl bg-white p-4 shadow-sm border border-brand-border min-w-0 overflow-hidden">
           <p className="text-xs font-semibold tracking-wide text-brand-muted uppercase">
             Panel
           </p>
