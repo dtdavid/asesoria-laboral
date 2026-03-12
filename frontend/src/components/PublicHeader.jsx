@@ -26,13 +26,13 @@ export default function PublicHeader() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-brand-border bg-white/90 backdrop-blur">
-      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4">
+      <div className="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-4 gap-3">
         {/* Marca: link a Home */}
         <Link to="/" className="flex items-center gap-2 shrink-0">
           <img
             src="/logo.svg"
             alt="Consultoría Gestión Laboral"
-            className="h-10 md:h-16 w-auto"
+            className="h-9 sm:h-10 md:h-14 w-auto"
           />
         </Link>
 
@@ -65,7 +65,7 @@ export default function PublicHeader() {
         {/* Botón móvil */}
         <button
           type="button"
-          className="md:hidden inline-flex items-center justify-center rounded-lg border border-brand-border bg-white px-3 py-2 text-brand-text shadow-sm transition-colors hover:bg-brand-surface"
+          className="md:hidden inline-flex h-10 w-10 items-center justify-center rounded-lg border border-brand-border bg-white text-brand-text shadow-sm transition-colors hover:bg-brand-surface"
           onClick={toggleMenu}
           aria-label="Abrir menú"
           aria-expanded={isOpen}
@@ -79,9 +79,9 @@ export default function PublicHeader() {
       {isOpen && (
         <nav
           id="mobile-nav"
-          className="md:hidden border-t border-brand-border bg-white"
+          className="md:hidden border-t border-brand-border bg-white/95 backdrop-blur"
         >
-          <div className="mx-auto w-full max-w-7xl px-4 py-4 space-y-4">
+          <div className="mx-auto w-full max-w-7xl px-4 py-5 space-y-5">
             {/* Anclas solo si estamos en Home */}
             {isHome ? <Navbar onNavigate={closeMenu} /> : null}
 
