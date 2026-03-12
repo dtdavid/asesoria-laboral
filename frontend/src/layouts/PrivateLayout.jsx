@@ -42,9 +42,8 @@ export default function PrivateLayout() {
 
       {/** PublicFooter */}
       
-      <div className="mt-6">
         <PublicFooter />
-      </div>
+      
     </div>
     
   )
