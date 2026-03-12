@@ -205,7 +205,7 @@ return (
                       {it.razon_social} (ID {it.empresa_id})
                     </td>
                     <td className="py-3 pr-4 hidden sm:table-cell">{it.tipo}</td>
-                    <td className="py-3 pr-6 break-words whitespace-nowrap">
+                    <td className="py-3 pr-6 min-w-0">
                       {it.trabajador_nombre
                         ? `${it.trabajador_nombre} ${it.trabajador_apellidos || ""}`
                         : it.trabajador_id
@@ -215,8 +215,8 @@ return (
                     <td className="py-3 pr-4 whitespace-nowrap hidden sm:table-cell">{it.estado}</td>
                     {/* <td className="py-3 pr-4">{it.fecha_inicio}</td> */}
                     <td className="py-3 pr-4 hidden sm:table-cell">{fmtDate(it.fecha_inicio)}</td>
-                    <td className="py-3 pr-4 text-right">
-                      <div className="inline-flex gap-2">
+                    <td className="py-3 pr-4 text-right align-top">
+                      <div className="flex flex-col gap-2 sm:inline-flex sm:flex-row">
                         <Button
                           variant="primary"
                           className="px-3 py-1.5 text-xs"
