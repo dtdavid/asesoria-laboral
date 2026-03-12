@@ -1386,6 +1386,9 @@ A continuación se resumen las principales dependencias de terceros utilizadas y
 - `dotenv`: BSD-2-Clause
 - `bcryptjs`: BSD-3-Clause
 - `nodemon` (devDependency): MIT
+- `cross-env` (devDependency): MIT
+- `jest` (devDependency): MIT
+- `supertest` (devDependency): MIT
 
 ### Frontend
 
@@ -1399,7 +1402,18 @@ A continuación se resumen las principales dependencias de terceros utilizadas y
 - `globals`: MIT
 - `@types/react` / `@types/react-dom`: MIT
 
-**Nota sobre iconos (`react-icons`):** es un agregador de librerías de iconos. La licencia final depende del set concreto de iconos utilizado (MIT/Apache/CC BY, etc.). En este proyecto se usa como dependencia de interfaz y se revisará la licencia del set concreto si se amplía su uso o se redistribuyen assets.
+**Nota sobre iconos (`react-icons`):**
+
+- La librería `react-icons` está licenciada bajo **MIT**.
+- En este proyecto se usan iconos de:
+  - **Font Awesome (fa / fa6)**: los iconos se distribuyen bajo **CC BY 4.0** (Font Awesome Free).
+  - **Feather (fi)**: **MIT**.
+
+Referencias:
+
+- [react-icons LICENSE](https://github.com/react-icons/react-icons/blob/master/LICENSE)
+- [Font Awesome Free license](https://fontawesome.com/license/free)
+- [Feather LICENSE](https://github.com/feathericons/feather/blob/master/LICENSE)
 
 ## Conclusiones
 
