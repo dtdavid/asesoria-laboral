@@ -12,7 +12,10 @@ import { API_URL } from "../config/api"
 
 export default function Trabajadores() {
 
-  const [items, setItems] = useState([]) // empresas
+  
+  const [items, setItems] = useState([])
+  const [empresas, setEmpresas] = useState([])
+  const [empresaId, setEmpresaId] = useState("")
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState("")
   const navigate = useNavigate()
@@ -27,14 +30,11 @@ export default function Trabajadores() {
     setLoading(true)
     setError("")
 
-    const empresaId = 5 // dinámico para gestor
-    const path =
-    user?.role === "CLIENTE"
-    ? "/me/trabajadores"
-    : `/trabajadores?empresa_id=${empresaId}`
+    const path = isCliente
+      ? "/me/trabajadores"
+      : `/trabajadores?empresa_id=${empresaId}`
 
     const data = await apiFetch(path)
-
     setItems(data?.data || [])
   } catch (err) {
     if (err?.status === 403 && err?.code === "NO_EMPRESA_ASIGNADA") {
@@ -47,56 +47,96 @@ export default function Trabajadores() {
   }
 }
 
+useEffect(() => {
+  if (!token || isCliente) return
+
+  const loadEmpresas = async () => {
+    try {
+      setLoading(true)
+      setError("")
+      const data = await apiFetch("/empresas")
+      setEmpresas(data?.data || [])
+    } catch (err) {
+      setError(err?.message || "No se pudieron cargar empresas.")
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  loadEmpresas()
+}, [token, isCliente])
+
+useEffect(()=> {
+  if (!token || !user || !isCliente) return
+
+  loadTrabajadores()
+}, [token, user, isCliente])
+
     //Manejador DELETE empresa handleDelete
-  const handleDelete = async (id) => {
+const handleDelete = async (id) => {
 
-  const confirmDelete = window.confirm(
+const confirmDelete = window.confirm(
     "¿Estás seguro de que quieres eliminar este trabajador?"
-  )
+)
 
-  if (!confirmDelete) return
+if (!confirmDelete) return
 
-  try {
+try {
     await apiFetch(`/trabajadores/${id}`, { method: "DELETE" })
     loadTrabajadores()
   } catch (err) {
     setError(err?.message || "No se pudo eliminar el trabajador.")
   }
 }
-    useEffect(() => {
 
-  if (!token) return
+useEffect(() => {
+  if (!token || isCliente) return
+  if (!empresaId) {
+    setItems([])
+    return
+  }
 
   loadTrabajadores()
-
-}, [token])
+}, [token, isCliente, empresaId])
 
   const card = "rounded-2xl bg-white p-5 shadow-sm"
+  const canShowTable = isCliente ? true : Boolean(empresaId)
 
   return (
     <div className="space-y-6 min-w-0">
       {/* Header */}
-      <header className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+      <header className="flex flex-col gap-4">
         <div className="space-y-1 min-w-0">
-          <h1 className="text-2xl font-semibold text-brand-text">
-            Trabajadores
-          </h1>
+          <h1 className="text-2xl font-semibold text-brand-text">Trabajadores</h1>
           <p className="text-sm text-brand-muted">
             Listado de trabajadores desde la API.
           </p>
         </div>
 
-      {/* POST nueva empresa */}
+        {!isCliente && (
+          <div className="w-full flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <select
+              value={empresaId}
+              onChange={(e) => setEmpresaId(e.target.value)}
+              className="w-full sm:w-[520px] h-10 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-1"
+            >
+              <option value="">Selecciona empresa…</option>
+              {empresas.map((emp) => (
+                <option key={emp.id} value={emp.id}>
+                  {emp.razon_social} (ID {emp.id})
+                </option>
+              ))}
+            </select>
 
-       {!isCliente && ( 
-      <Button  
-      variant="secondary"
-      className="ml-auto" 
-      onClick={() => navigate("/app/trabajadores/nuevo")}>
-        Nuevo trabajador
-        </Button>
-      )}
-
+            <Button
+              variant="secondary"
+              className="w-full sm:w-auto"
+              onClick={() => navigate("/app/trabajadores/nuevo")}
+            >
+              Nuevo trabajador
+            </Button>
+          </div>
+        )}
       </header>
 
       {/* Estados */}
@@ -123,7 +163,13 @@ export default function Trabajadores() {
               </p>
             )}
           </section>
-          ) : (
+          ) : !canShowTable ? (
+              <section className={card}>
+                <p className="text-sm text-brand-muted">
+                  Selecciona una empresa para ver sus trabajadores.
+                </p>
+              </section>
+            ) : (
             <section className={card}>
               {items.length === 0 ? (
               <p className="text-sm text-brand-muted">
