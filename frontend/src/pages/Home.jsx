@@ -24,7 +24,7 @@ export default function Home() {
 
   // Cards consistentes (borde + hover sutil). Sin “caja dentro de caja”.
   const card =
-    "rounded-xl border border-brand-border bg-white p-6 transition-shadow hover:shadow-sm"
+    "rounded-xl border border-brand-border bg-white p-6 space-y-1 transition-shadow hover:shadow-sm"
 
   // Wrapper visual para cada sección: una “tarjeta de sección” sutil (sin borde duro)
   // Regla: fondo global único + secciones como tarjetas alternando blanco/surface.
@@ -40,10 +40,10 @@ export default function Home() {
         <div className={container}>
           <div className={`${sectionWhite} space-y-6 text-center`}>
             <div className="space-y-3">
-              <h1 className="text-3xl md:text-4xl font-semibold text-brand-text">
+              <h1 className="text-3xl md:text-5xl font-semibold tracking-tight text-brand-text">
                 Asesoría laboral (demo)
               </h1>
-              <p className="text-sm md:text-base text-brand-muted max-w-2xl mx-auto">
+              <p className="text-sm md:text-base leading-7 text-brand-muted max-w-2xl mx-auto">
                 Aplicación web para organizar empresas, trabajadores e incidencias
                 laborales en un entorno único. Proyecto académico orientado a un caso real.
               </p>
@@ -77,7 +77,7 @@ export default function Home() {
             <img
               src="/hero.jpg"
               alt="Entorno de trabajo en asesoría"
-              className="mx-auto w-full max-w-4xl h-52 sm:h-64 object-cover rounded-2xl border border-brand-border/70 shadow-sm"
+              className="mx-auto w-full max-w-4xl h-52 sm:h-64 md:h-72 object-cover rounded-2xl border border-brand-border/70 shadow-sm"
               loading="lazy"
             />
           </div>
@@ -275,7 +275,7 @@ export default function Home() {
                   href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11430"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                  className="flex items-center gap-2 py-1 text-brand-secondary hover:text-brand-primary"
                 >
                   <FaBook className="shrink-0" aria-hidden="true" />
                   <span className="underline">Estatuto de los Trabajadores (BOE)</span>
@@ -286,7 +286,7 @@ export default function Home() {
                   href="https://www.boe.es/buscar/"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                  className="flex items-center gap-2 py-1 text-brand-secondary hover:text-brand-primary"
                 >
                   <FaGavel className="shrink-0" aria-hidden="true" />
                   <span className="underline">Buscar convenios colectivos (BOE)</span>
@@ -297,7 +297,7 @@ export default function Home() {
                   href="https://portal.seg-social.gob.es/wps/portal/importass/importass/inicio"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                  className="flex items-center gap-2 py-1 text-brand-secondary hover:text-brand-primary"
                 >
                   <FaIdCard className="shrink-0" aria-hidden="true" />
                   <span className="underline">Import@ss (Seguridad Social)</span>
@@ -308,7 +308,7 @@ export default function Home() {
                   href="https://sede.sepe.gob.es/portalSede/es/"
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                  className="flex items-center gap-2 py-1 text-brand-secondary hover:text-brand-primary"
                 >
                   <FaIdCard className="shrink-0" aria-hidden="true" />
                   <span className="underline">SEPE – Sede electrónica</span>
@@ -335,7 +335,7 @@ export default function Home() {
 
             <div className={card}>
               <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-2">
+                <div className="flex items-start gap-2 py-1">
                   <FaMapMarkerAlt className="mt-0.5 text-brand-secondary" aria-hidden="true" />
                   <p className="text-brand-text">
                     R/ San Clemente s/n, 15705 – Santiago de Compostela
@@ -344,7 +344,7 @@ export default function Home() {
 
                 <a
                   href="mailto:ies.sanclemente@edu.xunta.gal"
-                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                  className="flex items-center gap-2 py-1 text-brand-secondary hover:text-brand-primary"
                 >
                   <FaEnvelope aria-hidden="true" />
                   <span className="underline">ies.sanclemente@edu.xunta.gal</span>
@@ -352,7 +352,7 @@ export default function Home() {
 
                 <a
                   href="tel:+34881867501"
-                  className="flex items-center gap-2 text-brand-secondary hover:text-brand-primary"
+                  className="flex items-center gap-2 py-1 text-brand-secondary hover:text-brand-primary"
                 >
                   <FaPhone aria-hidden="true" />
                   <span className="underline">(+34) 881 867 501</span>
@@ -367,7 +367,7 @@ export default function Home() {
       {/* CTA FINAL */}
       <section className="py-10 scroll-mt-24" id="cta">
         <div className={container}>
-          <div className={`${sectionSurface} text-center space-y-3`}>
+          <div className={`${sectionSurface} text-center space-y-3 py-10 md:py-12`}>
             <h2 className="text-2xl font-semibold text-brand-text">¿Empezamos?</h2>
             <p className="text-sm text-brand-muted">
               Accede al prototipo y revisa el panel privado.
