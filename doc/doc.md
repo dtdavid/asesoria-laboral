@@ -33,6 +33,9 @@
 - [Diseño](#diseño)
   - [Mapa de navegación (rutas)](#mapa-de-navegación-rutas)
   - [Wireframe de la página principal (Home)](#wireframe-de-la-página-principal-home)
+  - [Mejoras en la landing pública (Home)](#mejoras-en-la-landing-pública-home)
+  - [Recursos y enlaces oficiales (Home)](#recursos-y-enlaces-oficiales-home)
+  - [Footer público](#footer-público)
   - [Wireframe del Dashboard (/app)](#wireframe-del-dashboard-app)
   - [Wireframe de Empresas (/app/empresas)](#wireframe-de-empresas-appempresas)
   - [Wireframe de Incidencias (/app/incidencias)](#wireframe-de-incidencias-appincidencias)
@@ -322,6 +325,24 @@ A continuación se presenta el wireframe de la página principal de la aplicaci�
 Este esquema define la estructura general de la Home, las secciones principales y los puntos de interacción del usuario, sirviendo como guía para el diseño visual y la implementación posterior.
 
 ![Wireframe Home](img/wireframe-home.png)
+
+### Mejoras en la landing pública (Home)
+
+- Se incorpora una imagen “hero” (`hero.jpg`) y se ajusta el bloque superior para que el contenido principal sea visible sin obligar a scroll inicial.
+- Se añaden iconos (react-icons) en secciones informativas (“Qué problemas resuelve”, “Qué permite hacer”, “Cómo funciona”) para mejorar la lectura.
+- Se crea una sección de **Contacto** (ancla `#contacto`) con datos de entorno académico/demo (dirección, teléfono con enlace `tel:` y email con enlace `mailto:`).
+
+### Recursos y enlaces oficiales (Home)
+
+- Se sustituye el listado “pendiente” por enlaces reales a fuentes oficiales: Estatuto de los Trabajadores (BOE), búsqueda general del BOE (convenios) y calendarios laborales oficiales.
+- Se mejora la presentación de enlaces eliminando bullets y aplicando estilo consistente (iconos y formato uniforme).
+
+### Footer público
+
+- Se revisa la estructura del footer para alinear columnas y evitar descuadres por diferencias de altura.
+- Se añaden enlaces útiles: ancla a `#contacto` y enlace al repositorio GitLab en “Sobre el proyecto”.
+- Se ajustan enlaces de redes (apertura en nueva pestaña con `target="_blank"` y `rel="noreferrer"`) y se sustituyen por enlaces reales del entorno demo.
+- Las entradas de “Legal” se marcan como _(demo)_ para evitar enlaces falsos en esta versión.
 
 ### Wireframe del Dashboard (/app)
 
