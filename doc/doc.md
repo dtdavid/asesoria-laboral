@@ -92,6 +92,7 @@
       - [Vista GESTOR – Incidencias (frontend)](#vista-gestor--incidencias-frontend)
       - [Restricción de acciones por rol (frontend)](#restricción-de-acciones-por-rol-frontend)
       - [Evidencias UI (navegador)](#evidencias-ui-navegador)
+      - [Pruebas automatizadas (backend)](#pruebas-automatizadas-backend)
       - [Evidencias (Thunder Client)](#evidencias-thunder-client)
       - [Evidencias UI (navegador)](#evidencias-ui-navegador-1)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
@@ -1225,6 +1226,24 @@ Las siguientes capturas recogen una sesión corta de pruebas manuales en navegad
 - Confirmación visual tras crear/editar (flash).  
   ![GESTOR flash guardado](img/tests-frontend/ui-test-gestor-incidencias-flash-guardado.png)
 
+##### Pruebas automatizadas (backend)
+
+Se configura **Jest + Supertest** para realizar pruebas de integración del backend (entorno ESM).  
+Los tests se ubican en `backend/__tests__/` y se ejecutan con `cd backend && npm test`.
+
+**Casos cubiertos:**
+
+- Login devuelve token (usuario GESTOR).
+- `401` por falta de token en endpoint protegido.
+- `403` por rol CLIENTE en endpoint restringido.
+- `403 NO_EMPRESA_ASIGNADA` para usuario sin empresa asignada en `GET /me/empresa`.
+- Creación de incidencia (GESTOR) mediante `POST /incidencias`.
+
+**Evidencia:**
+
+- Ejecución correcta de test suite (captura de salida de Jest).  
+  ![Jest tests OK](img/tests-backend/tests-jest-pass.png)
+
 ##### Evidencias (Thunder Client)
 
 A continuación se incluyen capturas representativas de las pruebas de autenticación y autorización:
@@ -1347,6 +1366,10 @@ Frontend:
 - Mejora UX en asignaciones: añadir buscador y filtros en listados y selects, mostrando más información (razón social, CIF) para reducir errores de selección.
 - Gestión de estados y auditoría: ampliar estados del usuario (PENDIENTE/ACTIVO/BLOQUEADO) y registrar quién realizó asignaciones o cambios relevantes.
 - Seguridad adicional: limitar intentos de login y añadir refresco de token / caducidad configurable.
+- Ampliar tests negativos (validaciones `400` y errores `409` por FK) para incidencias y usuarios.
+- Añadir tests de no-regresión para endpoints `/me/*` (trabajadores/incidencias) con distintos perfiles y combinaciones de `empresa_id`.
+- Ejecutar los tests contra una base de datos de test aislada (por ejemplo `asesoria_laboral_test` o contenedor Docker) y limpiar datos automáticamente.
+- Integrar CI en GitLab para ejecutar `npm test` en cada push/merge.
 
 ## Licencia del proyecto y licencias de terceros
 
