@@ -28,15 +28,17 @@ export default function Incidencias() {
   const flash = location.state?.flash
 
   // mostrar fechas sin ISO largo
-
   const fmtDate = (v) => (v ? String(v).slice(0, 10) : "—")
 
   //condición para PUT y DELETE
   const { user } = useAuth()
   const isGestor = user?.role === "GESTOR"
+  //detectar si es cliente sin empresa asignada
+  const isCliente = user?.role === "CLIENTE"
+  const noEmpresaAsignada = isCliente && !user?.empresa_id
 
   //mostrar tabla para CLIENTE
-  const canShowTable = isGestor ? Boolean(empresaId): true
+  const canShowTable = isGestor ? Boolean(empresaId): Boolean(user?.empresa_id)
 
   //cargar las empresas en el estado setEmpresas para poblar el select
 
@@ -82,6 +84,13 @@ export default function Incidencias() {
 
 useEffect(() => {
   if (isGestor) return
+
+  if (!user?.empresa_id) {
+    setItems([])
+    setError("Usuario pendiente de asignación a una empresa. Contacta con tu gestor.")
+    setLoading(false)
+    return
+  }
 
   const loadMyIncidencias = async () => {
     try {
@@ -175,7 +184,7 @@ return (
     {!loading && !error && canShowTable && (
       <section className="rounded-2xl bg-white p-1 sm:p-5 shadow-sm">
         {items.length === 0 ? (
-          <p className="text-sm text-brand-muted">No hay incidencias {isGestor ? "esta empresa" : "tu empresa"}.</p>
+          <p className="text-sm text-brand-muted">No hay incidencias en {isGestor ? "esta empresa" : "tu empresa"}.</p>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
