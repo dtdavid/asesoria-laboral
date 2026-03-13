@@ -70,12 +70,12 @@ export async function getMyIncidencias(req, res, next) {
   try {
     const empresaId = req.user?.empresa_id
 
-    if (empresaId == 0) {
+    if (!empresaId) {
 
       return res.status(403).json({
         ok: false,
         code: "NO_EMPRESA_ASIGNADA",
-        message: "Cliente pendiente de asignación.",
+        message: "Cliente pendiente de asignación a una empresa.",
         details: { empresa_id: null },
       })
     }
