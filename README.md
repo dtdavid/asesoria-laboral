@@ -181,12 +181,79 @@ psql -U postgres -d asesoria_laboral -f backend/db/XX_archivo.sql
 
 ## 6.2 Usuarios demo
 
-- **GESTOR**: gestor@demo.test / Cliente1234!
-- **CLIENTE**: cliente1@demo.test / Cliente1234! (empresa_id=1)
+- **GESTOR**:
+  - _Usuario_: gestor@demo.test / _Password_: Cliente1234!
+- **CLIENTE**:
+  - _Usuario_: cliente1@demo.test / _Password_: Cliente1234! (empresa_id=1)
+
+# 7. Instalación con Docker (local)
+
+Requisitos: Docker Desktop + Docker Compose.
+
+> Importante: si tienes la app ejecutándose en local con `npm run dev` (puertos 3000/5173),
+> debes pararla antes de levantar Docker para evitar conflictos de puertos.
+
+## 7.1 Arranque
+
+**Desde la raíz del repositorio:**
+
+```bash
+docker compose up --build
+```
+
+**Si quieres levantar en segundo plano y recuperar el promt de la terminal:**
+
+```bash
+docker compose up -d --build
+```
+
+**Servicios:**
+
+- 1.Frontend: http://localhost:5173
+
+- 2.Backend (health): http://localhost:3000/health
+
+- 3.PostgreSQL: localhost:5432 (db: asesoria_laboral, user: pfc, pass: pfc)
+
+## 7.2 Usuarios demo
+
+- **GESTOR**:
+  - _Usuario_: gestor@demo.test / _Password_: Cliente1234!
+- **CLIENTE**:
+  - _Usuario_: cliente1@demo.test / _Password_: Cliente1234! (empresa_id=1)
+
+**Comprobación y logs**
+
+> Importante: desde otra terminal, para no interrumpir el servicio de docker
+
+```bash
+docker compose ps
+```
+
+**Ver logs**
+
+```bash
+docker compose logs -f backend
+docker compose logs -f frontend
+docker compose logs -f db
+```
+
+**Parada**
+
+```bash
+docker compose down
+```
+
+**Reinicializar la BD demo (reaplicar schema + seed):**
+
+```bash
+docker compose down -v
+docker compose up --build
+```
 
 ---
 
-# 7. Endpoints disponibles
+# 8. Endpoints disponibles
 
 ## Utilidad
 
@@ -267,7 +334,7 @@ Ejemplo:
 
 ---
 
-# 8. Scripts disponibles
+# 9. Scripts disponibles
 
 ## Backend
 
@@ -290,7 +357,7 @@ Ejemplo:
 
 ---
 
-## 9. Testing (Backend)
+## 10. Testing (Backend)
 
 Se incluyen pruebas de integración con Jest + Supertest.
 
@@ -314,7 +381,7 @@ Casos cubiertos (resumen):
 
 ---
 
-# 10. Estado actual (Prototipo final)
+# 11. Estado actual (Prototipo final)
 
 ✔ SPA con rutas públicas y privadas  
 ✔ Autenticación JWT (roles GESTOR / CLIENTE)  
@@ -324,7 +391,7 @@ Casos cubiertos (resumen):
 
 ---
 
-# 11. Documentación
+# 12. Documentación
 
 La documentación técnica completa se encuentra en:
 
@@ -336,14 +403,14 @@ Incluye análisis, diseño, arquitectura y referencias externas.
 
 ---
 
-# 12. Autor
+# 13. Autor
 
 David Docampo Trabazo  
 CFGS Desarrollo de Aplicaciones Web (DAW)
 
 ---
 
-## 13. Licencia y dependencias de terceros
+## 14. Licencia y dependencias de terceros
 
 Este proyecto se publica bajo licencia **MIT** (ver archivo [LICENSE](LICENSE)).
 
@@ -377,9 +444,21 @@ Dependencias principales (según `package.json`):
 - supertest
 - cross-env (Windows)
 
+### Docker (despliegue local)
+
+Para el despliegue local se utiliza Docker Compose.
+
+- Docker Engine: Apache License 2.0.
+- Docker Compose (plugin v2): Apache License 2.0.
+- Docker Desktop (Windows/macOS): Docker Subscription Service Agreement (herramienta utilizada para ejecutar el motor en local).
+
+Imágenes:
+
+- `postgres:16-alpine` (Docker Official Image) para la base de datos.
+
 > Nota: las licencias exactas de cada dependencia se pueden consultar en sus repositorios oficiales o en el fichero `package-lock.json`.
 
-## 14. Documentación
+## 15. Documentación
 
 La documentación técnica y funcional del proyecto se encuentra en:
 

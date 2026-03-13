@@ -1,0 +1,61 @@
+
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: pfc_db
+    environment:
+      POSTGRES_DB: asesoria_laboral
+      POSTGRES_USER: pfc
+      POSTGRES_PASSWORD: pfc
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend/db:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U pfc -d asesoria_laboral"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - pfc_net
+
+  backend:
+    build:
+      context: ./backend
+    container_name: pfc_backend
+    environment:
+      PORT: "3000"
+      PGHOST: db
+      PGPORT: "5432"
+      PGDATABASE: asesoria_laboral
+      PGUSER: pfc
+      PGPASSWORD: pfc
+      JWT_SECRET: ${JWT_SECRET:-dev_secret_change_me}
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    networks:
+      - pfc_net
+  frontend:
+    build:
+      context: ./frontend
+    container_name: pfc_frontend
+    environment:
+      VITE_API_URL: "http://localhost:3000"
+    depends_on:
+      - backend
+    ports:
+      - "5173:5173"
+    networks:
+      - pfc_net
+
+volumes:
+    db_data:
+
+networks:
+  pfc_net:
+    driver: bridge
