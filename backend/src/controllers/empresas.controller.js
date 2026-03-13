@@ -69,16 +69,16 @@ export async function getEmpresa(req, res, next) {
 
 export async function addEmpresa(req, res, next) {
   try {
-    const { razon_social, cif } = req.body || {}
+    const missingFields = ["razon_social", "cif"].filter(
+      (field) => !req.body?.[field]
+    )
 
-    // Validación mínima
-    if (!razon_social || !cif) {
+    if (missingFields.length > 0) {
       return res.status(400).json({
         ok: false,
         code: "VALIDATION_ERROR",
-        message:" Campos obligatorios: razon_social, cif",
-        details:{fields:["razon_social", "cif"]},
-        //error: "Campos obligatorios: razon_social, cif",
+        message: `Campos obligatorios: ${missingFields.join(", ")}`,
+        details: { fields: missingFields },
       })
     }
 
@@ -89,15 +89,12 @@ export async function addEmpresa(req, res, next) {
       data: nueva,
     })
   } catch (err) {
-    // Código de error de PostgreSQL para violación de UNIQUE
-    // 23505 = unique_violation
     if (err?.code === "23505") {
       return res.status(409).json({
         ok: false,
         code: "CIF_DUPLICADO",
         message: "Ya existe una empresa con ese CIF",
         details: { field: "cif" },
-        //error: "Ya existe una empresa con ese CIF"
       })
     }
 
@@ -152,15 +149,16 @@ export async function editEmpresa(req, res, next) {
       return res.status(400).json({ ok: false, error: "ID inválido" })
     }
 
-    const { razon_social, cif } = req.body || {}
-    if (!razon_social || !cif) {
+    const missingFields = ["razon_social", "cif"].filter(
+      (field) => !req.body?.[field]
+    )
+
+    if (missingFields.length > 0) {
       return res.status(400).json({
         ok: false,
         code: "VALIDATION_ERROR",
-        message: "Campos obligatorios: razon_social, cif",
-        details: { fields: ["razon_social", "cif"] },
-        //error: "Campos obligatorios: razon_social, cif"
-
+        message: `Campos obligatorios: ${missingFields.join(", ")}`,
+        details: { fields: missingFields },
       })
     }
 
@@ -168,24 +166,21 @@ export async function editEmpresa(req, res, next) {
 
     if (!updated) {
       return res.status(404).json({
-        ok: false, 
+        ok: false,
         code: "NOT_FOUND",
         message: "Empresa no encontrada",
         details: { id },
-        //error: "Empresa no encontrada"
       })
     }
 
     return res.status(200).json({ ok: true, data: updated })
-  } 
-  catch (err) {
+  } catch (err) {
     if (err?.code === "23505") {
-      return res.status(409).json({ 
-        ok: false, 
+      return res.status(409).json({
+        ok: false,
         code: "CIF_DUPLICADO",
         message: "Ya existe una empresa con ese CIF",
         details: { field: "cif" },
-        //error: "Ya existe una empresa con ese CIF"
       })
     }
     next(err)
