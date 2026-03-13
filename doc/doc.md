@@ -14,6 +14,10 @@
 - [Estado de arte o análisis del contexto](#estado-de-arte-o-análisis-del-contexto)
 - [Propósito](#propósito)
 - [Objetivos](#objetivos)
+  - [Objetivos generales](#objetivos-generales)
+  - [Objetivos específicos del frontend](#objetivos-específicos-del-frontend)
+  - [Objetivos específicos del backend](#objetivos-específicos-del-backend)
+  - [Objetivos específicos de base de datos](#objetivos-específicos-de-base-de-datos)
 - [Alcance](#alcance)
   - [Funcionalidades incluidas](#funcionalidades-incluidas)
   - [Usuarios y perfiles](#usuarios-y-perfiles)
@@ -23,7 +27,6 @@
 - [Análisis](#análisis)
   - [Análisis del problema](#análisis-del-problema)
   - [Descripción del proyecto](#descripción-del-proyecto)
-  - [Objetivos específicos del frontend](#objetivos-específicos-del-frontend)
   - [Alcance](#alcance-1)
   - [Justificación del proyecto y estudio de necesidades](#justificación-del-proyecto-y-estudio-de-necesidades)
   - [Funcionalidades del proyecto y actores implicados](#funcionalidades-del-proyecto-y-actores-implicados)
@@ -94,7 +97,6 @@
       - [Evidencias UI (navegador)](#evidencias-ui-navegador)
       - [Pruebas automatizadas (backend)](#pruebas-automatizadas-backend)
       - [Evidencias (Thunder Client)](#evidencias-thunder-client)
-      - [Evidencias UI (navegador)](#evidencias-ui-navegador-1)
       - [Evidencias de despliegue con Docker](#evidencias-de-despliegue-con-docker)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
   - [Requisitos](#requisitos)
@@ -111,6 +113,9 @@
   - [Backend](#backend)
   - [Frontend](#frontend)
 - [Conclusiones](#conclusiones)
+  - [Resultado del proyecto (según criterios de evaluación)](#resultado-del-proyecto-según-criterios-de-evaluación)
+  - [Aprendizajes principales](#aprendizajes-principales)
+  - [Líneas de mejora](#líneas-de-mejora)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
   - [Documentación oficial](#documentación-oficial)
   - [Recursos conceptuales](#recursos-conceptuales)
@@ -142,6 +147,8 @@ En definitiva, el propósito del proyecto es crear una base sólida y estructura
 
 ## Objetivos
 
+### Objetivos generales
+
 El objetivo principal de este proyecto es desarrollar una aplicación web que sirva como herramienta de apoyo al asesoramiento laboral, permitiendo organizar y gestionar de forma estructurada la información relacionada con empresas, clientes y trabajadores, dentro de un entorno académico.
 
 A partir de este objetivo general, se definen los siguientes objetivos específicos:
@@ -161,6 +168,30 @@ A partir de este objetivo general, se definen los siguientes objetivos específi
 - Adquirir y consolidar conocimientos prácticos sobre el desarrollo de aplicaciones web, especialmente en el uso de tecnologías actuales y metodologías de trabajo orientadas a proyectos.
 
 Estos objetivos servirán como referencia para guiar el desarrollo del proyecto y para evaluar el grado de cumplimiento del mismo en las distintas fases establecidas.
+
+### Objetivos específicos del frontend
+
+Estos objetivos concretan el apartado general de **Objetivos** aplicado a la interfaz de usuario (SPA), su navegación y la experiencia de uso:
+
+- Diseñar una estructura funcional clara y coherente, diferenciando zonas públicas y privadas dentro de una arquitectura SPA.
+- Implementar la interfaz utilizando **React**, aplicando el modelo de componentes y una estructura modular que facilite la escalabilidad y el mantenimiento.
+- Configurar el sistema de navegación mediante **React Router**, estableciendo rutas públicas y privadas y validando el flujo de acceso.
+- Aplicar **Tailwind CSS** para la maquetación, garantizando coherencia visual y diseño responsive.
+- Integrar autenticación basada en tokens para controlar el acceso a la zona privada y el consumo de endpoints protegidos.
+- Mantener buenas prácticas de desarrollo y control de versiones en el frontend, asegurando coherencia entre código y documentación.
+
+**Nota:** los objetivos generales del proyecto se recogen en el apartado `## Objetivos`. Este bloque resume únicamente objetivos específicos del **frontend**.
+
+### Objetivos específicos del backend
+
+- Implementar una API REST con Express para gestionar empresas, trabajadores, incidencias y usuarios.
+- Aplicar autenticación mediante JWT y autorización por roles (GESTOR/CLIENTE).
+- Mantener una estructura modular (routes/controllers/services) y manejo de errores consistente.
+
+### Objetivos específicos de base de datos
+
+- Diseñar el modelo relacional y aplicar integridad (PK, FK, CHECK, UNIQUE).
+- Crear scripts de inicialización y datos de prueba para validar el funcionamiento.
 
 ## Alcance
 
@@ -239,19 +270,6 @@ Con este proyecto no se pretende automatizar trámites oficiales, sino **mejorar
 El proyecto consiste en el diseño y desarrollo de una **aplicación web de apoyo al asesoramiento laboral**, orientada a la organización y gestión interna de la información relacionada con empresas, clientes y trabajadores. La aplicación permitirá centralizar datos y realizar un seguimiento estructurado de los distintos procesos e incidencias laborales habituales, con el objetivo de mejorar el control y la eficiencia del trabajo diario del asesor.
 
 Se trata de un proyecto desarrollado en un **entorno académico**, planteado como un **prototipo funcional**, que utiliza datos de prueba y no realiza trámites oficiales reales. La aplicación está concebida como una herramienta de apoyo organizativo, no como un sustituto de las plataformas oficiales de las administraciones públicas.
-
-### Objetivos específicos del frontend
-
-Estos objetivos concretan el apartado general de **Objetivos** aplicado a la interfaz de usuario (SPA), su navegación y la experiencia de uso:
-
-- Diseñar una estructura funcional clara y coherente, diferenciando zonas públicas y privadas dentro de una arquitectura SPA.
-- Implementar la interfaz utilizando **React**, aplicando el modelo de componentes y una estructura modular que facilite la escalabilidad y el mantenimiento.
-- Configurar el sistema de navegación mediante **React Router**, estableciendo rutas públicas y privadas y validando el flujo de acceso.
-- Aplicar **Tailwind CSS** para la maquetación, garantizando coherencia visual y diseño responsive.
-- Integrar autenticación basada en tokens para controlar el acceso a la zona privada y el consumo de endpoints protegidos.
-- Mantener buenas prácticas de desarrollo y control de versiones en el frontend, asegurando coherencia entre código y documentación.
-
-**Nota:** los objetivos generales del proyecto se recogen en el apartado `## Objetivos`. Este bloque resume únicamente objetivos específicos del **frontend**.
 
 ### Alcance
 
@@ -1289,18 +1307,10 @@ A continuación se incluyen capturas representativas de las pruebas de autentica
 - Incidencias (GESTOR): no encontrado (404).  
   ![Thunder incidencias 404](img/thunder/thunder-incidencias-notfound-404.png)
 
-##### Evidencias UI (navegador)
-
-- Perfil CLIENTE en `/app/empresas`: no se muestra el botón “Nueva empresa”.  
-  ![CLIENTE sin botón Nueva empresa](img/ui/ui-cliente-empresas-sin-nueva.png)
-
-- Perfil CLIENTE intentando acceso directo a `/app/empresas/nueva`: se muestra “No autorizado”.  
-  ![CLIENTE no autorizado en crear empresa](img/ui/ui-cliente-empresas-nueva-no-autorizado.png)
-
 ##### Evidencias de despliegue con Docker
 
 - Servicios levantados con Docker Compose (db, backend y frontend).  
-  ![Docker Compose running](img\docker\docker-compose-runnig.png)
+  ![Docker Compose running](img/docker/docker-compose-running.png)
 
 ## Instalación / puesta en marcha (entorno local)
 
@@ -1447,8 +1457,11 @@ Referencias:
 
 ## Conclusiones
 
-El proyecto ha permitido diseñar y construir una aplicación web modular basada en una SPA (React) y una API REST (Express) conectada a PostgreSQL. El principal aprendizaje ha estado en la integración entre capas, el diseño de un modelo relacional coherente y la incorporación de autenticación/autorización por roles para proteger la información y las operaciones.  
-Como trabajo futuro queda el despliegue en un entorno accesible por terceros y la ampliación funcional de los módulos pendientes, manteniendo la misma estructura técnica y criterios de calidad aplicados en los prototipos.
+### Resultado del proyecto (según criterios de evaluación)
+
+### Aprendizajes principales
+
+### Líneas de mejora
 
 ## Referencias y recursos externos
 

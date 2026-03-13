@@ -140,9 +140,13 @@ export default function EmpresasForm() {
 
             <div className="rounded-2xl bg-white p-8 shadow-sm space-y-6">
               <header className="text-center space-y-2">
-                <h2 className="text-2xl font-semibold text-brand-text">Crear nueva empresa</h2>
+                <h2 className="text-2xl font-semibold text-brand-text">
+                  {isEdit ? "Editar empresa" : "Crear nueva empresa"}
+                </h2>
                 <p className="text-sm text-brand-muted">
-                  Página para registrar una nueva empresa.
+                  {isEdit
+                    ? "Actualiza los datos de la empresa."
+                    : "Página para registrar una nueva empresa."}
                 </p>
               </header>
 
