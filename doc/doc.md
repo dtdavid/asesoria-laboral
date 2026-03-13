@@ -95,10 +95,12 @@
       - [Pruebas automatizadas (backend)](#pruebas-automatizadas-backend)
       - [Evidencias (Thunder Client)](#evidencias-thunder-client)
       - [Evidencias UI (navegador)](#evidencias-ui-navegador-1)
+      - [Evidencias de despliegue con Docker](#evidencias-de-despliegue-con-docker)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
   - [Requisitos](#requisitos)
   - [Variables de entorno](#variables-de-entorno)
   - [Puesta en marcha](#puesta-en-marcha)
+  - [Puesta en marcha con Docker Compose (recomendado)](#puesta-en-marcha-con-docker-compose-recomendado)
 - [Manual de usuario y usabilidad (resumen)](#manual-de-usuario-y-usabilidad-resumen)
   - [Acceso](#acceso)
   - [Flujo básico (GESTOR)](#flujo-básico-gestor)
@@ -1295,6 +1297,11 @@ A continuación se incluyen capturas representativas de las pruebas de autentica
 - Perfil CLIENTE intentando acceso directo a `/app/empresas/nueva`: se muestra “No autorizado”.  
   ![CLIENTE no autorizado en crear empresa](img/ui/ui-cliente-empresas-nueva-no-autorizado.png)
 
+##### Evidencias de despliegue con Docker
+
+- Servicios levantados con Docker Compose (db, backend y frontend).  
+  ![Docker Compose running](img\docker\docker-compose-runnig.png)
+
 ## Instalación / puesta en marcha (entorno local)
 
 ### Requisitos
@@ -1330,6 +1337,29 @@ Frontend:
    - Frontend: `http://localhost:5173`
 
 **Nota:** en este prototipo final la ejecución se realiza en entorno local.
+
+### Puesta en marcha con Docker Compose (recomendado)
+
+El prototipo puede ejecutarse en local mediante **Docker Compose**, levantando tres servicios: `db` (PostgreSQL), `backend` (Express) y `frontend` (Vite/React) en una red interna del proyecto.
+
+PostgreSQL inicializa automáticamente la base de datos y ejecuta los scripts SQL ubicados en `backend/db` durante el **primer arranque** del contenedor (montados en `/docker-entrypoint-initdb.d`).
+
+> Nota: estos scripts se ejecutan solo en la inicialización (si el volumen ya existe, no se reejecutan; para reiniciar: `docker compose down -v`).
+
+Comandos habituales:
+
+- `docker compose up --build` (arranque)
+- `docker compose ps` (estado de servicios)
+- `docker compose logs -f` (logs en tiempo real)
+- `docker compose down` (parada)
+- `docker compose down -v` (parada y borrado de volúmenes)
+
+Verificación de arranque:
+
+- Frontend: `http://localhost:5173`
+- Backend (health check): `http://localhost:3000/health`
+
+**Nota de licencias (herramientas):** Docker Engine y Docker Compose se distribuyen bajo Apache 2.0. Docker Desktop está sujeto a los términos de la licencia de Docker (Subscription Service Agreement). Las condiciones pueden verificarse en la documentación oficial de Docker.
 
 ## Manual de usuario y usabilidad (resumen)
 
