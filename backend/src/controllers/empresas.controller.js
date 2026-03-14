@@ -1,9 +1,5 @@
 import { getEmpresas, getEmpresaById, createEmpresa, deleteEmpresaById, updateEmpresaById } from "../services/empresas.service.js"
 
-/**
- * Controller de empresas.
- * Gestiona la capa HTTP (req/res) y delega la lógica al service.
- */
 
 /**
  * GET /empresas
@@ -20,28 +16,24 @@ export async function listEmpresas(_req, res, next) {
 }
 
 /**
- *
- * @export
- * @param {import("express").Request} req
- * @param {import("express").Response} res
- * @param {import("express").NextFunction} next
- * @return {Promise<void>} 
+ * GET /empresas/:id
+ * obtener empresa por id  
  */
 export async function getEmpresa(req, res, next) {
-  //en "req" espero un parámetro id (req.params.id) que es el ID de la empresa a obtener
+  
   try {
-    //valido ese "id" para asegurarme de que es un número entero positivo
+    
     const id = Number(req.params.id)
     if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({
         ok: false,
         code: "VALIDATION_ERROR",
-        message: "ID inválido",
+        message: "ID de empresa inválido",
         details: { field: "id", value: req.params.id },
         //error: "ID inválido"
       })
     }
-    //llamo a getEmpresaById(id) para obtener la empresa de la base de datos
+    
     const empresa = await getEmpresaById(id)
     if (!empresa) {
       return res.status(404).json({ 
@@ -109,13 +101,15 @@ export async function addEmpresa(req, res, next) {
 export async function removeEmpresa(req, res, next) {
   try {
     const id = Number(req.params.id)
-    // Validación defensiva para evitar DELETE con id inválido o manipulaciones en URL
+    
     if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({
         ok: false,
         code: "VALIDATION_ERROR",
-        message: "ID inválido",
-        details: { field: "id" },
+        message: "ID de empresa inválido",
+        details: { 
+          field: "id",
+          value: req.params.id },
         //error: "ID inválido"
       })
     }
@@ -145,9 +139,16 @@ export async function removeEmpresa(req, res, next) {
 export async function editEmpresa(req, res, next) {
   try {
     const id = Number(req.params.id)
-    if (!id || Number.isNaN(id)) {
-      return res.status(400).json({ ok: false, error: "ID inválido" })
-    }
+      if (!Number.isInteger(id) || id <= 0) {
+        return res.status(400).json({
+          ok: false,
+          code: "VALIDATION_ERROR",
+          message: "ID de empresa inválido",
+          details: { 
+            field: "id", 
+            value: req.params.id },
+        })
+      }
 
     const missingFields = ["razon_social", "cif"].filter(
       (field) => !req.body?.[field]
