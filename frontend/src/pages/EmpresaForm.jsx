@@ -153,10 +153,10 @@ export default function EmpresasForm() {
             {/* Formulario con campos mínimos de empresa. */}
 
             <form onSubmit={handleSubmit} className="space-y-5">
-
+              <div className="grid gap-5 md:grid-cols-2">
               {/* Razón Social */}
 
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="razon_social" className="text-sm font-medium text-brand-text">
                   Razón Social<span className="text-red-600 ml-1">*</span> 
                 </label>
@@ -168,7 +168,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Razón Social"
                   autoComplete="organization"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
 
@@ -186,7 +186,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="CIF"
                   autoComplete="cif"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
                 
               </div>
@@ -205,13 +205,13 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Nombre Comercial"
                   autoComplete="nombre_comercial"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
 
               {/* Dirección */}
               
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="direccion" className="text-sm font-medium text-brand-text">
                   Dirección
                 </label>
@@ -223,7 +223,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Dirección"
                   autoComplete="direccion"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
 
@@ -241,7 +241,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Código Postal"
                   autoComplete="codigo_postal"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
               
@@ -259,7 +259,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Ciudad"
                   autoComplete="ciudad"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
@@ -277,7 +277,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Provincia"
                   autoComplete="provincia"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
@@ -295,7 +295,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="País"
                   autoComplete="pais"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
@@ -313,7 +313,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Teléfono"
                   autoComplete="tel"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
@@ -331,15 +331,15 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Email"
                   autoComplete="email"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
 
               {/* Código Cuenta Cotización */}
               
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="codigo_cuenta_cotizacion" className="text-sm font-medium text-brand-text">
-                  Código Cuenta Cotización
+                  Código de cuenta de cotización
                 </label>
                 <input
                   type="text"
@@ -349,13 +349,13 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Código Cuenta Cotización"
                   autoComplete="codigo_cuenta_cotizacion"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
               {/* Convenio Colectivo */}
               
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="convenio_colectivo" className="text-sm font-medium text-brand-text">
                   Convenio Colectivo
                 </label>
@@ -367,7 +367,7 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Convenio Colectivo"
                   autoComplete="convenio_colectivo"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
@@ -385,26 +385,28 @@ export default function EmpresasForm() {
                   onChange={handleChange}
                   placeholder="Sector de Actividad"
                   autoComplete="sector_actividad"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
               {/* Activa */}
               
-              <div className="space-y-1">
-                <label htmlFor="activa" className="text-sm font-medium text-brand-text ">
-                  Empresa Activa  
-                </label>
+              <div className="flex items-center gap-3 rounded-lg border border-brand-border bg-brand-surface px-3 py-3 md:col-span-2">
                 <input
                   type="checkbox"
                   id="activa"
                   name="activa"
                   checked={Boolean(form.activa)}
                   onChange={handleChange}
-                  className="w-4 h-4 text-brand-primary border border-brand-border rounded focus:ring-brand-secondary focus:ring-2 mx-2"
-                />                  
+                  className="h-4 w-4 rounded border border-brand-border text-brand-primary focus:ring-2 focus:ring-brand-secondary"
+                />
+                <label htmlFor="activa" className="text-sm font-medium text-brand-text">
+                  Empresa activa
+                </label>
               </div>
-    
+
+              </div>
+
               {error && (
                 <p className="text-sm text-red-600" role="alert">
                   {error}
