@@ -219,7 +219,7 @@ export default function IncidenciaForm(){
 
         {/* Fechas */}
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-5 sm:grid-cols-2 md:col-span-2">
           <div className="space-y-1">
             <label className="text-sm font-medium text-brand-text">
               Fecha inicio <span className="text-red-600">*</span>
@@ -229,7 +229,7 @@ export default function IncidenciaForm(){
               name="fecha_inicio"
               value={form.fecha_inicio ?? ""}
               onChange={handleChange}
-              className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+              className="w-full min-w-0 h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             />
           </div>
 
@@ -240,7 +240,7 @@ export default function IncidenciaForm(){
               name="fecha_fin"
               value={form.fecha_fin ?? ""}
               onChange={handleChange}
-              className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+              className="w-full min-w-0 h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             />
           </div>
         </div>
