@@ -2,16 +2,21 @@ import { getUserByEmail, createUser } from "../services/usuarios.service.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
-/**Controller de auth
- * Contiene la lógica de controladores (req/res).
- * No gestiona acceso a datos ni lógica de negocio.
+/**
+ * Controller de autenticación.
+ * Gestiona registro y login.
  */
 
 
+
+/**
+ * POST /auth/register
+ * Registra un nuevo usuario. 
+ */
 export async function register(req, res, next) {
     
     try {
-        const { email, password } = req.body
+        const { email, password } = req.body || {}
         if(!email || !password) {
             return res.status(400).json({ 
                 ok: false,
@@ -70,12 +75,16 @@ export async function register(req, res, next) {
     }
 }
 
+/**
+ * POST /auth/login 
+ * Autentica un usuario y devuelve un JWT.
+ */
 
 export async function login(req, res, next) {
 
     try {
         //validar email y password
-        const { email, password } = req.body
+        const { email, password } = req.body || {}
         if(!email || !password) {
             return res.status(400).json({ 
                 ok: false,
