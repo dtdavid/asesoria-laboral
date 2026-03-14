@@ -182,7 +182,7 @@ useEffect(() => {
                       <tr className="text-xs font-semibold tracking-wide text-brand-muted uppercase">
                         <th className="py-3 pr-4 hidden sm:table-cell">ID</th>
                         <th className="py-3 pr-4">Nombre</th>
-                        <th className="py-3 pr-4 hidden md:table-cell">Apellidos</th>
+                        <th className="py-3 pr-4">Apellidos</th>
                         <th className="py-3 pr-4 hidden lg:table-cell">DNI</th>
                         <th className="py-3">{isCliente ? "Ver" : "Acciones"}</th>
                       </tr>
@@ -193,12 +193,12 @@ useEffect(() => {
                         {/* recorremos los trabajadores */}
 
                         {items.map((e) => (
-                          <tr key={e.id} className="align-top">
+                          <tr key={e.id} className="align-middle">
                             <td className="py-3 pr-4 text-brand-muted hidden sm:table-cell">{e.id}</td>
                             <td className="py-3 pr-4 font-medium text-brand-text">
                               {e.nombre}
                             </td>
-                            <td className="py-3 pr-4 text-brand-text hidden md:table-cell">{e.apellidos}</td>
+                            <td className="py-3 pr-4 text-brand-text">{e.apellidos}</td>
                             <td className="py-3 pr-4 text-brand-text hidden lg:table-cell">
                               {e.dni || "—"}
                             </td>
@@ -212,7 +212,7 @@ useEffect(() => {
                                   Ver
                                 </Button>
                               ) : (
-                                <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+                                <div className="flex flex-col justify-center gap-2 sm:flex-row sm:items-center sm:justify-end">
                                   <Button
                                     className="w-full sm:w-auto"
                                     onClick={() => navigate(`/app/trabajadores/${e.id}/editar`)}
