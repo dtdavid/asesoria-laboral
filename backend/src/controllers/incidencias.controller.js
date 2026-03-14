@@ -1,6 +1,10 @@
 import { getIncidenciasByEmpresaId, createIncidencia, getIncidenciaById, updateIncidenciaById, deleteIncidenciaById } from "../services/incidencias.service.js"
 
-// listar incidencia por empresa a partir de empresa_id
+/**
+ * 
+ * GET /incidencias
+ * Listar incidencias por empresa_id.
+ */
 
 export async function listIncidencias(req, res, next) {
 
@@ -32,22 +36,27 @@ export async function listIncidencias(req, res, next) {
     }
 }
 
-// crear nueva incidencia
+/**
+ * POST /incidencias
+ * Crea una nueva incidencia 
+ */
 
 export async function addIncidencia(req, res, next){
     try {
         const { empresa_id, tipo, fecha_inicio, trabajador_id} = req.body || {}
 
-        //validación básica de campos obligatorios
-        if(!empresa_id || !tipo || !fecha_inicio){
+        const missingFields = ["empresa_id", "tipo", "fecha_inicio"].filter(
+            (field) => !req.body?.[field]
+            )
+
+            if (missingFields.length > 0) {
             return res.status(400).json({
-                ok:false,
+                ok: false,
                 code: "VALIDATION_ERROR",
-                message: "Campos obligatorios: empresa_id, tipo, fecha_inicio",
-                details: { missing_fields: ["empresa_id", "tipo", "fecha_inicio"].filter(f => !req.body[f]) },
-                //error: "Campos obligatorios: empresa_id, tipo, fecha_inicio"
+                message: `Campos obligatorios: ${missingFields.join(", ")}`,
+                details: { missing_fields: missingFields },
             })
-        }    
+            }    
         const empresa_id_num = Number(empresa_id)
         let trabajador_id_num = null
 
@@ -67,7 +76,7 @@ export async function addIncidencia(req, res, next){
             return res.status(400).json({
                 ok:false,
                 code: "VALIDATION_ERROR",
-                message: "ID del trabajador inválido.",
+                message: "ID del trabajador inválido",
                 details: { field: "trabajador_id", value: trabajador_id },
             })
             }
@@ -101,7 +110,10 @@ export async function addIncidencia(req, res, next){
     }
 }
 
-// obtener incidencia por id
+/**
+ * GET /incidencias/:id
+ * Obtiene una incidencia por su id 
+ */
 
 export async function getIncidencia(req, res, next){
     try {
@@ -114,7 +126,7 @@ export async function getIncidencia(req, res, next){
             return res.status(400).json({
                 ok:false,
                 code: "VALIDATION_ERROR",
-                message: "ID de incidencia inválido.",
+                message: "ID de incidencia inválido",
                 details: { field: "id", value: req.params.id },
                 // error: "id no es un número entero positivo"
             })
@@ -140,7 +152,10 @@ export async function getIncidencia(req, res, next){
     }
 }
 
-// actualizar incidencia por id
+/**
+ * PUT incidencia/:id
+ * Actualiza una incidencia existente 
+ */
 
 export async function editIncidencia(req, res, next){
     try {
@@ -155,17 +170,20 @@ export async function editIncidencia(req, res, next){
                  //error: "ID de incidencia inválido"
             })
         }
-        const { tipo, estado, fecha_inicio} = req.body
-        if(!tipo|| !estado || !fecha_inicio){
+
+        const missingFields = ["tipo", "estado", "fecha_inicio"].filter(
+            (field) => !req.body?.[field]
+            )
+
+            if (missingFields.length > 0) {
             return res.status(400).json({
                 ok: false,
                 code: "VALIDATION_ERROR",
-                message: "Campos obligatorios: tipo, estado, fecha_inicio",
-                details: { 
-                    missing_fields: ["tipo", "estado", "fecha_inicio"].filter(f => !req.body[f]) },
-                    //error: "Campos obligatorios: tipo, estado, fecha_inicio"
+                message: `Campos obligatorios: ${missingFields.join(", ")}`,
+                details: { missing_fields: missingFields },
             })
-        }
+            }
+
         const { trabajador_id } = req.body
         let trabajador_id_num = null
 
@@ -176,7 +194,7 @@ export async function editIncidencia(req, res, next){
             return res.status(400).json({
                 ok:false,
                 code: "VALIDATION_ERROR",
-                message: "ID del trabajador inválido.",
+                message: "ID del trabajador inválido",
                 details: { 
                     field: "trabajador_id", 
                     value: trabajador_id },
@@ -184,6 +202,7 @@ export async function editIncidencia(req, res, next){
             })
             }
         }
+
         const payload = {...req.body, trabajador_id: trabajador_id_num }
         const updated = await updateIncidenciaById(id, payload)
         if(!updated){
@@ -216,7 +235,10 @@ export async function editIncidencia(req, res, next){
     }
 }
 
-// eliminación de una incidencia por id
+/**
+ * DELETE /incidencias/:id
+ * Elimina una incidencia por su id.
+ */
 
 export async function removeIncidencia(req, res, next){
     try {
