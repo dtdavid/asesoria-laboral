@@ -4,7 +4,7 @@ import { register, login } from "../controllers/auth.controller.js";
 
 /** 
  * Router de autenticación
- * Define los endpoints relacionados con la autenticación de usuarios.
+ * Define los endpoints de registro y login.
  */
 
 const router = Router()

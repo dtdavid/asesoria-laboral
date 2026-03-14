@@ -11,9 +11,8 @@ import { requireRole } from "../middlewares/requireRole.js"
 
 const router = Router()
 
-// Aquí se definirán los endpoints relacionados con trabajadores
 
-// listar trabajadores por id de empresa
+// GET /trabajadores?empresa_id=...
 router.get("/", requireAuth, requireRole("GESTOR"),  listTrabajadores)
 
 // GET /trabajadores/:id

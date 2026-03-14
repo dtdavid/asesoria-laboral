@@ -1,14 +1,13 @@
 import { pool } from "../db.js";
 
-/**Service de usuarios
- * Contiene la lógica de acceso a datos (consultas SQL).
- * No gestiona HTTP ni req/res.
+/**
+ * Service de usuarios.
+ * Contiene la lógica de acceso a datos.
  */
 
-
-
-// opbtenemos un usuario por su email
-
+/**
+ * Obtiene un usuario por su email.
+ */
 export async function getUserByEmail(email) {
     const result = await pool.query(
         `SELECT id, email, password_hash, role, status, empresa_id FROM usuarios WHERE email = $1`,
@@ -17,8 +16,9 @@ export async function getUserByEmail(email) {
     return result.rows[0] || null
 }
 
-// opbtenemos un usuario por su id
-
+/**
+ * Obtiene un usuario por su id.
+ */
 export async function getUserById(id) {
     const result = await pool.query(
         `SELECT id, email, role, status, empresa_id FROM usuarios WHERE id = $1`,
@@ -28,7 +28,9 @@ export async function getUserById(id) {
 }
 
 
-// creamos un nuevo usuario
+/**
+ * Crea un nuevo usuario.
+ */
 export async function createUser(payload) {
     const { email, password_hash, role = "CLIENTE", status = "PENDIENTE", empresa_id =null} = payload
     const result = await pool.query(

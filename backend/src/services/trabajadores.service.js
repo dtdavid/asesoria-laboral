@@ -1,15 +1,12 @@
 import { pool } from "../db.js";
 
-/**Service de trabajadores
- * Contiene la lógica de acceso a datos (consultas SQL).
- * No gestiona HTTP ni req/res.
+/**
+ * Service de trabajadores.
+ * Contiene la lógica de acceso a datos.
  */
 
 /**
- * obtiene la lista de trabajadores de una empresa
- * @export
- * @param {*} empresa_id
- * @return {*} 
+ * Obtiene los trabajadores de una empresa.
  */
 export async function getTrabajadores(empresa_id) {
 
@@ -23,11 +20,9 @@ export async function getTrabajadores(empresa_id) {
     return result.rows
 }
 
+
 /**
- * trabajador por id 
- * trabajador o null si no existe
- * @param {number} id
- * @return {Promise<Object|null>}
+ * Obtiene un trabajador por su id.
  */
 export async function getTrabajadorById(id) {
     const result = await pool.query(
@@ -38,7 +33,7 @@ export async function getTrabajadorById(id) {
 }           
     
 /**
- * Crea un trabajador nuevo
+ * Crea un nuevo trabajador.
  */
 export async function createTrabajador(payload){
     const {empresa_id, nombre, apellidos, dni, telefono = null, email = null, puesto = null, salario_bruto = null, activo = true} = payload
@@ -49,18 +44,22 @@ export async function createTrabajador(payload){
 }
 
 
-//eliminar un trabajador por su id
+/**
+ * Elimina un trabajador por su id.
+ */
 export async function deleteTrabajadorById(id){
     const result = await pool.query(
         "DELETE FROM trabajadores WHERE id = $1",
         [id]
     )
     
-    return result.rowCount  // 1 si se ha eliminado(204), 0 si no se ha encontrado(404)
+    return result.rowCount  
 }
 
 
-//actualizar un trabajador por su id
+/**
+ * Actualiza un trabajador por su id.
+ */
  export async function updateTrabajadorById(id, payload){
     const {empresa_id, nombre, apellidos, dni, telefono = null, email = null, puesto = null, salario_bruto = null, activo = true} = payload
     const result = await pool.query(
@@ -79,6 +78,6 @@ export async function deleteTrabajadorById(id){
         RETURNING id, empresa_id, nombre, apellidos, dni, telefono, email, puesto, salario_bruto, activo, created_at, updated_at`,
         [empresa_id, nombre, apellidos, dni, telefono, email, puesto, salario_bruto, activo, id]
     )
-    return result.rows[0] || null // devuelve el trabajador actualizado o null si no se ha encontrado
+    return result.rows[0] || null 
 
 }

@@ -1,6 +1,7 @@
-//se ejecuta después de requireAuth
-// Middleware para proteger rutas que requieren un rol específico
-// Verifica que el usuario autenticado (req.user) tenga el rol requerido para acceder a la ruta. Si no tiene el rol adecuado, responde con un error 403 Forbidden. Si tiene el rol correcto, llama a next() para continuar con la ejecución del controlador.
+/**
+ * Middleware de autorización por rol.
+ * Permite el acceso solo si req.user.role coincide con el rol requerido.
+ */
 
 export function requireRole(role) {
   return (req, res, next) => {

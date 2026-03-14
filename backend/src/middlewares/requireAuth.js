@@ -1,17 +1,13 @@
 import jwt from "jsonwebtoken"
 
-// Middleware para proteger rutas que requieren autenticación
-// Verifica que el token JWT esté presente y sea válido, y adjunta la información del usuario al objeto req.user para que los controladores puedan acceder a ella.
-//leer hearer authorization 
-//verificar formato "Bearer <token>"
-// verificar token con jwt.verify
-// Si el token es válido, extraer payload y asignar a req.user 
-// manejar errores de token faltante, formato inválido o token inválido/caducado.  
-// luego llamar a next() para continuar con la ejecución del controlador.
+/**
+ * Middleware de autenticación.
+ * Verifica el JWT y expone el payload en req.user.
+ */
 
 export function requireAuth(req, res, next) {
   try {
-    const auth = req.header("authorization") // "Bearer <token>"
+    const auth = req.header("authorization") 
     if (!auth) {
       return res.status(401).json({
         ok: false,
@@ -30,7 +26,7 @@ export function requireAuth(req, res, next) {
     }
 
     const payload = jwt.verify(token, process.env.JWT_SECRET)
-    req.user = payload // { user_id, role, status, empresa_id, iat, exp }
+    req.user = payload 
     return next()
   } catch (err) {
     return res.status(401).json({

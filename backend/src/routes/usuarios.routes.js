@@ -12,12 +12,10 @@ import { requireRole } from "../middlewares/requireRole.js"
 
 const router = Router()
 
-// ruta para obtener lista de usuarios con role = "CLIENTE"
-
+// GET /usuarios?role=CLIENTE
 router.get("/", requireAuth, requireRole("GESTOR"), listUsuarios)
 
-// ruta para asignar empresa a cliente
-
+// PATCH /usuarios/:id/asignar-empresa
 router.patch("/:id/asignar-empresa", requireAuth, requireRole("GESTOR"), assignEmpresa)
 
 export default router

@@ -1,13 +1,13 @@
 import { pool } from "../db.js";
 
 /**
- * incidencias de trabajadores
- * Contiene la lógica de acceso a datos (consultas SQL).
- * No gestiona HTTP ni req/res.
+ * Service de incidencias.
+ * Contiene la lógica de acceso a datos.
  */
 
-// función que lista incidencias de un trabajador por empresa_id
-
+/**
+ * Obtiene las incidencias de una empresa.
+ */
 export async function getIncidenciasByEmpresaId(empresa_id){
 
     const result = await pool.query(
@@ -35,8 +35,9 @@ export async function getIncidenciasByEmpresaId(empresa_id){
     return result.rows
 }
 
-// GET /incidencias/:id (GESTOR)
-
+/**
+ * Obtiene una incidencia por su id.
+ */
 export async function getIncidenciaById(id) {
    
     const result = await pool.query (
@@ -64,8 +65,9 @@ export async function getIncidenciaById(id) {
 
 }
 
-// función para insertar nueva inidencia
-
+/**
+ * Crea una nueva incidencia.
+ */
 export async function createIncidencia(payload){
     const {
         empresa_id,
@@ -98,8 +100,9 @@ export async function createIncidencia(payload){
 }
 
 
-// PUT actualizar incidencia de trabajador por id
-
+/**
+ * Actualiza una incidencia por su id.
+ */
 export async function updateIncidenciaById(id, payload){
     const {
         tipo, 
@@ -125,8 +128,9 @@ export async function updateIncidenciaById(id, payload){
     return result.rows[0] || null // devuelve la incidencia actualizado o null si no se ha encontrado
 }
 
-// DELETE eliminar incidencia por id
-
+/**
+ * Elimina una incidencia por su id.
+ */
 export async function deleteIncidenciaById(id){
     const result = await pool.query(
         `DELETE FROM incidencias WHERE id = $1`,

@@ -16,7 +16,7 @@ router.get("/", requireAuth, requireRole("GESTOR"), listEmpresas)
 // GET /empresas/:id
 router.get("/:id", requireAuth, requireRole("GESTOR"), getEmpresa)
 
-//Protegemos las rutas de modificación con autenticación y rol de gestor
+// Rutas de modificación protegidas para GESTOR
 // POST /empresas
 router.post("/", requireAuth, requireRole("GESTOR"), addEmpresa)
 

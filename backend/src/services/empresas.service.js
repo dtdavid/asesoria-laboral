@@ -1,17 +1,13 @@
 import { pool } from "../db.js"
 
 /**
-* Service de empresas.
- * Contiene la lógica de acceso a datos (consultas SQL).
- * No gestiona HTTP ni req/res.
+ * Service de empresas.
+ * Contiene la lógica de acceso a datos.
  */
-
 
 /**
  * Obtiene el listado de empresas ordenadas por fecha de creación.
- * @returns {Promise<Array>} Array de empresas
  */
-
 export async function getEmpresas() {
   const result = await pool.query(
     `SELECT id, razon_social, cif, ciudad, provincia, activa
@@ -22,11 +18,8 @@ export async function getEmpresas() {
 }
 
 /**
- * Obtiene una empresa por ID.
- * @export
- * @param {number} id - ID de la empresa
- * @returns {Promise<Object|null>} Empresa encontrada o null si no existe
- */
+ * Obtiene una empresa por su id.
+*/
 export async function getEmpresaById(id) {
   const result = await pool.query(
     `SELECT * FROM empresas WHERE id = $1`,
@@ -36,11 +29,8 @@ export async function getEmpresaById(id) {
 }
 
 /**
- * Inserta una nueva empresa en la base de datos.
- * @param {Object} payload - Datos de la empresa
- * @returns {Promise<Object>} Empresa creada
+ * Crea una nueva empresa.
  */
-
 export async function createEmpresa(payload) {
   const {
     razon_social,
@@ -96,26 +86,20 @@ export async function createEmpresa(payload) {
 }
 
 /**
- * 
- * @param {number} id - ID de la empresa
- * @returns {Promise<number>} Número de filas eliminadas
+ * Elimina una empresa por su id.
  */
-
 export async function deleteEmpresaById(id) {
   const result = await pool.query(
     `DELETE FROM empresas WHERE id = $1`,
     [id]
   )
 
-  return result.rowCount  //rowCount = 0 si no se ha eliminado nada (404), 1 si se ha eliminado una fila (204)
+  return result.rowCount  
 }
 
 
 /**
- * Actualiza una empresa por ID.
- * @param {number} id - ID de la empresa
- * @param {Object} payload - Datos a actualizar
- * @returns {Promise<Object|null>} Empresa actualizada o null si no existe
+ * Actualiza una empresa por su id.
  */
 export async function updateEmpresaById(id, payload) {
   const {

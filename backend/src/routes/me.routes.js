@@ -1,9 +1,17 @@
 import { Router } from "express"
 import { requireAuth } from "../middlewares/requireAuth.js"
-import {requireRole} from "../middlewares/requireRole.js"
-import { getMyEmpresa, getMyTrabajadores, getMyIncidencias } from "../controllers/me.controller.js"
+import { requireRole } from "../middlewares/requireRole.js"
+import { 
+    getMyEmpresa, 
+    getMyTrabajadores, 
+    getMyIncidencias 
+} from "../controllers/me.controller.js"
 
 
+/**
+ * Router de endpoints /me.
+ * Define las rutas del cliente autenticado.
+ */
 
 const router = Router()
 
