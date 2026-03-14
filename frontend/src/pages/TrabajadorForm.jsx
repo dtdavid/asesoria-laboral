@@ -25,6 +25,7 @@ export default function TrabajadorForm() {
    
   //Estado de error para mostrar mensajes al usuario
   const [error, setError] = useState("")
+  const [empresas, setEmpresas] = useState([])
    //Estado del formulario
   const [form, setForm] = useState({
     nombre: "",
@@ -38,6 +39,18 @@ export default function TrabajadorForm() {
     activo: true
   })
 
+  useEffect(() => {
+  const loadEmpresas = async () => {
+    try {
+      const data = await apiFetch("/empresas")
+      setEmpresas(data?.data || [])
+    } catch (err) {
+      setError(err?.message || "No se pudieron cargar empresas.")
+    }
+  }
+
+  loadEmpresas()
+}, [])
 
 useEffect(() => {
 
@@ -81,7 +94,7 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
     e.preventDefault() // evita que el navegador recargue la página
     setError("") // reseteamos el error antes de intentar registrar
 
-    console.log(form)
+    
     //verificamos validación mínima antes de enviar al backend
     if (!canSubmit) {
       setError(
@@ -139,19 +152,24 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
 
             <div className="rounded-2xl bg-white p-8 shadow-sm space-y-6">
               <header className="text-center space-y-2">
-                <h2 className="text-2xl font-semibold text-brand-text">Crear nuevo trabajador</h2>
+                <h2 className="text-2xl font-semibold text-brand-text">
+                  {isEdit ? "Editar trabajador" : "Crear nuevo trabajador"}
+                </h2>
                 <p className="text-sm text-brand-muted">
-                  Página para registrar un nuevo trabajador.
+                  {isEdit
+                    ? "Actualiza los datos del trabajador."
+                    : "Página para registrar un nuevo trabajador."}
                 </p>
               </header>
 
             {/* Formulario con campos mínimos de empresa. */}
 
             <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="grid gap-5 md:grid-cols-2">
 
               {/* Nombre */}
 
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="nombre" className="text-sm font-medium text-brand-text">
                   Nombre<span className="text-red-600 ml-1">*</span>
                 </label>
@@ -163,13 +181,13 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
                   onChange={handleChange}
                   placeholder="Nombre"
                   autoComplete="nombre"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
 
               {/* Apellidos */}
               
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="apellidos" className="text-sm font-medium text-brand-text">
                   Apellidos<span className="text-red-600 ml-1">*</span>
                 </label>
@@ -181,13 +199,13 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
                   onChange={handleChange}
                   placeholder="Apellidos"
                   autoComplete="apellidos"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
 
               {/* DNI */}
               
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="dni" className="text-sm font-medium text-brand-text">
                   DNI<span className="text-red-600 ml-1">*</span>
                 </label>
@@ -199,31 +217,35 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
                   onChange={handleChange}
                   placeholder="DNI"
                   autoComplete="dni"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
 
               {/* empresa_id */}
               
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="empresa_id" className="text-sm font-medium text-brand-text">
-                  ID de Empresa<span className="text-red-600 ml-1">*</span>
+                  Empresa<span className="text-red-600 ml-1">*</span>
                 </label>
-                <input
-                  type="text"
+                <select
                   id="empresa_id"
                   name="empresa_id"
                   value={form.empresa_id ?? ""}
                   onChange={handleChange}
-                  placeholder="ID de Empresa"
-                  autoComplete="empresa_id"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
-                />
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                >
+                  <option value="">Selecciona empresa…</option>
+                  {empresas.map((emp) => (
+                    <option key={emp.id} value={emp.id}>
+                      {emp.razon_social} (ID {emp.id})
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Teléfono */}
               
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-1">
                 <label htmlFor="telefono" className="text-sm font-medium text-brand-text">
                   Teléfono
                 </label>
@@ -235,13 +257,13 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
                   onChange={handleChange}
                   placeholder="Teléfono"
                   autoComplete="telefono"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
               
               {/* Email */}
               
-              <div className="space-y-1">
+              <div className="space-y-1 md:col-span-2">
                 <label htmlFor="email" className="text-sm font-medium text-brand-text">
                   Email
                 </label>
@@ -253,7 +275,7 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
                   onChange={handleChange}
                   placeholder="Email"
                   autoComplete="email"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
@@ -271,7 +293,7 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
                   onChange={handleChange}
                   placeholder="Puesto"
                   autoComplete="puesto"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
@@ -289,24 +311,26 @@ const canSubmit = Boolean(form.nombre.trim() && form.apellidos.trim() && isValid
                   onChange={handleChange}
                   placeholder="Salario Bruto"
                   autoComplete="salario_bruto"
-                  className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
+                  className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
                 />
               </div>
                             
               {/* Activo */}
               
-              <div className="space-y-1">
-                <label htmlFor="activo" className="text-sm font-medium text-brand-text ">
-                  Trabajador Activo  
-                </label>
+              <div className="flex items-center gap-3 rounded-lg border border-brand-border bg-brand-surface px-3 py-3 md:col-span-2">
                 <input
                   type="checkbox"
                   id="activo"
                   name="activo"
                   checked={Boolean(form.activo)}
                   onChange={handleChange}
-                  className="w-4 h-4 text-brand-primary border border-brand-border rounded focus:ring-brand-secondary focus:ring-2 mx-2"
-                />                  
+                  className="h-4 w-4 rounded border border-brand-border text-brand-primary focus:ring-2 focus:ring-brand-secondary"
+                />
+                <label htmlFor="activo" className="text-sm font-medium text-brand-text">
+                  Trabajador activo
+                </label>
+              </div>
+
               </div>
     
               {error && (
