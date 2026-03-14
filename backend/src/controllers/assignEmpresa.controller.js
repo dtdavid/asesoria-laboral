@@ -3,13 +3,11 @@ import  { getUserById } from "../services/usuarios.service.js"
 import { getEmpresaById } from "../services/empresas.service.js"
 
 
-/** 
- * controlador de assignación de empresas a usuario
- */
+
 
 /**
- * asignación de usuario CLIENTE by id a una EMPRESA by empresa_id
- *
+ * PATCH /usuarios/:id/asignar-empresa
+ * Asigna una empresa a un usuario cliente.
  */
 
 export async function assignEmpresa(req, res, next) {
@@ -27,7 +25,7 @@ export async function assignEmpresa(req, res, next) {
                 //error: "ID de usuario inválido"
             })
            }
-           const empresa_id = Number(req.body.empresa_id)
+           const empresa_id = Number(req.body?.empresa_id)
            if(!Number.isInteger(empresa_id) || empresa_id <= 0) {
             return res.status(400).json({
                 ok: false,
@@ -53,13 +51,13 @@ export async function assignEmpresa(req, res, next) {
             return res.status(400).json({
                 ok:false, 
                 code: "VALIDATION_ERROR",
-                message: "Role de usuario incorrecto",
-                details: {id},
+                message: "Solo se puede asignar empresa a usuarios con rol CLIENTE",
+                details: {id, role: user.role},
                 //error: "Usuario sin permiso"
             })
         }
         const empresa = await getEmpresaById(empresa_id)
-        if (!empresa || empresa === null){
+        if (!empresa){
             return res.status(404).json({
                 ok:false, 
                 code: "NOT_FOUND",
@@ -73,7 +71,7 @@ export async function assignEmpresa(req, res, next) {
             return res.status(404).json({
                 ok:false, 
                 code: "NOT_FOUND",
-                message: "No se pudo actualizar",
+                message: "No se pudo asignar la empresa al usuario",
                 details: { id, empresa_id },
                 //error: "No se pudo actualizar la assignación"
             })
