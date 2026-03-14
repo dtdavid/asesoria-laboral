@@ -1,23 +1,19 @@
 import { getUsuariosByRole } from "../services/listUsuarios.service.js"
 
-/** controlador de usuarios con role
- * 
- */
-
 /**
- *Lista de usuarios por role
- *
+ * GET /usuarios
+ * Lista usuarios filtrados por role.
  */
 
  export async function listUsuarios(req, res, next) {
     try {
-       const role = req.query.role
-    //    if(!role || (role !== "CLIENTE" && role !== "GESTOR"))
+       const role = req.query?.role
+    
        if(role  !== "CLIENTE" ){
             return res.status(400).json({
                 ok: false,
                 code:"VALIDATION_ERROR",
-                message: "Role de usuario inválido",
+                message: "El rol debe ser CLIENTE",
                 details: { field: "role", value: req.query.role },
                 //error: "Role no existe o no es válido"
             })
