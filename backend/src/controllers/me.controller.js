@@ -62,7 +62,7 @@ export async function getMyTrabajadores(req, res, next) {
 
 /**
  * GET /me/incidencias
- * Devuelve incidencias asociadas a una empresa
+ * Devuelve incidencias asociadas a la empresa del usuario autenticado.
  */
 
 export async function getMyIncidencias(req, res, next) {
@@ -75,7 +75,7 @@ export async function getMyIncidencias(req, res, next) {
       return res.status(403).json({
         ok: false,
         code: "NO_EMPRESA_ASIGNADA",
-        message: "Cliente pendiente de asignación a una empresa.",
+        message: "Usuario pendiente de asignación a una empresa.",
         details: { empresa_id: null },
       })
     }
