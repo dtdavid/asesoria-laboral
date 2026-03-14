@@ -1,17 +1,13 @@
 import { getTrabajadores, getTrabajadorById, createTrabajador, deleteTrabajadorById, updateTrabajadorById } from "../services/trabajadores.service.js";
 
-/** controlador de trabajadores
- * aquí se implementarán las funciones que manejarán las peticiones relacionadas con los trabajadores
- * 
- */
+
 
 /**
- *Lista de trabajadores por empresa_id(query param)
- *GET /trabajadores?empresa_id=2
+ * GET /trabajadores
+ * Lista de trabajadores por empresa_id
  */
 export async function listTrabajadores(req, res, next) {
-    //req se espera que tenga un parámetro id (req.query.empresa_id) que es el ID de la empresa de la que se quieren listar los trabajadores
-
+    
     try {
         const id = Number(req.query.empresa_id)
         if (!Number.isInteger(id) || id <= 0) {
@@ -32,8 +28,8 @@ export async function listTrabajadores(req, res, next) {
 }
 
 /**
- * busca trabajador por id (path param)
  * GET /trabajadores/:id
+ * Obtiene un trabajador por su id.
  */
 
 export async function getTrabajador(req, res, next){
@@ -66,21 +62,27 @@ export async function getTrabajador(req, res, next){
     }
 }
 
-// inserción de un nuevo trabajador
+/**
+ * POST /trabajadores
+ * Crea un nuevo trabajador
+ */
+
 export async function addTrabajador(req, res, next){
     try {
         const {empresa_id, nombre, apellidos, dni} = req.body
 
-        //validación básica de campos obligatorios
-        if(!empresa_id || !nombre || !apellidos || !dni){
+        const missingFields = ["empresa_id", "nombre", "apellidos", "dni"].filter(
+            (field) => !req.body?.[field]
+            )
+
+            if (missingFields.length > 0) {
             return res.status(400).json({
-                ok:false,
+                ok: false,
                 code: "VALIDATION_ERROR",
-                message: "Campos obligatorios: empresa_id, nombre, apellidos, dni",
-                details: { missing_fields: ["empresa_id", "nombre", "apellidos", "dni"].filter(f => !req.body[f]) },
-                //error: "Campos obligatorios: empresa_id, nombre, apellidos, dni"
+                message: `Campos obligatorios: ${missingFields.join(", ")}`,
+                details: { missing_fields: missingFields },
             })
-        }
+            }
 
         const empresa_id_num = Number(empresa_id)
 
@@ -136,7 +138,11 @@ export async function addTrabajador(req, res, next){
     }
 }
 
-// eliminación de un trabajador por su id
+/**
+ * 
+ * DELETE /trabajadores/:id
+ * Elimina un trabajador por su id. 
+ */
 export async function removeTrabajador(req, res, next){
     try {
         const id = Number(req.params.id)
@@ -184,12 +190,16 @@ export async function editTrabajador(req, res, next){
 
         const { empresa_id, nombre, apellidos, dni } = req.body
 
-        if(!nombre || !apellidos || !dni || !empresa_id){
+        const missingFields = ["empresa_id", "nombre", "apellidos", "dni"].filter(
+            (field) => !req.body?.[field]
+            )
+
+            if (missingFields.length > 0) {
             return res.status(400).json({
                 ok: false,
                 code: "VALIDATION_ERROR",
-                message: "Campos obligatorios: empresa_id, nombre, apellidos, dni",
-                details: { missing_fields: ["empresa_id", "nombre", "apellidos", "dni"].filter(f => !req.body[f]) },
+                message: `Campos obligatorios: ${missingFields.join(", ")}`,
+                details: { missing_fields: missingFields },
             })
         }
 
