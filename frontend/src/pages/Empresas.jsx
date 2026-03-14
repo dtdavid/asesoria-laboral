@@ -147,9 +147,9 @@ export default function Empresas() {
 
                 <tbody className="divide-y divide-brand-border">
                   {items.map((e) => (
-                    <tr key={e.id} className="align-top">
+                    <tr key={e.id} className="align-middle">
                       <td className="py-3 pr-4 text-brand-muted hidden sm:table-cell">{e.id}</td>
-                      <td className="py-3 pr-4 font-medium text-brand-text">
+                      <td className="py-4 pr-4 font-medium text-brand-text">
                         {e.razon_social}
                       </td>
                       <td className="py-3 pr-4 text-brand-text hidden md:table-cell">{e.cif}</td>
@@ -169,7 +169,7 @@ export default function Empresas() {
                         </span>
                       </td>
 
-                      <td className="py-3 text-brand-text">
+                      <td className="py-4 text-brand-text">
                         {isCliente ? (
                           <Button
                             className="w-full sm:w-auto"
@@ -178,7 +178,7 @@ export default function Empresas() {
                             Ver
                           </Button>
                         ) : (
-                          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
+                          <div className="flex flex-col justify-center gap-2 sm:flex-row sm:items-center sm:justify-end">
                             <Button
                               className="w-full sm:w-auto"
                               onClick={() => navigate(`/app/empresas/${e.id}/editar`)}
