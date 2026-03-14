@@ -175,7 +175,11 @@ export async function removeTrabajador(req, res, next){
 }
 
 
-//editar trabajador
+/**
+ * 
+ * PUT /trabajadores/:id
+ * Actualiza un trabajador existente. 
+ */
 export async function editTrabajador(req, res, next){
     try {
         const id = Number(req.params.id)
