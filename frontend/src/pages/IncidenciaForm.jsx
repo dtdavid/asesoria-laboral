@@ -130,9 +130,9 @@ export default function IncidenciaForm(){
         <h1 className="text-2xl font-semibold text-brand-text">
           {isEdit ? "Editar incidencia" : "Nueva incidencia"}
         </h1>
-        <p className="text-sm text-brand-muted">
-          {isEdit ? `ID: ${id}` : "Crear una incidencia para una empresa."}
-        </p>
+          <p className="text-sm text-brand-muted">
+            {isEdit ? `Editando incidencia ID ${id}.` : "Crear una incidencia para una empresa."}
+          </p>
       </header>
 
       {error && (
@@ -142,8 +142,11 @@ export default function IncidenciaForm(){
       )}
 
       <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-6 shadow-sm space-y-4">
+        <div className="grid gap-5 md:grid-cols-2">
+
         {/* Empresa */}
-        <div className="space-y-1">
+
+        <div className="space-y-1 md:col-span-2">
           <label className="text-sm font-medium text-brand-text">
             Empresa <span className="text-red-600">*</span>
           </label>
@@ -151,7 +154,7 @@ export default function IncidenciaForm(){
             name="empresa_id"
             value={form.empresa_id ?? ""}
             onChange={handleChange}
-            className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none"
+            className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             disabled={loading}
           >
             <option value="">Selecciona empresa…</option>
@@ -164,7 +167,7 @@ export default function IncidenciaForm(){
         </div>
 
         {/* Trabajador ID (opcional) */}
-        <div className="space-y-1">
+        <div className="space-y-1 md:col-span-2">
           <label className="text-sm font-medium text-brand-text">
             Trabajador ID (opcional)
           </label>
@@ -173,12 +176,13 @@ export default function IncidenciaForm(){
             name="trabajador_id"
             value={form.trabajador_id ?? ""}
             onChange={handleChange}
-            className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none"
+            className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             placeholder="Ej: 1"
           />
         </div>
 
         {/* Tipo */}
+
         <div className="space-y-1">
           <label className="text-sm font-medium text-brand-text">
             Tipo <span className="text-red-600">*</span>
@@ -187,7 +191,7 @@ export default function IncidenciaForm(){
             name="tipo"
             value={form.tipo ?? ""}
             onChange={handleChange}
-            className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none"
+            className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
           >
             <option value="">Selecciona tipo…</option>
             <option value="VACACIONES">VACACIONES</option>
@@ -198,13 +202,14 @@ export default function IncidenciaForm(){
         </div>
 
         {/* Estado */}
+
         <div className="space-y-1">
           <label className="text-sm font-medium text-brand-text">Estado</label>
           <select
             name="estado"
             value={form.estado ?? "ABIERTA"}
             onChange={handleChange}
-            className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none"
+            className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
           >
             <option value="ABIERTA">ABIERTA</option>
             <option value="EN_PROCESO">EN_PROCESO</option>
@@ -213,6 +218,7 @@ export default function IncidenciaForm(){
         </div>
 
         {/* Fechas */}
+
         <div className="grid gap-4 sm:grid-cols-2">
           <div className="space-y-1">
             <label className="text-sm font-medium text-brand-text">
@@ -223,7 +229,7 @@ export default function IncidenciaForm(){
               name="fecha_inicio"
               value={form.fecha_inicio ?? ""}
               onChange={handleChange}
-              className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none"
+              className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             />
           </div>
 
@@ -234,33 +240,38 @@ export default function IncidenciaForm(){
               name="fecha_fin"
               value={form.fecha_fin ?? ""}
               onChange={handleChange}
-              className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none"
+              className="w-full h-11 rounded-lg border border-brand-border bg-white px-3 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             />
           </div>
         </div>
 
         {/* Descripción */}
-        <div className="space-y-1">
+
+        <div className="space-y-1 md:col-span-2">
           <label className="text-sm font-medium text-brand-text">Descripción</label>
           <textarea
             name="descripcion"
             value={form.descripcion ?? ""}
             onChange={handleChange}
-            className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none"
+            className="w-full rounded-lg border border-brand-border bg-white px-3 py-2 text-sm outline-none transition focus:ring-2 focus:ring-brand-secondary focus:ring-offset-2"
             rows={3}
             placeholder="Detalles de la incidencia..."
           />
         </div>
 
-        <div className="flex gap-3">
-          <Button type="submit" disabled={!canSubmit}>
+        </div>
+
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+          <Button type="submit" disabled={!canSubmit} className="w-full sm:w-auto">
             {isEdit ? "Guardar cambios" : "Crear incidencia"}
           </Button>
-          <Button type="button" variant="ghost" onClick={() => navigate(-1)}>
+          <Button type="button" variant="ghost" onClick={() => navigate(-1)} className="w-full sm:w-auto">
             Cancelar
           </Button>
         </div>
+
       </form>
+
     </div>
   )
 
