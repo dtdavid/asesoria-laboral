@@ -96,6 +96,7 @@
       - [Restricción de acciones por rol (frontend)](#restricción-de-acciones-por-rol-frontend)
       - [Evidencias UI (navegador)](#evidencias-ui-navegador)
       - [Pruebas automatizadas (backend)](#pruebas-automatizadas-backend)
+      - [Comprobaciones finales y refactorización (backend)](#comprobaciones-finales-y-refactorización-backend)
       - [Evidencias (Thunder Client)](#evidencias-thunder-client)
       - [Evidencias de despliegue con Docker](#evidencias-de-despliegue-con-docker)
 - [Instalación / puesta en marcha (entorno local)](#instalación--puesta-en-marcha-entorno-local)
@@ -1263,6 +1264,27 @@ Los tests se ubican en `backend/__tests__/` y se ejecutan con `cd backend && npm
 
 - Ejecución correcta de test suite (captura de salida de Jest).  
   ![Jest tests OK](img/tests-backend/tests-jest-pass.png)
+
+##### Comprobaciones finales y refactorización (backend)
+
+Se realizó una revisión final del backend para corregir errores, unificar validaciones y mejorar la consistencia interna del proyecto.
+
+**Correcciones funcionales principales**
+
+- Se corrigió `GET /me/incidencias`, que podía responder `200` a clientes sin empresa asignada; ahora devuelve `403 NO_EMPRESA_ASIGNADA`.
+- Se ajustó la validación de campos obligatorios en `empresas`, `trabajadores` e `incidencias`, de forma que `message` y `details` reflejen únicamente los campos realmente ausentes.
+- Se añadió manejo del error de clave foránea (`23503`) en `trabajadores`, evitando `500 Internal Server Error` y devolviendo un error controlado.
+- Se incorporó validación básica de formato DNI/NIE en `trabajadores`.
+- Se unificó la validación de IDs y el formato de errores en varios controladores.
+
+**Mejoras de consistencia**
+
+- Se revisaron comentarios en controladores, rutas, middlewares y services para dejarlos más cortos y uniformes.
+- Se revisó `app.js` para homogeneizar el formato de respuestas `404` y `500`.
+- Se comprobaron rutas y middlewares para asegurar coherencia con los endpoints realmente utilizados en el prototipo.
+
+**Validación manual**
+Se probaron manualmente con Thunder Client los bloques `auth`, `me`, `usuarios` (incluida asignación de empresa), `empresas`, `trabajadores` e `incidencias`, verificando respuestas correctas para `200/201/204`, `400`, `401/403`, `404` y `409`.
 
 ##### Evidencias (Thunder Client)
 
