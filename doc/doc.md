@@ -105,6 +105,16 @@
   - [Variables de entorno](#variables-de-entorno)
   - [Puesta en marcha](#puesta-en-marcha)
   - [Puesta en marcha con Docker Compose (recomendado)](#puesta-en-marcha-con-docker-compose-recomendado)
+- [Despliegue (Railway / Vercel)](#despliegue-railway--vercel)
+  - [Backend y PostgreSQL en Railway](#backend-y-postgresql-en-railway)
+    - [Proceso de despliegue (resumen)](#proceso-de-despliegue-resumen)
+    - [Carga de esquema y datos seed](#carga-de-esquema-y-datos-seed)
+    - [Verificación en entorno desplegado](#verificación-en-entorno-desplegado)
+  - [Variable de entorno para frontend desplegado](#variable-de-entorno-para-frontend-desplegado)
+  - [Frontend en Vercel](#frontend-en-vercel)
+    - [Requisitos previos](#requisitos-previos)
+    - [Proceso de despliegue (resumen)](#proceso-de-despliegue-resumen-1)
+    - [Verificación tras el despliegue](#verificación-tras-el-despliegue)
 - [Manual de usuario y usabilidad (resumen)](#manual-de-usuario-y-usabilidad-resumen)
   - [Acceso](#acceso)
   - [Flujo básico (GESTOR)](#flujo-básico-gestor)
@@ -1430,6 +1440,101 @@ Verificación de arranque:
 - Backend (health check): `http://localhost:3000/health`
 
 **Nota de licencias (herramientas):** Docker Engine y Docker Compose se distribuyen bajo Apache 2.0. Docker Desktop está sujeto a los términos de la licencia de Docker (Subscription Service Agreement). Las condiciones pueden verificarse en la documentación oficial de Docker.
+
+## Despliegue (Railway / Vercel)
+
+### Backend y PostgreSQL en Railway
+
+Se realizó el despliegue del backend y la base de datos PostgreSQL en **Railway**, utilizando la **Railway CLI** desde PowerShell (VS Code) y manteniendo el repositorio en GitLab (sin migrarlo a GitHub).
+
+**Backend desplegado (URL pública):**  
+`https://backend-production-583a.up.railway.app`
+
+#### Proceso de despliegue (resumen)
+
+1. Instalación y autenticación en Railway CLI:
+   - `npm install -g @railway/cli`
+   - `railway login`
+2. Creación del proyecto y servicios:
+   - `railway init`
+   - `railway add` → PostgreSQL (DB)
+   - `railway add` → Empty Service (backend)
+3. Configuración del monorepo:
+   - En Railway se configuró el **Root Directory** del servicio backend como `/backend`.
+4. Despliegue y revisión:
+   - `railway up`
+   - `railway logs --deployment --latest`
+5. Variables de entorno:
+   - En el servicio backend se configuraron `JWT_SECRET` y las variables de conexión PostgreSQL (`PGHOST`, `PGPORT`, `PGDATABASE`, `PGUSER`, `PGPASSWORD`) con los valores proporcionados por Railway.
+
+#### Carga de esquema y datos seed
+
+A diferencia del entorno local con Docker Compose, Railway no ejecuta automáticamente los scripts SQL del proyecto.  
+Por ello, el esquema y los datos seed se cargaron manualmente con `psql` desde PowerShell, utilizando los datos de conexión públicos del servicio PostgreSQL.
+
+Para evitar problemas de codificación en Windows (acentos/ñ), se forzó UTF-8 antes de ejecutar scripts:
+
+- `chcp 65001`
+- `PGCLIENTENCODING="UTF8"`
+
+#### Verificación en entorno desplegado
+
+Se verificó el funcionamiento del backend en producción mediante pruebas con Thunder Client:
+
+- `GET /health` y `GET /db-time` (servicio operativo y conexión a base de datos).
+- `POST /auth/login` (JWT operativo).
+- `GET /usuarios?role=CLIENTE`, `GET /me/empresa`, `GET /incidencias?empresa_id=1` (endpoints protegidos funcionando con datos seed).
+
+### Variable de entorno para frontend desplegado
+
+Cuando el frontend se despliegue (Vercel), deberá configurarse:
+
+`VITE_API_URL=https://backend-production-583a.up.railway.app`
+
+### Frontend en Vercel
+
+Para publicar el frontend del proyecto se utilizó **Vercel CLI**, desplegando únicamente la carpeta `frontend` del repositorio (monorepo).
+
+**Frontend desplegado (producción):**  
+`https://asesoria-laboral-frontend.vercel.app`
+
+#### Requisitos previos
+
+- El backend ya estaba desplegado previamente en Railway y accesible públicamente:
+  - `https://backend-production-583a.up.railway.app`
+- Variable de entorno necesaria para conectar el frontend con la API:
+  - `VITE_API_URL=https://backend-production-583a.up.railway.app`
+
+#### Proceso de despliegue (resumen)
+
+1. Acceso a la carpeta del frontend:
+   - `cd frontend`
+2. Instalación de Vercel CLI:
+   - `npm install -g vercel`
+3. Inicio de sesión:
+   - `vercel login`
+4. Enlace del proyecto con Vercel:
+   - `vercel link`
+   - Se creó un proyecto nuevo con configuración auto-detectada para Vite.
+5. Configuración de variable de entorno:
+   - `vercel env add VITE_API_URL production`
+   - Valor: `https://backend-production-583a.up.railway.app`
+   - Nota: en Vite, las variables `VITE_*` son públicas en el build, por lo que no se marcó como variable sensible.
+6. Despliegue en producción:
+   - `vercel --prod`
+
+#### Verificación tras el despliegue
+
+- Acceso correcto a la URL pública.
+- Conexión correcta con el backend desplegado en Railway.
+- Funcionamiento del login y carga de pantallas protegidas.
+- Respuestas esperadas para usuarios pendientes de asignación de empresa.
+- Sin errores visibles de conexión durante la navegación.
+
+**URLs finales del sistema**
+
+1. Frontend (Vercel): `https://asesoria-laboral-frontend.vercel.app`
+2. Backend (Railway): `https://backend-production-583a.up.railway.app`
 
 ## Manual de usuario y usabilidad (resumen)
 

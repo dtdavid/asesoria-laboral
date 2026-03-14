@@ -4,9 +4,9 @@ Aplicación web (React + Express + PostgreSQL) con autenticación JWT, roles (GE
 
 ---
 
-# 1. Tecnologías utilizadas
+## 1. Tecnologías utilizadas
 
-## Frontend
+### Frontend
 
 - React
 - Vite
@@ -16,7 +16,7 @@ Aplicación web (React + Express + PostgreSQL) con autenticación JWT, roles (GE
 - PostCSS
 - Autoprefixer
 
-## Backend
+### Backend
 
 - Node.js
 - Express
@@ -28,7 +28,7 @@ Aplicación web (React + Express + PostgreSQL) con autenticación JWT, roles (GE
 - bcryptjs (hash de contraseñas)
 - nodemon
 
-## Testing (backend)
+### Testing (backend)
 
 - Jest
 - Supertest
@@ -36,7 +36,7 @@ Aplicación web (React + Express + PostgreSQL) con autenticación JWT, roles (GE
 
 ---
 
-# 2. Estructura del repositorio
+## 2. Estructura del repositorio
 
 ```
 /
@@ -60,7 +60,7 @@ Aplicación web (React + Express + PostgreSQL) con autenticación JWT, roles (GE
 
 ---
 
-# 3. Requisitos previos
+## 3. Requisitos previos
 
 - Node.js (LTS)
 - npm
@@ -70,9 +70,9 @@ Aplicación web (React + Express + PostgreSQL) con autenticación JWT, roles (GE
 
 ---
 
-# 4. Instalación
+## 4. Instalación
 
-## 4.1 Clonar repositorio
+### 4.1 Clonar repositorio
 
 ```bash
 git clone https://gitlab.iessanclemente.net/dawd/a25daviddt.git
@@ -81,7 +81,7 @@ cd a25daviddt
 
 ---
 
-## 4.2 Instalación del frontend
+### 4.2 Instalación del frontend
 
 ```bash
 cd frontend
@@ -97,7 +97,7 @@ http://localhost:5173
 
 ---
 
-## 4.3 Instalación del backend
+### 4.3 Instalación del backend
 
 ```bash
 cd backend
@@ -110,7 +110,7 @@ http://localhost:3000
 
 ---
 
-# 5. Variables de entorno
+## 5. Variables de entorno
 
 Archivo plantilla:
 
@@ -140,7 +140,7 @@ Para desarrollo:
 
 ---
 
-# 6. Creación de la base de datos
+## 6. Creación de la base de datos
 
 Desde `psql`:
 
@@ -154,7 +154,7 @@ Comprobar:
 \l
 ```
 
-## 6.1 Inicialización de tablas y datos demo (schema + seed)
+### 6.1 Inicialización de tablas y datos demo (schema + seed)
 
 Los scripts SQL están en `backend/db` y están numerados para ejecutarse en orden.
 
@@ -179,21 +179,21 @@ $env:PGCLIENTENCODING="UTF8"
 psql -U postgres -d asesoria_laboral -f backend/db/XX_archivo.sql
 ```
 
-## 6.2 Usuarios demo
+### 6.2 Usuarios demo
 
 - **GESTOR**:
   - _Usuario_: gestor@demo.test / _Password_: Cliente1234!
 - **CLIENTE**:
   - _Usuario_: cliente1@demo.test / _Password_: Cliente1234! (empresa_id=1)
 
-# 7. Instalación con Docker (local)
+## 7. Instalación con Docker (local)
 
 Requisitos: Docker Desktop + Docker Compose.
 
 > Importante: si tienes la app ejecutándose en local con `npm run dev` (puertos 3000/5173),
 > debes pararla antes de levantar Docker para evitar conflictos de puertos.
 
-## 7.1 Arranque
+### 7.1 Arranque
 
 **Desde la raíz del repositorio:**
 
@@ -215,7 +215,7 @@ docker compose up -d --build
 
 - 3.PostgreSQL: localhost:5432 (db: asesoria_laboral, user: pfc, pass: pfc)
 
-## 7.2 Usuarios demo
+### 7.2 Usuarios demo
 
 - **GESTOR**:
   - _Usuario_: gestor@demo.test / _Password_: Cliente1234!
@@ -251,31 +251,42 @@ docker compose down -v
 docker compose up --build
 ```
 
+## 8. Despliegue
+
+- **Frontend (Vercel):** https://asesoria-laboral-frontend.vercel.app
+- **Backend (Railway):** https://backend-production-583a.up.railway.app
+
+### 8.1 Variable de entorno (frontend)
+
+En Vercel (producción):
+
+- `VITE_API_URL=https://backend-production-583a.up.railway.app`
+
 ---
 
-# 8. Endpoints disponibles
+## 9. Endpoints disponibles
 
-## Utilidad
+### Utilidad
 
 - GET `/health` → estado del servicio
 - GET `/db-time` → prueba de conexión a PostgreSQL (SELECT NOW())
 - POST `/echo` → devuelve el body recibido
 
-## Auth
+### Auth
 
 - POST `/auth/registro` → registro público (crea CLIENTE, status=PENDIENTE, empresa_id=NULL)
 - POST `/auth/login` → login, devuelve JWT (Bearer)
 
-## Scoped (CLIENTE) – requiere JWT
+### Scoped (CLIENTE) – requiere JWT
 
 - GET `/me/empresa` → empresa asociada al usuario autenticado
 - GET `/me/trabajadores` → trabajadores de su empresa
 - GET `/me/incidencias` → incidencias de su empresa
   > Si `empresa_id` no está asignado → 403 `NO_EMPRESA_ASIGNADA`
 
-## Backoffice (GESTOR) – requiere JWT + rol GESTOR
+### Backoffice (GESTOR) – requiere JWT + rol GESTOR
 
-### Empresas (CRUD)
+#### Empresas (CRUD)
 
 - GET `/empresas`
 - GET `/empresas/:id`
@@ -283,7 +294,7 @@ docker compose up --build
 - PUT `/empresas/:id`
 - DELETE `/empresas/:id`
 
-### Trabajadores (CRUD)
+#### Trabajadores (CRUD)
 
 - GET `/trabajadores?empresa_id=<id>`
 - GET `/trabajadores/:id`
@@ -291,7 +302,7 @@ docker compose up --build
 - PUT `/trabajadores/:id`
 - DELETE `/trabajadores/:id`
 
-### Incidencias (CRUD)
+#### Incidencias (CRUD)
 
 - GET `/incidencias?empresa_id=<id>`
 - GET `/incidencias/:id`
@@ -299,14 +310,14 @@ docker compose up --build
 - PUT `/incidencias/:id`
 - DELETE `/incidencias/:id`
 
-### Usuarios (asignación de empresa a clientes)
+#### Usuarios (asignación de empresa a clientes)
 
 - GET `/usuarios?role=CLIENTE` → lista clientes (ordenados: PENDIENTE primero)
 - PATCH `/usuarios/:id/asignar-empresa` body `{ "empresa_id": <id> }` → asigna empresa y activa status
 
 ---
 
-## GET /db-time
+### GET /db-time
 
 Ejecuta:
 
@@ -318,25 +329,9 @@ Verifica conexión con PostgreSQL.
 
 ---
 
-## POST /echo
+## 10. Scripts disponibles
 
-Devuelve el body recibido.
-
-Ejemplo:
-
-```json
-{
-  "received": {
-    "mensaje": "hola"
-  }
-}
-```
-
----
-
-# 9. Scripts disponibles
-
-## Backend
+### Backend
 
 ```json
 "scripts": {
@@ -345,7 +340,7 @@ Ejemplo:
 }
 ```
 
-## Frontend
+### Frontend
 
 ```json
 "scripts": {
@@ -357,7 +352,7 @@ Ejemplo:
 
 ---
 
-## 10. Testing (Backend)
+## 11. Testing (Backend)
 
 Se incluyen pruebas de integración con Jest + Supertest.
 
@@ -381,7 +376,7 @@ Casos cubiertos (resumen):
 
 ---
 
-# 11. Estado actual (Prototipo final)
+## 12. Estado actual (Prototipo final)
 
 ✔ SPA con rutas públicas y privadas  
 ✔ Autenticación JWT (roles GESTOR / CLIENTE)  
@@ -391,19 +386,7 @@ Casos cubiertos (resumen):
 
 ---
 
-# 12. Documentación
-
-La documentación técnica completa se encuentra en:
-
-```
-doc/doc.md
-```
-
-Incluye análisis, diseño, arquitectura y referencias externas.
-
----
-
-# 13. Autor
+## 13. Autor
 
 David Docampo Trabazo  
 CFGS Desarrollo de Aplicaciones Web (DAW)
