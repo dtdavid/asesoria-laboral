@@ -85,6 +85,7 @@
     - [Prototipo 3 (FINAL)](#prototipo-3-final)
       - [Funcionalidades implementadas](#funcionalidades-implementadas)
       - [Ajustes UX (área privada e incidencias)](#ajustes-ux-área-privada-e-incidencias)
+      - [Correcciones y refactorización final (frontend UI/UX)](#correcciones-y-refactorización-final-frontend-uiux)
       - [Autenticación con JWT (justificación breve)](#autenticación-con-jwt-justificación-breve)
       - [JWT (estructura del token)](#jwt-estructura-del-token)
       - [Ajustes en el flujo de registro y validación](#ajustes-en-el-flujo-de-registro-y-validación)
@@ -1075,6 +1076,43 @@ El servidor se ejecuta en entorno local mediante Node.js, utilizando `nodemon` d
 - Se mejora el header privado en móvil: acceso a Home mediante logo/enlace y acciones más compactas para pantallas pequeñas.
 - En Incidencias (perfil GESTOR) se reorganiza el bloque superior integrando el selector de empresa y el botón “Nueva incidencia” en el header.
 - Se optimiza la tabla de incidencias en móvil para reducir scroll horizontal: ocultación de columnas no esenciales y compactación/alineación de acciones.
+
+##### Correcciones y refactorización final (frontend UI/UX)
+
+En la fase final del proyecto se realizaron ajustes de interfaz para mejorar la claridad visual, la coherencia entre pantallas y la adaptación responsive en móvil y escritorio.
+
+**Landing, navegación pública y autenticación**
+
+- Se refinó la jerarquía visual de la página de inicio (Home), ajustando espaciados, legibilidad e imagen principal.
+- Se revisó el `PublicHeader` en móvil para mejorar proporciones (logo, botón hamburguesa y menú desplegable).
+- Se ajustaron `Login` y `Registro` para mejorar el contraste del formulario sobre el fondo y mantener una presentación consistente.
+
+**Layout privado y navegación interna**
+
+- Se unificó el espaciado entre contenido y pie de página para evitar separaciones duplicadas.
+- Se refinó el `PrivateHeader` (proporción del logo y truncado del correo del usuario).
+- Se mejoró el `PrivateSidebar`, reforzando la visibilidad del enlace activo y el acabado visual en escritorio y móvil.
+
+**Dashboard**
+
+- Se reorganizaron las tarjetas principales para convertirlas en accesos claros a empresas, trabajadores e incidencias.
+- Se sustituyeron textos provisionales por mensajes coherentes con el estado real del prototipo.
+
+**Listados y tablas**
+
+- En `Empresas` y `Trabajadores` se mejoró el responsive ocultando columnas secundarias en móvil y reorganizando acciones.
+- En `Trabajadores` se priorizó mostrar nombre y apellidos en móvil.
+- En `Incidencias` se ajustó la alineación de acciones y celdas para mejorar la lectura en pantallas pequeñas.
+
+**Formularios**
+
+- `EmpresaForm`: maquetación más clara en escritorio, títulos dinámicos según modo crear/editar y checkbox de estado más limpio.
+- `TrabajadorForm`: mejora equivalente, incorporando selector de empresa en lugar de introducir el identificador manualmente.
+- `IncidenciaForm`: reorganización de controles y botones para mejorar lectura y uso.
+
+**Verificación**
+
+- Se revisó el comportamiento responsive en móvil/escritorio y el flujo básico de navegación y formularios en la zona privada.
 
 ##### Autenticación con JWT (justificación breve)
 
