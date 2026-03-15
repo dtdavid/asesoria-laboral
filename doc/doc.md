@@ -97,6 +97,7 @@
       - [Restricción de acciones por rol (frontend)](#restricción-de-acciones-por-rol-frontend)
       - [Evidencias UI (navegador)](#evidencias-ui-navegador)
       - [Pruebas automatizadas (backend)](#pruebas-automatizadas-backend)
+      - [Ejecución de tests y criterio en despliegue](#ejecución-de-tests-y-criterio-en-despliegue)
       - [Comprobaciones finales y refactorización (backend)](#comprobaciones-finales-y-refactorización-backend)
       - [Evidencias (Thunder Client)](#evidencias-thunder-client)
       - [Evidencias de despliegue con Docker](#evidencias-de-despliegue-con-docker)
@@ -1312,6 +1313,16 @@ Los tests se ubican en `backend/__tests__/` y se ejecutan con `cd backend && npm
 
 - Ejecución correcta de test suite (captura de salida de Jest).  
   ![Jest tests OK](img/tests-backend/tests-jest-pass.png)
+
+##### Ejecución de tests y criterio en despliegue
+
+Los tests automatizados del backend se ejecutan con:
+
+- `cd backend && npm test`
+
+Estas pruebas permiten validar de forma reproducible funcionalidades clave (autenticación/autorización y endpoints principales) antes de realizar despliegues o cambios relevantes.
+
+**Nota:** el despliegue a Railway/Vercel se realiza de forma manual. Como mejora futura, se podría añadir un pipeline de CI en GitLab para ejecutar `npm test` en cada push/merge y tener en cuenta el resultado de los tests antes de integrar cambios.
 
 ##### Comprobaciones finales y refactorización (backend)
 
