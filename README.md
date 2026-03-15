@@ -158,6 +158,17 @@ Comprobar:
 
 Los scripts SQL están en `backend/db` y están numerados para ejecutarse en orden.
 
+⚠ **Nota** (Windows/PowerShell - acentos/ñ):
+Antes de ejecutar seeds con psql, puede ser necesario forzar **UTF8**:
+
+```bash
+$env:PGCLIENTENCODING="UTF8"
+psql -U postgres -d asesoria_laboral -f backend/db/XX_archivo.sql
+```
+
+> Nota: el script `backend/db/01_create_database.sql.disabled` está desactivado para evitar ejecuciones automáticas en Docker/Railway.  
+> En instalación local, la base de datos se crea con `CREATE DATABASE asesoria_laboral;` y después se ejecutan los scripts `02_...` en adelante.
+
 Ejemplo (desde la raíz del proyecto):
 
 ```bash
@@ -171,20 +182,24 @@ psql -U postgres -d asesoria_laboral -f backend/db/08_usuarios_schema.sql
 psql -U postgres -d asesoria_laboral -f backend/db/09_usuarios_seed.sql
 ```
 
-⚠ **Nota** (Windows/PowerShell - acentos/ñ):
-Antes de ejecutar seeds con psql, puede ser necesario forzar **UTF8**:
-
-```bash
-$env:PGCLIENTENCODING="UTF8"
-psql -U postgres -d asesoria_laboral -f backend/db/XX_archivo.sql
-```
-
 ### 6.2 Usuarios demo
 
-- **GESTOR**:
-  - _Usuario_: gestor@demo.test / _Password_: Cliente1234!
-- **CLIENTE**:
-  - _Usuario_: cliente1@demo.test / _Password_: Cliente1234! (empresa_id=1)
+**GESTOR**
+
+- Email: `gestor@demo.test`
+- Password: `Cliente1234!`
+
+**CLIENTE (asignado)**
+
+- Email: `cliente1@demo.test`
+- Password: `Cliente1234!`
+- Nota: `empresa_id=1`
+
+**CLIENTE (pendiente)**
+
+- Email: `ines.galan@demo.test`
+- Password: `Cliente1234!`
+- Nota: `status=PENDIENTE` (sin empresa asignada)
 
 ## 7. Instalación con Docker (local)
 
@@ -217,10 +232,22 @@ docker compose up -d --build
 
 ### 7.2 Usuarios demo
 
-- **GESTOR**:
-  - _Usuario_: gestor@demo.test / _Password_: Cliente1234!
-- **CLIENTE**:
-  - _Usuario_: cliente1@demo.test / _Password_: Cliente1234! (empresa_id=1)
+**GESTOR**
+
+- Email: `gestor@demo.test`
+- Password: `Cliente1234!`
+
+**CLIENTE (asignado)**
+
+- Email: `cliente1@demo.test`
+- Password: `Cliente1234!`
+- Nota: `empresa_id=1`
+
+**CLIENTE (pendiente)**
+
+- Email: `ines.galan@demo.test`
+- Password: `Cliente1234!`
+- Nota: `status=PENDIENTE` (sin empresa asignada)
 
 **Comprobación y logs**
 
@@ -261,6 +288,23 @@ docker compose up --build
 En Vercel (producción):
 
 - `VITE_API_URL=https://backend-production-583a.up.railway.app`
+
+**GESTOR**
+
+- Email: `gestor@demo.test`
+- Password: `Cliente1234!`
+
+**CLIENTE (asignado)**
+
+- Email: `cliente1@demo.test`
+- Password: `Cliente1234!`
+- Nota: `empresa_id=1`
+
+**CLIENTE (pendiente)**
+
+- Email: `ines.galan@demo.test`
+- Password: `Cliente1234!`
+- Nota: `status=PENDIENTE` (sin empresa asignada)
 
 ---
 
