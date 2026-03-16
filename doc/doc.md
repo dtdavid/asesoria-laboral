@@ -65,6 +65,7 @@
   - [Estimación de esfuerzo y presupuesto](#estimación-de-esfuerzo-y-presupuesto)
     - [Estimación inicial por bloques](#estimación-inicial-por-bloques)
     - [Criterio de coste (orientativo)](#criterio-de-coste-orientativo)
+    - [Seguimiento real del esfuerzo (estimado vs real)](#seguimiento-real-del-esfuerzo-estimado-vs-real)
     - [Seguimiento del esfuerzo (método)](#seguimiento-del-esfuerzo-método)
   - [Metodología de trabajo](#metodología-de-trabajo)
   - [Riesgos y mitigación](#riesgos-y-mitigación)
@@ -122,13 +123,19 @@
   - [Flujo básico (CLIENTE)](#flujo-básico-cliente)
   - [Ayudas al usuario](#ayudas-al-usuario)
 - [Propuestas de mejora](#propuestas-de-mejora)
+  - [Frontend (UX y funcionalidades)](#frontend-ux-y-funcionalidades)
+  - [Backend (API y soporte a frontend)](#backend-api-y-soporte-a-frontend)
+  - [Seguridad y gestión de usuarios](#seguridad-y-gestión-de-usuarios)
+  - [Calidad y testing](#calidad-y-testing)
 - [Licencia del proyecto y licencias de terceros](#licencia-del-proyecto-y-licencias-de-terceros)
   - [Backend](#backend)
   - [Frontend](#frontend)
 - [Conclusiones](#conclusiones)
-  - [Resultado del proyecto (según criterios de evaluación)](#resultado-del-proyecto-según-criterios-de-evaluación)
-  - [Aprendizajes principales](#aprendizajes-principales)
-  - [Líneas de mejora](#líneas-de-mejora)
+  - [Gestión y documentación del proyecto (CD)](#gestión-y-documentación-del-proyecto-cd)
+  - [Frontend (PROG, DWCC, DIW)](#frontend-prog-dwcc-diw)
+  - [Backend y persistencia (PROG, DWCS, BD)](#backend-y-persistencia-prog-dwcs-bd)
+  - [Despliegue](#despliegue)
+  - [Presentación (defensa)](#presentación-defensa)
 - [Referencias y recursos externos](#referencias-y-recursos-externos)
   - [Documentación oficial](#documentación-oficial)
   - [Recursos conceptuales](#recursos-conceptuales)
@@ -610,8 +617,10 @@ El proyecto se ejecuta en un entorno local de desarrollo, lo que permite iterar 
 #### Estructura del repositorio (alto nivel)
 
 - `frontend/`: aplicación React (Vite), componentes, vistas y rutas.
-- `backend/` (previsto): API REST desarrollada con Express.
+- `backend/` : API REST desarrollada con Express.
 - `doc/`: documentación del proyecto y diagramas.
+
+<br><br><br><br><br><br>
 
 ### Planificación temporal (resumen)
 
@@ -645,16 +654,46 @@ La estimación de esfuerzo se ha realizado desglosando el trabajo por bloques pr
 | Preparación de presentación y defensa           |              10 |
 | **Total estimado**                              |         **230** |
 
-> Nota: En las fases iniciales del proyecto, el frontend puede trabajar con datos de prueba para validar la interfaz y la navegación, sustituyéndose posteriormente por la integración real con el backend y la base de datos.
+> Nota: En las fases iniciales (Prototipo 1) el frontend trabajó con datos de prueba para validar interfaz y navegación. En prototipos posteriores se sustituyó por integración real con backend y PostgreSQL.
 
 #### Criterio de coste (orientativo)
 
 A efectos académicos, se realiza una estimación económica orientativa basada en horas de trabajo:
 
 - Coste hora estimado: **20 € / hora**
+
+**Estimación inicial (planificada):**
+
 - Coste total aproximado: **230 h × 20 € = 4.600 €**
 
+**Estimación actualizada (real aprox.):**
+
+- Coste total aproximado: **356 h × 20 € = 7.120 €**
+
 Este cálculo tiene un carácter exclusivamente académico y sirve para contextualizar el esfuerzo del proyecto.
+
+#### Seguimiento real del esfuerzo (estimado vs real)
+
+| Bloque                 | Horas<br>estimadas | Horas<br>reales<br>(aprox.) | Desviación |
+| ---------------------- | -----------------: | --------------------------: | ---------: |
+| Documentación          |                 45 |                          70 |        +25 |
+| Frontend               |                 65 |                         105 |        +40 |
+| Backend                |                 55 |                          95 |        +40 |
+| Base de datos          |                 25 |                          30 |         +5 |
+| Integración FE/BE      |                 20 |                          25 |         +5 |
+| Pruebas y correcciones |                 10 |                          20 |        +10 |
+| Presentación y defensa |                 10 |                          11 |         +1 |
+| **Total**              |            **230** |                     **356** |   **+126** |
+
+**Notas de reparto (resumen):**
+
+- Documentación: ampliación por evidencias, despliegue y cierre de rúbrica.
+- Frontend: UX final, responsive y control por rol.
+- Backend: incidencias, validaciones/errores y refactor final.
+- BD: ajustes de esquema/seed y carga en Railway.
+- Integración: ajustes de flujo auth, `apiFetch` y coherencia de errores.
+- Pruebas: Thunder/UI + Jest/Supertest.
+- Presentación: guion + demo + revisión final.
 
 #### Seguimiento del esfuerzo (método)
 
@@ -675,6 +714,9 @@ El proyecto se desarrolla siguiendo un enfoque incremental e iterativo, basado e
 - Coordinación periódica con el tutor para validar decisiones técnicas y de alcance.
 
 El **seguimiento del proyecto** se ha realizado mediante **issues** y un **tablero Kanban** en GitLab, utilizados para planificar tareas, visualizar el estado del trabajo y documentar mejoras futuras de forma estructurada.
+![Tablero de issues (GitLab)](img/tablero-issues-gitlab.png)
+
+> Nota: el tablero muestra una vista resumida. El seguimiento completo (issues abiertas/cerradas, etiquetas y commits asociados) se consulta directamente en GitLab.
 
 ### Riesgos y mitigación
 
@@ -792,7 +834,7 @@ La autenticación se implementa de forma simulada en el frontend con fines acad�
 - La navegación se gestiona de forma declarativa mediante **React Router**, definiendo las rutas y los componentes asociados sin manipular directamente el DOM.
 - Separación de rutas públicas y privadas mediante layouts específicos (`PublicLayout` y `PrivateLayout`).
 - Implementación de un componente `ProtectedRoute` para controlar el acceso a la zona privada de la aplicación.
-- Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend. El uso de **Context API** apermite gestionar el estado global sin necesidad de incorporar librerías externas como **Redux** en esta fase del proyecto.
+- Gestión del estado de autenticación mediante **Context API**, con funciones `login()` y `logout()` simuladas, sin conexión a backend. El uso de **Context API** permite gestionar el estado global sin necesidad de incorporar librerías externas como **Redux** en esta fase del proyecto.
 - Uso de hooks de React como `useState`, `useEffect` y `useContext` para gestionar estado, efectos y autenticación simulada.
 - Formularios de **login y registro** con validación básica en el frontend y redirección automática a la zona privada (`/app`) tras la autenticación simulada.
 - Página **Dashboard** accesible únicamente para usuarios autenticados, con opción de cierre de sesión que devuelve al usuario a la página de login.
@@ -1213,7 +1255,6 @@ Se completa el CRUD de incidencias para el perfil **GESTOR** bajo `/incidencias`
 
 **Pendiente / mejora futura:**
 
-- Despliegue en un entorno accesible por tutores/profesorado (actualmente ejecución local).
 - Mejoras de seguridad: limitación de intentos de login y refresco de token / caducidad configurable.
 - Verificación y asociación automatizada de clientes a empresa (email/código de invitación) y registro de auditoría de asignaciones.
 
@@ -1498,7 +1539,7 @@ Se verificó el funcionamiento del backend en producción mediante pruebas con T
 
 ### Variable de entorno para frontend desplegado
 
-Cuando el frontend se despliegue (Vercel), deberá configurarse:
+El frontend se desplegó en Vercel con la siguiente configuración:
 
 `VITE_API_URL=https://backend-production-583a.up.railway.app`
 
@@ -1574,18 +1615,33 @@ Para publicar el frontend del proyecto se utilizó **Vercel CLI**, desplegando �
 
 ## Propuestas de mejora
 
-- Despliegue en un entorno accesible por el profesorado (por ejemplo hosting del frontend y backend).
-- Mejorar feedback visual en operaciones (notificaciones tipo toast tras altas/ediciones/borrados).
-- Añadir recuperación de contraseña y gestión de estado de usuario (activación/cambios de rol).
-- Añadir tests automatizados para API (y/o colección de pruebas versionada).
-- Verificación y asociación automatizada: permitir que el cliente vincule su cuenta a una empresa mediante verificación por email o código de invitación generado por la asesoría.
-- Mejora UX en asignaciones: añadir buscador y filtros en listados y selects, mostrando más información (razón social, CIF) para reducir errores de selección.
-- Gestión de estados y auditoría: ampliar estados del usuario (PENDIENTE/ACTIVO/BLOQUEADO) y registrar quién realizó asignaciones o cambios relevantes.
-- Seguridad adicional: limitar intentos de login y añadir refresco de token / caducidad configurable.
-- Ampliar tests negativos (validaciones `400` y errores `409` por FK) para incidencias y usuarios.
-- Añadir tests de no-regresión para endpoints `/me/*` (trabajadores/incidencias) con distintos perfiles y combinaciones de `empresa_id`.
+### Frontend (UX y funcionalidades)
+
+- Crear la pantalla de **Perfil** para el usuario autenticado (datos de cuenta, rol/estado y empresa asociada si aplica).
+- Añadir **recuperación de contraseña** mediante correo electrónico (flujo de “olvido de contraseña”).
+- Mejorar `IncidenciaForm` con **selector dinámico de trabajadores** filtrado por la empresa seleccionada.
+- Añadir **métricas reales** al dashboard (contadores por empresa: nº trabajadores, incidencias abiertas/cerradas, etc.).
+- Mejorar ayudas contextuales en formularios (mensajes de validación más específicos y consistentes).
+- Paginación en listados (Empresas/Trabajadores/Incidencias) para mejorar rendimiento y usabilidad con volúmenes altos de datos.
+
+### Backend (API y soporte a frontend)
+
+- Añadir un endpoint para **listar trabajadores por empresa** pensado para formularios (por ejemplo, `GET /trabajadores?empresa_id=<id>` ya existe; como mejora, optimizar la respuesta para selects: id + nombre/apellidos).
+- Añadir endpoints auxiliares si fuese necesario para mejorar formularios (por ejemplo, listado ligero de empresas para selects, si se detecta que el endpoint general devuelve más datos de los necesarios).
+
+### Seguridad y gestión de usuarios
+
+- Limitar intentos de login y añadir medidas anti-fuerza bruta (rate limiting).
+- Añadir refresco de token o caducidad configurable (según criterios de seguridad del despliegue).
+- Auditoría básica de asignaciones/cambios relevantes (quién asigna empresa a cliente, cambios de estado, etc.).
+- Verificación y asociación automatizada de cliente ↔ empresa mediante email o código de invitación.
+
+### Calidad y testing
+
+- Ampliar tests negativos (validaciones `400` y errores `409` por FK) en incidencias/usuarios.
+- Añadir tests de no-regresión para endpoints `/me/*` con distintos perfiles y combinaciones de `empresa_id`.
 - Ejecutar los tests contra una base de datos de test aislada (por ejemplo `asesoria_laboral_test` o contenedor Docker) y limpiar datos automáticamente.
-- Integrar CI en GitLab para ejecutar `npm test` en cada push/merge.
+- Integrar CI en GitLab para ejecutar `npm test` en cada push/merge y bloquear merges si fallan.
 
 ## Licencia del proyecto y licencias de terceros
 
@@ -1631,13 +1687,106 @@ Referencias:
 - [Font Awesome Free license](https://fontawesome.com/license/free)
 - [Feather LICENSE](https://github.com/feathericons/feather/blob/master/LICENSE)
 
+<br><br>
+
 ## Conclusiones
 
-### Resultado del proyecto (según criterios de evaluación)
+### Gestión y documentación del proyecto (CD)
 
-### Aprendizajes principales
+**Propósito, objetivos y alcance bien delimitados**  
+Considero que este punto está cumplido porque el documento define el propósito del proyecto y concreta objetivos y alcance de forma coherente, incluyendo exclusiones para evitar sobrealcance. He trabajado por prototipos, validando en cada entrega que lo implementado se corresponde con lo documentado y ajustando el alcance cuando fue necesario para mantener un resultado defendible.
 
-### Líneas de mejora
+**Seguimiento con tutoría y autoría**  
+Durante el seguimiento he mantenido revisiones con el tutor y he aplicado correcciones cuando se detectaron incoherencias (por ejemplo, reordenación de objetivos, ajustes de requisitos de versiones y despliegue). En la defensa me ceñiré a lo que está en el repositorio y en la documentación, y la demo se apoyará en evidencias y despliegues ya publicados.
+
+**Documentación mínima (README + doc.md), versionada y con artefactos/licencias**  
+La documentación incluye los apartados mínimos en `README.md` y `doc/doc.md` y está sujeta a control de versiones (Git). Se describen los artefactos principales del repositorio (estructura, scripts, variables de entorno, comandos de ejecución) y el proyecto está licenciado (MIT), incluyendo licencias de dependencias y notas específicas para casos como iconos y herramientas de despliegue.
+
+**Calidad formal de la documentación (Markdown + recursos)**  
+La documentación está redactada en Markdown con estructura estable e integra recursos (imágenes, diagramas y evidencias de pruebas). En general, cada recurso se acompaña de texto explicativo para justificar su presencia y facilitar la lectura a terceros.
+
+**Control de versiones y trazabilidad (commits e issues)**  
+Durante el desarrollo he mantenido commits frecuentes y con intención clara. Para los mensajes de commit utilicé un patrón simple inspirado en convenciones habituales (por ejemplo `feat`, `fix`, `docs`, `refactor`, `chore`), lo que facilita revisar el historial y localizar cambios. Las issues y la documentación se mantuvieron en castellano para que el seguimiento y la memoria fueran más accesibles para el contexto académico.
+
+**Planificación, estimaciones y contraste estimado vs real**  
+La documentación incluye planificación por fases y una estimación inicial por bloques. Además, he incorporado el seguimiento del esfuerzo real con una tabla de horas **estimadas vs reales (aprox.)**, reflejando el incremento de dedicación en la fase final (cierre de funcionalidades, correcciones, pruebas, despliegue y ajustes de documentación). Este contraste permite justificar de forma transparente las desviaciones y cómo se priorizaron tareas para llegar a un prototipo final estable.
+
+**Iteraciones futuras y guía de contribución**  
+Las mejoras futuras están registradas mediante issues y un bloque de “Propuestas de mejora”, y el repositorio incluye una guía de contribución orientada a continuidad del proyecto en un contexto académico.
+
+### Frontend (PROG, DWCC, DIW)
+
+**Cliente web funcional, validación y comunicación con backend**  
+He desarrollado un cliente web en React (SPA) que se ejecuta en navegador y consume la API mediante peticiones HTTP en formato JSON. En los formularios principales (login/registro y formularios CRUD) aplico validación mínima en frontend y muestro errores de forma controlada cuando la entrada no es válida o cuando la API devuelve errores.
+
+**Gestión de estado entre cliente y servidor**  
+La aplicación mantiene el estado de sesión mediante JWT: el token se gestiona en el contexto de autenticación y se persiste en `localStorage`, lo que permite mantener la sesión entre recargas y condicionar el acceso a rutas privadas y a opciones de la interfaz.
+
+**Gestión de identidad: autenticación y autorización en interfaz**  
+En el frontend se integra el flujo de autenticación (login y registro) y se aplican restricciones por rol. La interfaz diferencia entre **GESTOR** y **CLIENTE**, ocultando acciones de gestión al cliente y bloqueando accesos por URL cuando no corresponden, manteniendo coherencia con las restricciones del backend.
+
+**Uso de framework (React) y justificación de su elección**  
+He utilizado React (con Vite) porque su enfoque por componentes facilita estructurar la interfaz y reducir duplicidades. En este proyecto se ve en piezas reutilizables y layouts diferenciados: `PublicHeader` y `PrivateLayout` ayudan a separar zona pública/privada, `PrivateSidebar` centraliza la navegación interna y `Button` unifica estilos y comportamiento. Este patrón me permite mantener el código más ordenado, minimizar errores al repetir UI y evolucionar pantallas sin reescribir bloques completos.
+Además, el uso de Context (AuthContext) y hooks simplifica la gestión de sesión y el control de acceso en rutas y componentes.
+
+**Diseño, estética y usabilidad (UI/UX)**  
+He trabajado una interfaz consistente entre zona pública y privada y he realizado ajustes finales de UI/UX para mejorar legibilidad, navegación y comportamiento responsive. En especial, se han optimizado tablas y formularios en móvil (colapsado de columnas secundarias y reorganización de acciones) para mejorar la experiencia de uso.
+
+**Gestión de estilos y consistencia visual**  
+El proyecto utiliza Tailwind CSS con una paleta de estilos consistente. Esto facilita mantener uniformidad en layouts, botones, formularios y tablas, y permite aplicar diseño responsive mediante breakpoints sin complejidad extra.
+
+**Código legible, estructurado y mantenible**  
+El frontend se organiza por responsabilidad (`pages`, `components`, `layouts`, `context`, `lib`, `config`) y se han centralizado aspectos críticos como la comunicación con la API mediante `apiFetch`. Esta estructura hace más sencillo mantener el código y extender funcionalidades sin romper el flujo principal.
+
+**Gestión de errores y estados en la interfaz**  
+La aplicación contempla estados de carga, mensajes de error y casos funcionales relevantes (por ejemplo, usuario sin empresa asignada), evitando fallos silenciosos y mostrando al usuario información útil sobre el estado del sistema.
+
+### Backend y persistencia (PROG, DWCS, BD)
+
+**Servidor propio con identidad, validación y persistencia**  
+He desarrollado un backend con Node.js y Express que gestiona identidad mediante registro/login y emisión de JWT. Antes de persistir datos aplico validaciones en controladores/servicios y devuelvo errores controlados cuando la entrada no es válida. La información se guarda en PostgreSQL y se consulta mediante servicios con SQL parametrizado. Se utilizan consultas SQL parametrizadas para separar datos de la consulta y reducir el riesgo de inyección SQL, además de mejorar la claridad y la reutilización de las consultas.
+
+**Persistencia documentada y modelo relacional justificado**  
+He elegido PostgreSQL porque el dominio es relacional y estructurado (empresas, trabajadores, incidencias y usuarios). El modelo E/R y las notas de integridad permiten justificar relaciones, restricciones y el comportamiento ante borrados (cascadas y `ON DELETE SET NULL`), manteniendo coherencia de datos.
+
+**Autorización por roles (GESTOR/CLIENTE) aplicada en backend**  
+Además de autenticar, controlo autorización por rol: el perfil **GESTOR** accede a módulos completos (empresas, trabajadores, incidencias) y el perfil **CLIENTE** accede a datos propios mediante endpoints acotados `/me/*`. Esta separación se aplica con middlewares (`requireAuth` y `requireRole`) y con respuestas coherentes (`401/403`) cuando corresponde.
+
+**API REST con Express y estructura modular**  
+He usado Express para exponer una API REST desacoplada del frontend. El backend está organizado por capas (`routes`, `controllers`, `services`) y utiliza un `Pool` de conexiones (`pg`) para acceder a la base de datos. Esto facilita mantenimiento, reduce acoplamiento y permite evolucionar módulos sin romper el resto. El `Pool` de conexiones permite reutilizar conexiones a PostgreSQL en lugar de abrir/cerrar una por petición, mejorando rendimiento y estabilidad del backend.
+
+**Gestión de errores y coherencia de respuestas**  
+El proyecto incluye manejo centralizado de errores y unificación de validaciones (por ejemplo, validación de IDs y control de conflictos como errores de clave foránea). Esto evita respuestas inconsistentes y facilita tanto el consumo desde el frontend como las pruebas.
+Además, en la API he mantenido un formato de respuesta homogéneo tanto en éxito como en error, usando campos como `ok`, `code`, `message` y, cuando aporta valor, `details` (por ejemplo, para indicar el campo inválido y su valor). Esto facilita depurar, validar desde el frontend y revisar el comportamiento en pruebas.
+
+Ejemplo de error de validación: `ok=false`, `code="VALIDATION_ERROR"`, `message="ID de trabajador inválido"`, `details={ field:"id", value:"..." }`.
+
+**Pruebas y verificación del backend**  
+Para validar el comportamiento, he realizado pruebas manuales con Thunder Client y he añadido pruebas automatizadas de integración en backend (Jest + Supertest), indicando claramente cómo ejecutarlas desde el repositorio. Este punto se apoya en lo descrito en _Prototipo 3 → “Pruebas automatizadas (backend)”_ y en el apartado _README → “Testing (Backend)”_.
+
+**Código legible, estructura y buenas prácticas (frontend y backend)**  
+He procurado que el código sea legible y mantenible, separando responsabilidades y utilizando nombres claros. En backend se organiza por rutas, controladores, servicios y middlewares; en frontend por páginas, componentes y layouts. En la fase final realicé una revisión para unificar comentarios y dejar descripciones más breves y homogéneas, de forma que cada módulo indique con claridad su propósito.
+
+Además, la API incorpora gestión consistente de errores mediante respuestas controladas (códigos HTTP y mensajes coherentes) y un manejo centralizado de excepciones. Durante el desarrollo y el despliegue se utilizaron trazas de ejecución mediante logs para verificar el funcionamiento y detectar incidencias reales.
+
+### Despliegue
+
+**Aplicación accesible para tutores (entorno publicado)**  
+He dejado la aplicación accesible en un entorno desplegado: el frontend está publicado en Vercel y el backend (con PostgreSQL) en Railway. Esto permite probar el flujo principal sin depender de mi equipo local, y facilita la validación por parte del profesorado.
+
+**Despliegue reproducible en local (Docker Compose)**  
+Además del despliegue cloud, he incorporado Docker Compose para levantar en local un entorno reproducible con tres servicios (`db`, `backend`, `frontend`). Esto reduce problemas de versiones y simplifica la puesta en marcha: el sistema se ejecuta con un único comando y se incluyen verificaciones básicas (por ejemplo `/health`).
+
+**Configuración por variables de entorno**  
+El despliegue se apoya en variables de entorno para evitar valores hardcodeados: en frontend `VITE_API_URL` apunta al backend desplegado y en backend se configuran `JWT_SECRET` y variables de conexión a PostgreSQL. Este enfoque facilita cambiar de entorno sin modificar código.
+
+**Verificación tras despliegue**  
+Tras publicar los servicios, se realizaron pruebas de funcionamiento (health/db-time, login y endpoints protegidos) para confirmar conectividad con base de datos, autenticación JWT y control de acceso por roles.
+(Ver: apartado “Despliegue (Railway / Vercel)” en `doc.md` y sección “Despliegue” en `README.md`).
+
+### Presentación (defensa)
+
+En la defensa me ceñiré estrictamente a lo que queda reflejado en el repositorio y en esta documentación. La exposición se apoyará en una demo breve del flujo principal (login, navegación por rol y operaciones clave) y en las evidencias incluidas (capturas y tests). Para facilitar la revisión, priorizaré explicar decisiones técnicas ya justificadas (React, Express, PostgreSQL, JWT) y mostrar cómo se integran en el proyecto.
 
 ## Referencias y recursos externos
 
@@ -1675,5 +1824,5 @@ Referencias:
 - Altadill Izura, Pello Xabier. _React Práctico_. Madrid: Anaya Multimedia, 2023.
 - Durán, Miguel Ángel. _Aprendiendo Git y GitHub_.
 - Cuantun Technologies LLC. _JavaScript de Cero a Superhéroe_. 1ª ed., 2024.
-- Ortuño Pérez, Miguel Ángel. _Express.js: introducción y buenas prácticas._ Universidad Rey Juan Carlos, diciembre 2023. Disponible en: https://gsyc.urjc.es/~mortuno/at/express.pdf
-- Express.js – Error Handling. Documentación oficial. https://expressjs.com/en/guide/error-handling.html
+- Ortuño Pérez, Miguel Ángel. _Express.js: introducción y buenas prácticas._ Universidad Rey Juan Carlos, diciembre 2023. Disponible en: [gsyc.urjc.es/~mortuno/at/express.pdf](https://gsyc.urjc.es/~mortuno/at/express.pdf)
+- Express.js. _Error Handling_. Documentación oficial. Disponible en: [expressjs.com/en/guide/error-handling.html](https://expressjs.com/en/guide/error-handling.html)
