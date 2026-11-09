@@ -75,8 +75,8 @@ Aplicación web (React + Express + PostgreSQL) con autenticación JWT, roles (GE
 ### 4.1 Clonar repositorio
 
 ```bash
-git clone https://gitlab.iessanclemente.net/dawd/a25daviddt.git
-cd a25daviddt
+git clone https://github.com/dtdavid/asesoria-laboral.git
+cd asesoria-laboral
 ```
 
 ---

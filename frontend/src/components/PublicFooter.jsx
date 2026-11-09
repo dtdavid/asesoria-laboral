@@ -22,7 +22,7 @@ export default function PublicFooter() {
               <li>
                 <a
                   className="text-white/80 hover:text-white hover:underline"
-                  href="https://gitlab.iessanclemente.net/dawd/a25daviddt"
+                  href="https://github.com/dtdavid/asesoria-laboral"
                   target="_blank"
                   rel="noreferrer"
                 >
